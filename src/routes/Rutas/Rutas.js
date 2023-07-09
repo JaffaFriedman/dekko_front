@@ -5,6 +5,7 @@ import Agregarcarro from '../../pages/Agregarcarro/Agregarcarro'
 import Bobina from '../../pages/Bobina/Bobina'
 import Metro from '../../pages/Metro/Metro'
 import Buscar from '../../pages/Buscar/Buscar'
+import Calculo from '../../pages/Calculo/Calculo'
 import Carrito from '../../pages/Carrito/Carrito'
 import Catalogo from '../../pages/Catalogo/Catalogo'
 import Checkout from '../../pages/Checkout/Checkout'
@@ -38,7 +39,7 @@ function Rutas() {
   let [familia, setFamilia] = useState({})
   let [categoria, setCategoria] = useState({})
   let [producto, setProducto] = useState('')
-
+  let [mt, setMt] = useState('')
   return (
     <div>
       <Routes>
@@ -120,11 +121,15 @@ function Rutas() {
           />
           <Route
             path='/metro'
-            element={<Metro categoria={categoria} producto={producto} />}
+            element={<Metro categoria={categoria} producto={producto} mt={mt} setMt={setMt}   />}
           />
           <Route
             path='/agregarcarro'
             element={<Agregarcarro producto={producto} />}
+          />
+          <Route
+            path='/calculo'
+            element={<Calculo mt={mt} setMt={setMt} />}
           />
         </Route>
       </Routes>

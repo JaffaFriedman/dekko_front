@@ -32,6 +32,7 @@ function Bobina({ categoria, producto }) {
   const navigate = useNavigate()
   let [cantidad, setCantidad] = useState(1)
 
+  const options = { style: 'currency', currency: 'CLP' };
 
 
  
@@ -131,10 +132,10 @@ function Bobina({ categoria, producto }) {
                 }
               </h6>
               <h6  >
-                {' Precio mt2: $' +parseFloat((p.pesos[gramaje].precio).toFixed(0)).toLocaleString()}
+                {' Precio mt2: ' +parseFloat((p.pesos[gramaje].precio).toFixed(0)).toLocaleString('es-CL', options)}
               </h6>
               <h6 className='mb-4 '>        
-                { 'Precio Bobina: $' + parseFloat((p.pesos[gramaje].precio*33).toFixed(0)).toLocaleString()  }
+                { 'Precio Bobina: ' + parseFloat((p.pesos[gramaje].precio*33).toFixed(0)).toLocaleString('es-CL', options)  }
               </h6>
               <Box
                 component='form'
@@ -166,7 +167,7 @@ function Bobina({ categoria, producto }) {
                 </Stack>
               </Box>
               <h5 className='mt-4 mb-4'>
-                { 'Precio: $' + parseFloat((p.pesos[gramaje].precio*33 * cantidad).toFixed(0)).toLocaleString()
+                { 'Precio: ' + parseFloat((p.pesos[gramaje].precio*33 * cantidad).toFixed(0)).toLocaleString('es-CL', options)
               }
               </h5>
 

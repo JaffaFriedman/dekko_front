@@ -13,6 +13,7 @@ function Productos ({ familia, categoria, producto, setProducto }) {
     if (categoria.link !=='' ) navigate(categoria.link);
     else   navigate(familia.link)
   }
+  const options = { style: 'currency', currency: 'CLP' };
 
   return (
     <>
@@ -48,7 +49,7 @@ function Productos ({ familia, categoria, producto, setProducto }) {
                     />
                   </Card.Body>
                   <Card.Footer>
-                    <Card.Text>Precio desde ${p.precio.toLocaleString()} {p.venta}</Card.Text>
+                    <Card.Text>Precio desde {p.precio.toLocaleString('es-CL', options)} {p.venta}</Card.Text>
                   </Card.Footer>
                 </Card>
               </Col>

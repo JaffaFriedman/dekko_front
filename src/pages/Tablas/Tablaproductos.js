@@ -14,7 +14,7 @@ let tablaProductos = [
     alto: 100,
     peso: 350,
     precio: 19990,
-    venta: ''
+    venta: 'mt2'
   },
   {
     sku: 2,
@@ -31,7 +31,7 @@ let tablaProductos = [
     alto: 100,
     peso: 350,
     precio: 19990,
-    venta: ''
+    venta: 'mt2'
   },
   {
     sku: 3,
@@ -48,7 +48,7 @@ let tablaProductos = [
     alto: 100,
     peso: 350,
     precio: 19990,
-    venta: ''
+    venta: 'mt2'
   },
   {
     sku: 4,
@@ -65,7 +65,7 @@ let tablaProductos = [
     alto: 100,
     peso: 350,
     precio: 19990,
-    venta: ''
+    venta: 'mt2'
   },
   {
     sku: 5,
@@ -82,7 +82,7 @@ let tablaProductos = [
     alto: 100,
     peso: 350,
     precio: 19990,
-    venta: ''
+    venta: 'mt2'
   },
   {
     sku: 6,
@@ -100,7 +100,7 @@ let tablaProductos = [
     alto: 100,
     peso: 350,
     precio: 19990,
-    venta: ''
+    venta: 'mt2'
   },
   {
     sku: 7,
@@ -118,7 +118,7 @@ let tablaProductos = [
     alto: 100,
     peso: 350,
     precio: 19990,
-    venta: ''
+    venta: 'mt2'
   },
   {
     sku: 8,
@@ -135,7 +135,7 @@ let tablaProductos = [
     alto: 100,
     peso: 350,
     precio: 19990,
-    venta: ''
+    venta: 'mt2'
   },
   {
     sku: 9,
@@ -152,7 +152,7 @@ let tablaProductos = [
     alto: 100,
     peso: 350,
     precio: 19990,
-    venta: ''
+    venta: 'mt2'
   },
   {
     sku: 10,
@@ -169,7 +169,7 @@ let tablaProductos = [
     alto: 100,
     peso: 350,
     precio: 19990,
-    venta: ''
+    venta: 'mt2'
   },
   {
     sku: 212,
@@ -182,15 +182,15 @@ let tablaProductos = [
     ],
     ancho: 110,
     alto: 30,
-    peso: 300,
+    peso: 220,
     pesos: [
       { peso: 220, precio: 4990 },
       { peso: 240, precio: 5990 },
       { peso: 280, precio: 6990 },
       { peso: 320, precio: 7990 },
       { peso: 380, precio: 8990 }],
-    
-precio: 4990,
+
+    precio: 4990,
     colores: [
       { codigo: 1, url: 'https://static.wixstatic.com/media/12b4f4_d083cbfb2bdc474d977923e40012fb84~mv2.png/v1/fill/w_914,h_764,al_c,q_90,usm_0.66_1.00_0.01,enc_auto/12b4f4_d083cbfb2bdc474d977923e40012fb84~mv2.png' },
       { codigo: 2, url: 'https://static.wixstatic.com/media/12b4f4_91671df121ee4f01ab0a6988aca12a6a~mv2.png/v1/fill/w_909,h_764,al_c,q_90,usm_0.66_1.00_0.01,enc_auto/12b4f4_91671df121ee4f01ab0a6988aca12a6a~mv2.png' },
@@ -216,15 +216,15 @@ precio: 4990,
     ],
     ancho: 110,
     alto: 30,
-    peso: 300,
+    peso: 220,
     pesos: [
       { peso: 220, precio: 4990 },
       { peso: 240, precio: 5990 },
       { peso: 280, precio: 6990 },
       { peso: 320, precio: 7990 },
       { peso: 380, precio: 8990 }],
-    
-precio: 4990,
+
+    precio: 4990,
 
     colores: [
       { codigo: 1, url: 'https://static.wixstatic.com/media/12b4f4_a17c8853d4b54885becc39b20e624c99~mv2.png/v1/fill/w_218,h_86,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/12b4f4_a17c8853d4b54885becc39b20e624c99~mv2.png' },
@@ -253,15 +253,15 @@ precio: 4990,
     ],
     ancho: 110,
     alto: 30,
-    peso: 300,
+    peso: 220,
     pesos: [
       { peso: 220, precio: 4990 },
       { peso: 240, precio: 5990 },
       { peso: 280, precio: 6990 },
       { peso: 320, precio: 7990 },
       { peso: 380, precio: 8990 }],
-    
-precio: 4990,
+
+    precio: 4990,
     colores: [
       { codigo: 1, url: 'https://static.wixstatic.com/media/12b4f4_ba7909f4a28d4d0f8cd54a34a70453e5~mv2.png/v1/fill/w_912,h_764,al_c,q_90,usm_0.66_1.00_0.01,enc_auto/12b4f4_ba7909f4a28d4d0f8cd54a34a70453e5~mv2.png' },
       { codigo: 2, url: 'https://static.wixstatic.com/media/12b4f4_fe8ad04e2ee945bdb426c7e39771f94c~mv2.png/v1/fill/w_535,h_451,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/12b4f4_fe8ad04e2ee945bdb426c7e39771f94c~mv2.png' },
@@ -280,15 +280,15 @@ precio: 4990,
     ],
     ancho: 110,
     alto: 30,
-    peso: 300,
+    peso: 220,
     pesos: [
       { peso: 220, precio: 4990 },
       { peso: 240, precio: 5990 },
       { peso: 280, precio: 6990 },
       { peso: 320, precio: 7990 },
       { peso: 380, precio: 8990 }],
-    
-precio: 4990,
+
+    precio: 4990,
     colores: [
       { codigo: 1, url: 'https://static.wixstatic.com/media/12b4f4_a17c8853d4b54885becc39b20e624c99~mv2.png/v1/fill/w_218,h_86,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/12b4f4_a17c8853d4b54885becc39b20e624c99~mv2.png' },
       { codigo: 2, url: 'https://static.wixstatic.com/media/12b4f4_e45eb04aa60949739a13cc40753df4d4~mv2.png/v1/fill/w_218,h_86,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/12b4f4_e45eb04aa60949739a13cc40753df4d4~mv2.png' },
@@ -316,15 +316,15 @@ precio: 4990,
     ],
     ancho: 110,
     alto: 30,
-    peso: 300,
+    peso: 220,
     pesos: [
       { peso: 220, precio: 4990 },
       { peso: 240, precio: 5990 },
       { peso: 280, precio: 6990 },
       { peso: 320, precio: 7990 },
       { peso: 380, precio: 8990 }],
-    
-precio: 4990,
+
+    precio: 4990,
     colores: [
       { codigo: 1, url: 'https://static.wixstatic.com/media/12b4f4_146d4161b2004b90aa9bf2124b7f7043~mv2.png/v1/fill/w_914,h_764,al_c,q_90,usm_0.66_1.00_0.01,enc_auto/12b4f4_146d4161b2004b90aa9bf2124b7f7043~mv2.png', },
       { codigo: 2, url: 'https://static.wixstatic.com/media/12b4f4_1dbfd3c9739e41df92853129908c079a~mv2.png/v1/fill/w_536,h_451,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/12b4f4_1dbfd3c9739e41df92853129908c079a~mv2.png' }],
@@ -346,7 +346,7 @@ precio: 4990,
     alto: 10,
     peso: 600,
     precio: 79990,
-    venta: ''
+    venta: 'mt2'
   },
   {
     sku: 14,
@@ -364,7 +364,7 @@ precio: 4990,
     alto: 100,
     peso: 600,
     precio: 39990,
-    venta: ''
+    venta: 'mt2'
   },
   {
     sku: 15,
@@ -381,7 +381,7 @@ precio: 4990,
     alto: 100,
     peso: 600,
     precio: 59990,
-    venta: ''
+    venta: 'mt2'
   },
   {
     sku: 16,
@@ -398,7 +398,7 @@ precio: 4990,
     alto: 100,
     peso: 600,
     precio: 99990,
-    venta: ''
+    venta: 'mt2'
   },
   {
     sku: 17,
@@ -415,7 +415,7 @@ precio: 4990,
     alto: 10,
     peso: 280,
     precio: 49990,
-    venta: ''
+    venta: 'rollo de 5mt2'
   },
   {
     sku: 18,
@@ -432,7 +432,7 @@ precio: 4990,
     alto: 10,
     peso: 280,
     precio: 49990,
-    venta: ''
+    venta: 'rollo de 5mt2'
   },
 
   {
@@ -447,7 +447,7 @@ precio: 4990,
     ],
     ancho: 140,
     alto: 10,
-    peso: 300,
+    peso: 220,
     pesos: [
       { peso: 220, precio: 4990 },
       { peso: 240, precio: 5990 },
@@ -457,6 +457,8 @@ precio: 4990,
     precio: 4990,
     colores: [
       { codigo: 1, url: 'https://static.wixstatic.com/media/12b4f4_91714ea6a7f341ef8b5d102f33aa4dd9.jpg/v1/fill/w_375,h_400,al_c,q_80,enc_auto/12b4f4_91714ea6a7f341ef8b5d102f33aa4dd9.jpg' },
+      { codigo: 2, url: 'https://static.wixstatic.com/media/12b4f4_fb689d5d87244421945a1e5092fe0792.jpg/v1/fill/w_375,h_400,al_c,q_80,enc_auto/12b4f4_fb689d5d87244421945a1e5092fe0792.jpg' },
+      { codigo: 3, url: 'https://static.wixstatic.com/media/12b4f4_f777a7982cf9460696e87e729d149886.jpg/v1/fill/w_375,h_400,al_c,q_80,enc_auto/12b4f4_f777a7982cf9460696e87e729d149886.jpg' },
     ],
     venta: 'mt2'
   },
@@ -472,7 +474,7 @@ precio: 4990,
     ],
     ancho: 140,
     alto: 10,
-    peso: 300,
+    peso: 220,
     pesos: [
       { peso: 220, precio: 4990 },
       { peso: 240, precio: 5990 },
@@ -482,7 +484,8 @@ precio: 4990,
     precio: 4990,
     colores: [
       { codigo: 1, url: 'https://static.wixstatic.com/media/12b4f4_93ac3d363996493bafac8b6030488ea5.jpg/v1/fill/w_375,h_400,al_c,q_80,enc_auto/12b4f4_93ac3d363996493bafac8b6030488ea5.jpg' },
-    ],
+      { codigo: 2, url: 'https://static.wixstatic.com/media/12b4f4_c417630228914c16a7baa884ae4118be.jpg/v1/fill/w_375,h_400,al_c,q_80,enc_auto/12b4f4_c417630228914c16a7baa884ae4118be.jpg' },
+      { codigo: 3, url: 'https://static.wixstatic.com/media/12b4f4_90c3d991f3d04478a8a11905bd321f68.jpg/v1/fill/w_375,h_400,al_c,q_80,enc_auto/12b4f4_90c3d991f3d04478a8a11905bd321f68.jpg' },],
     venta: 'mt2'
   },
   {
@@ -497,7 +500,7 @@ precio: 4990,
     ],
     ancho: 140,
     alto: 10,
-    peso: 300,
+    peso: 220,
     pesos: [
       { peso: 220, precio: 4990 },
       { peso: 240, precio: 5990 },
@@ -507,6 +510,8 @@ precio: 4990,
     precio: 4990,
     colores: [
       { codigo: 1, url: 'https://static.wixstatic.com/media/12b4f4_824d9428908f41c89f6629b8851b09fe.jpg/v1/fill/w_375,h_400,al_c,q_80,enc_auto/12b4f4_824d9428908f41c89f6629b8851b09fe.jpg' },
+      { codigo: 2, url: 'https://static.wixstatic.com/media/12b4f4_2d0eaaab6e284cf8a445d984aa9ec232.jpg/v1/fill/w_375,h_400,al_c,q_80,enc_auto/12b4f4_2d0eaaab6e284cf8a445d984aa9ec232.jpg' },
+      { codigo: 3, url: 'https://static.wixstatic.com/media/12b4f4_b0e4ba889b2a4f2790f41601a9b98c15.jpg/v1/fill/w_375,h_400,al_c,q_80,enc_auto/12b4f4_b0e4ba889b2a4f2790f41601a9b98c15.jpg' },
     ],
     venta: 'mt2'
   },
@@ -522,7 +527,7 @@ precio: 4990,
     ],
     ancho: 140,
     alto: 10,
-    peso: 300,
+    peso: 220,
     pesos: [
       { peso: 220, precio: 4990 },
       { peso: 240, precio: 5990 },
@@ -532,6 +537,8 @@ precio: 4990,
     precio: 4990,
     colores: [
       { codigo: 1, url: 'https://static.wixstatic.com/media/12b4f4_251d6ca87b134e0d92a13c286eaa26a4~mv2.jpg/v1/fill/w_760,h_507,al_c,q_85,enc_auto/12b4f4_251d6ca87b134e0d92a13c286eaa26a4~mv2.jpg' },
+      { codigo: 2, url: 'https://static.wixstatic.com/media/12b4f4_a972090d76904a5d92658e7ba993132a~mv2.jpg/v1/fill/w_676,h_451,al_c,q_80,usm_0.66_1.00_0.01,enc_auto/12b4f4_a972090d76904a5d92658e7ba993132a~mv2.jpg' },
+      { codigo: 3, url: 'https://static.wixstatic.com/media/12b4f4_37225589aa604abbb3f1b52cccfd8e9f~mv2.jpg/v1/fill/w_676,h_451,al_c,q_80,usm_0.66_1.00_0.01,enc_auto/12b4f4_37225589aa604abbb3f1b52cccfd8e9f~mv2.jpg' },
     ],
     venta: 'mt2'
   },
@@ -547,7 +554,7 @@ precio: 4990,
     ],
     ancho: 140,
     alto: 10,
-    peso: 300,
+    peso: 220,
     pesos: [
       { peso: 220, precio: 4990 },
       { peso: 240, precio: 5990 },
@@ -557,7 +564,8 @@ precio: 4990,
     precio: 4990,
     colores: [
       { codigo: 1, url: 'https://static.wixstatic.com/media/12b4f4_a372897eeb684c74bc7551d99afb9370~mv2.jpg/v1/fill/w_760,h_507,al_c,q_85,enc_auto/12b4f4_a372897eeb684c74bc7551d99afb9370~mv2.jpg' },
-    ],
+      { codigo: 2, url: 'https://static.wixstatic.com/media/12b4f4_41387e52aaad4511b39dbd18ed417e3c~mv2.jpg/v1/fill/w_676,h_451,al_c,q_80,usm_0.66_1.00_0.01,enc_auto/12b4f4_41387e52aaad4511b39dbd18ed417e3c~mv2.jpg' },
+      { codigo: 3, url: 'https://static.wixstatic.com/media/12b4f4_3413da2dc48c40628e652acf5308bf8e~mv2.jpg/v1/fill/w_676,h_451,al_c,q_80,usm_0.66_1.00_0.01,enc_auto/12b4f4_3413da2dc48c40628e652acf5308bf8e~mv2.jpg' },],
     venta: 'mt2'
   },
   {
@@ -572,7 +580,7 @@ precio: 4990,
     ],
     ancho: 140,
     alto: 10,
-    peso: 300,
+    peso: 220,
     pesos: [
       { peso: 220, precio: 4990 },
       { peso: 240, precio: 5990 },
@@ -581,9 +589,10 @@ precio: 4990,
       { peso: 380, precio: 8990 }],
     precio: 4990,
     colores: [
-      { codigo: 1, url: 'https://static.wixstatic.com/media/12b4f4_5df7ca17601f4e22b1db9135dcb23dff.jpg/v1/fill/w_375,h_400,al_c,q_80,enc_auto/12b4f4_5df7ca17601f4e22b1db9135dcb23dff.jpg' },
-    ],
-    venta: 'mt2'
+      { codigo: 1, url: 'https://static.wixstatic.com/media/12b4f4_54e3c88c7e234b07a70fdb64bf316b20.jpg/v1/fill/w_375,h_400,al_c,q_80,enc_auto/12b4f4_54e3c88c7e234b07a70fdb64bf316b20.jpg' },
+      {codigo: 2, url: 'https://static.wixstatic.com/media/12b4f4_4d7b9cad271b4c88b96bea7e941b518a.jpg/v1/fill/w_375,h_400,al_c,q_80,enc_auto/12b4f4_4d7b9cad271b4c88b96bea7e941b518a.jpg'},
+      {codigo: 3, url: 'https://static.wixstatic.com/media/12b4f4_5df7ca17601f4e22b1db9135dcb23dff.jpg/v1/fill/w_375,h_400,al_c,q_80,enc_auto/12b4f4_5df7ca17601f4e22b1db9135dcb23dff.jpg'},],
+      venta: 'mt2'
   },
   {
     sku: 117,
@@ -597,7 +606,7 @@ precio: 4990,
     ],
     ancho: 140,
     alto: 10,
-    peso: 300,
+    peso: 220,
     pesos: [
       { peso: 220, precio: 4990 },
       { peso: 240, precio: 5990 },
@@ -607,7 +616,8 @@ precio: 4990,
     precio: 4990,
     colores: [
       { codigo: 1, url: 'https://static.wixstatic.com/media/12b4f4_d81299c57d804f22937aaafdcf89810e.jpg/v1/fill/w_375,h_400,al_c,q_80,enc_auto/12b4f4_d81299c57d804f22937aaafdcf89810e.jpg' },
-    ],
+      { codigo: 2, url: 'https://static.wixstatic.com/media/12b4f4_a91ee4ebdf14423ea1a676f57cdf88f1.jpg/v1/fill/w_375,h_400,al_c,q_80,enc_auto/12b4f4_a91ee4ebdf14423ea1a676f57cdf88f1.jpg' },
+      { codigo: 3, url: 'https://static.wixstatic.com/media/12b4f4_4c7e73ff0afd4fa58f90dcdd27c90bab.jpg/v1/fill/w_375,h_400,al_c,q_80,enc_auto/12b4f4_4c7e73ff0afd4fa58f90dcdd27c90bab.jpg' },],
     venta: 'mt2'
   },
   {
@@ -622,7 +632,7 @@ precio: 4990,
     ],
     ancho: 140,
     alto: 10,
-    peso: 300,
+    peso: 220,
     pesos: [
       { peso: 220, precio: 4990 },
       { peso: 240, precio: 5990 },
@@ -632,7 +642,8 @@ precio: 4990,
     precio: 4990,
     colores: [
       { codigo: 1, url: 'https://static.wixstatic.com/media/12b4f4_ff698f88b25345a4b8a5def923f5431c.jpg/v1/fill/w_375,h_400,al_c,q_80,enc_auto/12b4f4_ff698f88b25345a4b8a5def923f5431c.jpg' },
-    ],
+      { codigo: 2, url: 'https://static.wixstatic.com/media/12b4f4_23f547fc51f4403093aae856e22028d1.jpg/v1/fill/w_375,h_400,al_c,q_80,enc_auto/12b4f4_23f547fc51f4403093aae856e22028d1.jpg' },
+      { codigo: 3, url: 'https://static.wixstatic.com/media/12b4f4_eafc06a3204e481abf0aa9cf6a411bd6.jpg/v1/fill/w_375,h_400,al_c,q_80,enc_auto/12b4f4_eafc06a3204e481abf0aa9cf6a411bd6.jpg' },],
     venta: 'mt2'
   },
   {
@@ -647,7 +658,7 @@ precio: 4990,
     ],
     ancho: 140,
     alto: 10,
-    peso: 300,
+    peso: 220,
     pesos: [
       { peso: 220, precio: 4990 },
       { peso: 240, precio: 5990 },
@@ -657,7 +668,8 @@ precio: 4990,
     precio: 4990,
     colores: [
       { codigo: 1, url: 'https://static.wixstatic.com/media/12b4f4_833aeb12630a4dfbb80dd30dc5dd7208.jpg/v1/fill/w_375,h_400,al_c,q_80,enc_auto/12b4f4_833aeb12630a4dfbb80dd30dc5dd7208.jpg' },
-    ],
+      { codigo: 2, url: 'https://static.wixstatic.com/media/12b4f4_d2cb918b877443cb9b07811fa538c867.jpg/v1/fill/w_375,h_400,al_c,q_80,enc_auto/12b4f4_d2cb918b877443cb9b07811fa538c867.jpg' },
+      { codigo: 3, url: 'https://static.wixstatic.com/media/12b4f4_37f12b92a9964aeea3453a8e9c53e095.jpg/v1/fill/w_375,h_400,al_c,q_80,enc_auto/12b4f4_37f12b92a9964aeea3453a8e9c53e095.jpg' },],
     venta: 'mt2'
   },
   {
@@ -672,7 +684,7 @@ precio: 4990,
     ],
     ancho: 140,
     alto: 10,
-    peso: 300,
+    peso: 220,
     pesos: [
       { peso: 220, precio: 4990 },
       { peso: 240, precio: 5990 },
@@ -682,7 +694,8 @@ precio: 4990,
     precio: 4990,
     colores: [
       { codigo: 1, url: 'https://static.wixstatic.com/media/12b4f4_e26a124c49b74f1bb760827a3b59c94d.jpg/v1/fill/w_375,h_400,al_c,q_80,enc_auto/12b4f4_e26a124c49b74f1bb760827a3b59c94d.jpg' },
-    ],
+      { codigo: 2, url: 'https://static.wixstatic.com/media/12b4f4_ed2ef73c8a6c45f69d12a9fa5be7b9d5.jpg/v1/fill/w_375,h_400,al_c,q_80,enc_auto/12b4f4_ed2ef73c8a6c45f69d12a9fa5be7b9d5.jpg' },
+      { codigo: 3, url: 'https://static.wixstatic.com/media/12b4f4_2e35eda386de40049a1d7463b3e09c00.jpg/v1/fill/w_375,h_400,al_c,q_80,enc_auto/12b4f4_2e35eda386de40049a1d7463b3e09c00.jpg' },],
     venta: 'mt2'
   },
   {
@@ -697,7 +710,7 @@ precio: 4990,
     ],
     ancho: 140,
     alto: 10,
-    peso: 300,
+    peso: 220,
     pesos: [
       { peso: 220, precio: 4990 },
       { peso: 240, precio: 5990 },
@@ -706,8 +719,9 @@ precio: 4990,
       { peso: 380, precio: 8990 }],
     precio: 4990,
     colores: [
-      { codigo: 1, url: 'https://static.wixstatic.com/media/12b4f4_42207c76b8c74696862389d607453413.jpg/v1/fill/w_375,h_400,al_c,q_80,enc_auto/12b4f4_42207c76b8c74696862389d607453413.jpg' },
-    ],
+      { codigo: 1, url: 'https://static.wixstatic.com/media/12b4f4_8c08187ae9734b6c846d89b4dd1a60df.jpg/v1/fill/w_375,h_400,al_c,q_80,enc_auto/12b4f4_8c08187ae9734b6c846d89b4dd1a60df.jpg' },
+      { codigo: 2, url: 'https://static.wixstatic.com/media/12b4f4_21226a4a627b4961bcf4d54a4ceadb0e.jpg/v1/fill/w_375,h_400,al_c,q_80,enc_auto/12b4f4_21226a4a627b4961bcf4d54a4ceadb0e.jpg' },
+      { codigo: 3, url: 'https://static.wixstatic.com/media/12b4f4_42207c76b8c74696862389d607453413.jpg/v1/fill/w_375,h_400,al_c,q_80,enc_auto/12b4f4_42207c76b8c74696862389d607453413.jpg' },],
     venta: 'mt2'
   },
   {
@@ -719,12 +733,9 @@ precio: 4990,
     descripcion: '',
     url: [
       'https://static.wixstatic.com/media/12b4f4_1d2ee32d4dcf4dda8e74916970fc7f3e.jpg/v1/fill/w_375,h_400,al_c,q_80,enc_auto/12b4f4_1d2ee32d4dcf4dda8e74916970fc7f3e.jpg'],
-
-
-
     ancho: 140,
     alto: 10,
-    peso: 300,
+    peso: 220,
     pesos: [
       { peso: 220, precio: 4990 },
       { peso: 240, precio: 5990 },

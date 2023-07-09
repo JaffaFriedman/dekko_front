@@ -42,6 +42,7 @@ function Rollo ({ categoria, producto }) {
    // setShow(true)
   };
   */
+  const options = { style: 'currency', currency: 'CLP' };
 
   return (
     <>
@@ -84,7 +85,7 @@ function Rollo ({ categoria, producto }) {
                     {' '}
                     {p.catalogo} - {p.nombre}
                   </h4>
-                  <h5> ${p.precio.toLocaleString()} por rollo </h5>
+                  <h5> {p.precio.toLocaleString('es-CL', options)} por rollo </h5>
                   <p>Las medidas son en centimetros.</p>
                   <Box
                     component='form'
@@ -121,7 +122,7 @@ function Rollo ({ categoria, producto }) {
                   </h6>
                   <h6 className='mt-4'>Alto del rollo {p.alto} metros</h6>
                   <h5 className='mt-4 mb-4'>
-                    Precio Total ${(p.precio * cantidad).toLocaleString()}
+                    Precio Total {(p.precio * cantidad).toLocaleString('es-CL', options)}
                   </h5>
                   <React.Fragment className='mt-4 mb-4'>
                     <Agregarcarro />

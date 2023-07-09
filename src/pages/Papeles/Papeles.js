@@ -33,7 +33,7 @@ function Papeles ({ familia, categoria, producto }) {
   let [mt2, setMt2] = useState(1)
   let [precio, setPrecio] = useState(0)
   let [papel, setPapel] = useState(0)
-  let [glosa, setGlosa] = useState(0)
+  let [glosa, setGlosa] = useState('')
   let [cantidad, setCantidad] = useState(1)
   const navigate = useNavigate()
 
@@ -56,6 +56,7 @@ function Papeles ({ familia, categoria, producto }) {
     setGlosa('')
   }
 
+ 
   const handleGlosa = p => {
     const nuevoAncho = parseInt(ancho) + 5
     const nuevoAlto = parseInt(alto) + 5
@@ -77,6 +78,7 @@ function Papeles ({ familia, categoria, producto }) {
     )
     setShow(false)
   }
+  const options = { style: 'currency', currency: 'CLP' };
 
   const handlePapel = v => {
     const nuevoAncho = parseInt(ancho) + 5
@@ -87,7 +89,9 @@ function Papeles ({ familia, categoria, producto }) {
 
     setPapel(v.nombre)
   }
-
+  const p = tablaProductos.find(c => c.nombre.toString() === producto.toString() &&
+    c.categoria.toString() === categoria.categoria &&
+    c.familia === categoria.familia)
   return (
     <>
       <div className='bg-dark text-bg-dark pb-2 mb-1 text-center'>
@@ -98,14 +102,6 @@ function Papeles ({ familia, categoria, producto }) {
       </div>
       <Container>
         <Box sx={{ flexGrow: 1 }}>
-          {tablaProductos
-            .filter(
-              c =>
-                c.nombre.toString() === producto.toString() &&
-                c.categoria.toString() === categoria.categoria &&
-                c.familia === categoria.familia
-            )
-            .map((p, idx) => (
               <Grid container spacing={2}>
                 <Grid item xs={8}>
                   <Carousel className='pt-4 pb-4 ps-3 centered '>
@@ -145,8 +141,8 @@ function Papeles ({ familia, categoria, producto }) {
                     {' '}
                     {precio === 0
                       ? ''
-                      : 'Precio $' +
-                        parseFloat(precio.toFixed(0)).toLocaleString()}{' '}
+                      : 'Precio ' +
+                        parseFloat(precio.toFixed(0)).toLocaleString('es-CL', options)}{' '}
                   </h6>
 
                   <Box
@@ -174,16 +170,17 @@ function Papeles ({ familia, categoria, producto }) {
                         }}
                         autoFocus
                       />
+                      
                     </Stack>
                   </Box>
                   <h5 className='mt-4 mb-4'>
                     {' '}
                     {precio === 0
                       ? ''
-                      : 'Precio Total $' +
+                      : 'Precio Total ' +
                         parseFloat(
                           (precio * cantidad).toFixed(0)
-                        ).toLocaleString()}{' '}
+                        ).toLocaleString('es-CL', options)}{' '}
                   </h5>
                   <React.Fragment className='mt-4 mb-4'>
                     <Agregarcarro />
@@ -228,7 +225,7 @@ function Papeles ({ familia, categoria, producto }) {
                                   id={i}
                                   onClick={() => handlePapel(v)}
                                 />
-                                <p>Precio {v.precio}</p>
+                                <p>Precio {v.precio.toLocaleString('es-CL', options)}</p>
                                 <p>{v.descripcion}</p>
                               </Item>
                             ))}
@@ -315,7 +312,6 @@ function Papeles ({ familia, categoria, producto }) {
                   </Button>
                 </Grid>
               </Grid>
-            ))}
         </Box>
       </Container>
     </>

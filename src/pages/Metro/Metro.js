@@ -13,6 +13,7 @@ import { styled } from '@mui/material/styles'
 import tablaProductos from '../../pages/Tablas/Tablaproductos'
 import { useState } from 'react'
 import Agregarcarro from '../../pages/Agregarcarro/Agregarcarro'
+import Calculo from '../../pages/Calculo/Calculo'
 import { SelectChangeEvent } from '@mui/material/Select';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
@@ -29,12 +30,11 @@ const Item = styled(Paper)(({ theme }) => ({
 }))
 
 const options = { style: 'currency', currency: 'CLP' };
- 
-function Metro
-({ categoria, producto }) {
-  const navigate = useNavigate()
-  let [cantidad, setCantidad] = useState(1)
 
+function Metro
+  ({ categoria, producto,  mt, setMt  }) {
+  const navigate = useNavigate()
+ 
   let [color, setColor] = useState(0)
   let [gramaje, setGramaje] = useState(0)
   const [show, setShow] = useState(false)
@@ -61,15 +61,14 @@ function Metro
   }
 
 
-
   const p = tablaProductos.find(c => c.nombre.toString() === producto.toString() &&
     c.categoria.toString() === categoria.categoria &&
     c.familia === categoria.familia)
 
-    const handleChange = (event: SelectChangeEvent) => {
-      setGramaje(event.target.value);
-    };
-  
+  const handleChange = (event: SelectChangeEvent) => {
+    setGramaje(event.target.value);
+  };
+
   return (
     <>
       <div className='bg-dark text-bg-dark pb-2 ps-5  mb-1 text-center'>
@@ -83,27 +82,28 @@ function Metro
 
           <Grid container spacing={2}>
             <Grid item xs={8}>
-
-              <img
-                className='d-block w-100 image-responsive justify-content-center ps-5'
-                alt={p.descripcion}
-                src={p.colores[color].url}
-              />
-              <h6 className='mt-1 text-center'>
-                {'Código Color: ' + p.colores[color].codigo}
-              </h6>
-              <div className='mt-1 mb-4 text-center'>
-                <Button
-                  variant='text'
-                  className='mt-1 mb-4 text-center'
-                  sx={{ mb: 3 }}
-                  color='primary'
-                  onClick={() => handleTextura()}
-                >
-                  Selecciona otro color
-                </Button>
-              </div>
-
+              <Container className='p-3 heigth=200 text-center' >
+                <img
+                  className='d-inline-block w-100 image-responsive justify-content-center ps-5'
+                  alt={p.descripcion}
+                  src={p.colores[color].url}
+                  title={'Código Color: ' + p.colores[color].codigo}
+                />
+                <h6  >
+                  {'Código Color: ' + p.colores[color].codigo}
+                </h6>
+                <div >
+                  <Button
+                    variant='text'
+                    className='mt-1 mb-4 text-center'
+                    sx={{ mb: 3 }}
+                    color='primary'
+                    onClick={() => handleTextura()}
+                  >
+                    Selecciona otro color
+                  </Button>
+                </div>
+              </Container>
             </Grid>
             <Grid item xs={4} className='mt-4'>
               <h4>
@@ -130,10 +130,10 @@ function Metro
                 }
               </h6>
               <h6  >
-                {' Precio mt2: ' +parseFloat((p.pesos[gramaje].precio).toFixed(0)).toLocaleString('es-CL', options)}
+                {' Precio mt2: ' + parseFloat((p.pesos[gramaje].precio).toFixed(0)).toLocaleString('es-CL', options)}
               </h6>
-              <h6 className='mb-4 '>        
-                { 'Precio Metro Lineal: ' + parseFloat((p.pesos[gramaje].precio*1.4).toFixed(0)).toLocaleString('es-CL', options)}
+              <h6 className='mb-4 '>
+                {'Precio Metro Lineal: ' + parseFloat((p.pesos[gramaje].precio * 1.4).toFixed(0)).toLocaleString('es-CL', options)}
               </h6>
               <Box
                 component='form'
@@ -149,23 +149,26 @@ function Metro
                       fullWidth
                       variant='standard'
                       type='number'
-                      id='cantidad'
+                      id='mt'
                       label='Cantidad de Metros Lineales'
-                      name='cantidad'
-                      autoComplete='cantidad'
-                      value={cantidad}
+                      name='mt'
+                      autoComplete='mt'
+                      value={mt}
                       onChange={(
                         event: React.ChangeEvent<HTMLInputElement>
                       ) => {
-                        setCantidad(event.target.value)
+                        setMt(event.target.value)
                       }}
                       autoFocus
                     />
                   </Item>
+                  <React.Fragment className='mt-4 mb-4'>
+                    <Calculo mt={mt} setMt={setMt}  />
+                  </React.Fragment>
                 </Stack>
               </Box>
               <h5 className='mt-4 mb-4'>
-                { 'Precio: ' + parseFloat((p.pesos[gramaje].precio*1.4 * cantidad).toFixed(0)).toLocaleString('es-CL', options)}
+                {'Precio: ' + parseFloat((p.pesos[gramaje].precio * 1.4 * mt).toFixed(0)).toLocaleString('es-CL', options)}
               </h5>
 
               <React.Fragment className='mt-4 mb-4'>
@@ -249,6 +252,7 @@ function Metro
             </Grid>
           </Grid>
         </Box>
+
       </Container>
     </>
   )
