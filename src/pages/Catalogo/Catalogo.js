@@ -1,3 +1,5 @@
+
+
 import * as React from 'react'
 
 import Box from '@mui/material/Box'
@@ -85,8 +87,8 @@ export default function Catalogo ({ familia, categoria, setCategoria }) {
 
   return (
     <div>
-      <div className='bg-dark text-bg-dark pb-2  ps-5   text-center'>
-        <h3> {categoria.familia} </h3>
+      <div className='bg-dark text-bg-dark pb-2   text-center'>
+        <h3> {familia.familia} </h3>
       </div>
       <Box
         sx={{ display: 'flex', flexWrap: 'wrap', minWidth: 400, width: '100%' }}

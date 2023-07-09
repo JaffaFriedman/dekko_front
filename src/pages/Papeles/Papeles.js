@@ -34,7 +34,6 @@ function Papeles ({ familia, categoria, producto }) {
   let [precio, setPrecio] = useState(0)
   let [papel, setPapel] = useState(0)
   let [glosa, setGlosa] = useState(0)
-  //  const [precioMural, setPrecioMural] = useState("");
   let [cantidad, setCantidad] = useState(1)
   const navigate = useNavigate()
 
@@ -91,10 +90,10 @@ function Papeles ({ familia, categoria, producto }) {
 
   return (
     <>
-      <div className='bg-dark text-bg-dark pb-2 ps-5  mb-1 text-center'>
+      <div className='bg-dark text-bg-dark pb-2 mb-1 text-center'>
         <h3>
           {' '}
-          {categoria.familia} {categoria.categoria}{' '}
+          {categoria.familia} - {categoria.categoria}{' '}
         </h3>
       </div>
       <Container>
@@ -193,7 +192,8 @@ function Papeles ({ familia, categoria, producto }) {
                     <Modal
                       show={show}
                       onHide={() => handleSalir()}
-                      size='lg'
+                      size='xl'
+                      scrollable
                       dialogClassName='modal-120w'
                       aria-labelledby='example-custom-modal-styling-title'
                     >
@@ -214,7 +214,7 @@ function Papeles ({ familia, categoria, producto }) {
                             .map((v, i) => (
                               <Item>
                                 <img
-                                  className='d-block w-40 image-responsive justify-content-center '
+                                  className='d-block w-30 image-responsive justify-content-center '
                                   style={{ maxHeight: '10rem' }}
                                   alt={v.nombre}
                                   src={v.url}

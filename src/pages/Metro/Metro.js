@@ -21,7 +21,7 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary
 }))
 
-function Bobina ({ categoria, producto }) {
+function Metro ({ categoria, producto }) {
   const navigate = useNavigate()
   let [cantidad, setCantidad] = useState(1)
   const handleSubmit = event => {
@@ -48,7 +48,7 @@ function Bobina ({ categoria, producto }) {
       <div className='bg-dark text-bg-dark pb-2 ps-5  mb-1 text-center'>
         <h3>
           {' '}
-          {categoria.familia} {categoria.categoria}{' '}
+          {categoria.familia} - {categoria.categoria}{' '}
         </h3>
       </div>
       <Container>
@@ -84,8 +84,10 @@ function Bobina ({ categoria, producto }) {
                     {' '}
                     {p.catalogo} - {p.nombre}
                   </h4>
-                  <h5> ${p.precio.toLocaleString()} por rollo </h5>
-                  <p>Las medidas son en centimetros.</p>
+                  <h5> ${p.precio.toLocaleString()} por metro cuadrado </h5>
+                  <h6 className='mt-4'>
+                    La venta es por metro lineal, el papel tiene {p.ancho} cm de ancho.
+                  </h6>
                   <Box
                     component='form'
                     onSubmit={handleSubmit}
@@ -101,7 +103,7 @@ function Bobina ({ categoria, producto }) {
                           variant='standard'
                           type='number'
                           id='cantidad'
-                          label='Cantidad'
+                          label='Cantidad Metros Lineales'
                           name='cantidad'
                           autoComplete='cantidad'
                           value={cantidad}
@@ -115,13 +117,12 @@ function Bobina ({ categoria, producto }) {
                       </Item>
                     </Stack>
                   </Box>
-
                   <h6 className='mt-4'>
-                    Ancho del rollo {p.ancho} centimetros
+                   Venta minima 10 mt lineales (14 mt cuadrados)
                   </h6>
-                  <h6 className='mt-4'>Alto del rollo {p.alto} metros</h6>
+
                   <h5 className='mt-4 mb-4'>
-                    Precio Total ${(p.precio * cantidad).toLocaleString()}
+                    Precio Total ${(p.precio * cantidad * p.ancho / 100).toLocaleString()}
                   </h5>
                   <React.Fragment className='mt-4 mb-4'>
                     <Agregarcarro />
@@ -144,4 +145,4 @@ function Bobina ({ categoria, producto }) {
   )
 }
 
-export default Bobina
+export default Metro

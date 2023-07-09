@@ -10,7 +10,8 @@ function Productos ({ familia, categoria, producto, setProducto }) {
 
   const handleProducto = p => {
     setProducto(p.nombre)
-    navigate(familia.link)
+    if (categoria.link !=='' ) navigate(categoria.link);
+    else   navigate(familia.link)
   }
 
   return (

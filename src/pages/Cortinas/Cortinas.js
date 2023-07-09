@@ -87,7 +87,7 @@ function Cortinas ({ familia, categoria, producto }) {
       <div className='bg-dark text-bg-dark pb-2 ps-5  mb-1 text-center'>
         <h3>
           {' '}
-          {categoria.familia} {categoria.categoria}{' '}
+          {categoria.familia} - {categoria.categoria}{' '}
         </h3>
       </div>
       <Container>
@@ -185,7 +185,8 @@ function Cortinas ({ familia, categoria, producto }) {
                     <Modal
                       show={show}
                       onHide={() => handleSalir()}
-                      size='lg'
+                      size='xl'
+                      scrollable
                       dialogClassName='modal-120w'
                       aria-labelledby='example-custom-modal-styling-title'
                     >

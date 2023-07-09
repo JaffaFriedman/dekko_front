@@ -64,7 +64,7 @@ const Footer = () => {
             <Typography level='h6'>
               {' '}
               <Link sx={{ color: grey[50] }} underline='none' href='/garantias'>
-                Garantias
+                Garantias y condiciones generales
               </Link>{' '}
             </Typography>
             <Typography level='h6'>
@@ -74,7 +74,7 @@ const Footer = () => {
                 underline='none'
                 href='/instructivo'
               >
-                Instructivo
+                Instalación de murales
               </Link>
             </Typography>
             <Typography level='h6'> </Typography>

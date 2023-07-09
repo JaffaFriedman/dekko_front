@@ -172,33 +172,13 @@ let tablaProductos = [
     venta: ''
   },
   {
-    sku: 11,
+    sku: 212,
     familia: 'PAPEL CONSTRUCTORA',
-    categoria: 'BOBINA',
-    catalogo: 'Texturas',
-    nombre: 'Papel Paris',
+    categoria: 'MURAVINIL',
+    catalogo: 'MURAVINIL',
+    nombre: '212',
     descripcion: '',
-    url: [
-      'https://static.wixstatic.com/media/12b4f4_1d2ee32d4dcf4dda8e74916970fc7f3e.jpg/v1/fill/w_375,h_400,al_c,q_80,enc_auto/12b4f4_1d2ee32d4dcf4dda8e74916970fc7f3e.jpg',
-      'https://static.wixstatic.com/media/12b4f4_036b0e58cfac438eb3140b605111dbd9.jpg/v1/fill/w_375,h_400,al_c,q_80,enc_auto/12b4f4_036b0e58cfac438eb3140b605111dbd9.jpg',
-      'https://static.wixstatic.com/media/12b4f4_1e6f0388b01145f1b2d91d1b51327353.jpg/v1/fill/w_375,h_400,al_c,q_80,enc_auto/12b4f4_1e6f0388b01145f1b2d91d1b51327353.jpg'
-    ],
-    ancho: 140,
-    alto: 10,
-    peso: 300,
-    precio: 4990,
-    venta: ''
-  },
-  {
-    sku: 12,
-    familia: 'PAPEL CONSTRUCTORA',
-    categoria: 'BOBINA',
-    catalogo: 'Texturas',
-    nombre: '12',
-    descripcion: '',
-    url: [
-      'https://static.wixstatic.com/media/12b4f4_410db04b5b4d4ac192f5ae04d027e717~mv2.jpg/v1/fill/w_633,h_764,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/12b4f4_410db04b5b4d4ac192f5ae04d027e717~mv2.jpg',
-      'https://static.wixstatic.com/media/12b4f4_ceb09d1dcf4c49ef9bac7438e2464cba~mv2.jpg/v1/fill/w_633,h_764,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/12b4f4_ceb09d1dcf4c49ef9bac7438e2464cba~mv2.jpg'
+    url: ["https://static.wixstatic.com/media/12b4f4_45e09180a99e4a0695aab181b1106f3c~mv2.png/v1/fill/w_906,h_764,al_c,q_90,usm_0.66_1.00_0.01,enc_auto/12b4f4_45e09180a99e4a0695aab181b1106f3c~mv2.png"
     ],
     ancho: 110,
     alto: 30,
@@ -207,9 +187,69 @@ let tablaProductos = [
     venta: ''
   },
   {
+    sku: 213,
+    familia: 'PAPEL CONSTRUCTORA',
+    categoria: 'MURAVINIL',
+    catalogo: 'MURAVINIL',
+    nombre: '213',
+    descripcion: '',
+    url: ["https://static.wixstatic.com/media/12b4f4_a17c8853d4b54885becc39b20e624c99~mv2.png/v1/fill/w_900,h_764,al_c,q_90,usm_0.66_1.00_0.01,enc_auto/12b4f4_a17c8853d4b54885becc39b20e624c99~mv2.png"
+    ],
+    ancho: 110,
+    alto: 30,
+    peso: 300,
+    precio: 80000,
+    venta: ''
+  },
+  {
+    sku: 214,
+    familia: 'PAPEL CONSTRUCTORA',
+    categoria: 'MURAVINIL',
+    catalogo: 'MURAVINIL',
+    nombre: '214',
+    descripcion: '',
+    url: ["https://static.wixstatic.com/media/12b4f4_ba7909f4a28d4d0f8cd54a34a70453e5~mv2.png/v1/fill/w_912,h_764,al_c,q_90,usm_0.66_1.00_0.01,enc_auto/12b4f4_ba7909f4a28d4d0f8cd54a34a70453e5~mv2.png"
+    ],
+    ancho: 110,
+    alto: 30,
+    peso: 300,
+    precio: 80000,
+    venta: ''
+  },
+  {
+  sku: 215,
+  familia: 'PAPEL CONSTRUCTORA',
+  categoria: 'MURAVINIL',
+  catalogo: 'MURAVINIL',
+  nombre: '215',
+  descripcion: '',
+  url: ["https://static.wixstatic.com/media/12b4f4_5c3d7cc2d8d14294a5d050e4dc714f93~mv2.png/v1/fill/w_903,h_764,al_c,q_90,usm_0.66_1.00_0.01,enc_auto/12b4f4_5c3d7cc2d8d14294a5d050e4dc714f93~mv2.png"
+  ],
+  ancho: 110,
+  alto: 30,
+  peso: 300,
+  precio: 80000,
+  venta: ''
+},
+{
+  sku: 216,
+  familia: 'PAPEL CONSTRUCTORA',
+  categoria: 'MURAVINIL',
+  catalogo: 'MURAVINIL',
+  nombre: '216',
+  descripcion: '',
+  url: ["https://static.wixstatic.com/media/12b4f4_146d4161b2004b90aa9bf2124b7f7043~mv2.png/v1/fill/w_914,h_764,al_c,q_90,usm_0.66_1.00_0.01,enc_auto/12b4f4_146d4161b2004b90aa9bf2124b7f7043~mv2.png"
+  ],
+  ancho: 110,
+  alto: 30,
+  peso: 300,
+  precio: 80000,
+  venta: ''
+},
+{
     sku: 13,
-    familia: 'CORTINAS',
-    categoria: 'ROLLER',
+    familia: 'CORTINAS Y TOLDOS',
+    categoria: 'CORTINA ROLLER',
     catalogo: 'Coleccion Primavera',
     nombre: 'Cortina Roller',
     descripcion: '',
@@ -226,7 +266,7 @@ let tablaProductos = [
   },
   {
     sku: 14,
-    familia: 'CORTINAS',
+    familia: 'CORTINAS Y TOLDOS',
     categoria: 'PERSIANA',
     catalogo: 'Coleccion Primavera',
     nombre: 'Persiana de Aluminio',
@@ -244,8 +284,8 @@ let tablaProductos = [
   },
   {
     sku: 15,
-    familia: 'CORTINAS',
-    categoria: 'ROLLER DUO',
+    familia: 'CORTINAS Y TOLDOS',
+    categoria: 'CORTINA ROLLER DUO',
     catalogo: 'Coleccion Primavera',
     nombre: '15',
     descripcion: '',
@@ -261,7 +301,7 @@ let tablaProductos = [
   },
   {
     sku: 16,
-    familia: 'CORTINAS',
+    familia: 'CORTINAS Y TOLDOS',
     categoria: 'TOLDO',
     catalogo: 'Coleccion Primavera',
     nombre: '16',
@@ -309,7 +349,213 @@ let tablaProductos = [
     peso: 280,
     precio: 49990,
     venta: ''
-  }
+  },
+
+  {
+    sku: 111,
+    familia: 'PAPEL CONSTRUCTORA',
+    categoria: 'CARPENTER',
+    catalogo: 'Carpenter',
+    nombre: 'Pin point',
+    descripcion: '',
+    url: [
+      'https://static.wixstatic.com/media/12b4f4_91714ea6a7f341ef8b5d102f33aa4dd9.jpg/v1/fill/w_375,h_400,al_c,q_80,enc_auto/12b4f4_91714ea6a7f341ef8b5d102f33aa4dd9.jpg'
+    ],
+    ancho: 140,
+    alto: 10,
+    peso: 300,
+    precio: 4990,
+    venta: ''
+  },
+  {
+    sku: 112,
+    familia: 'PAPEL CONSTRUCTORA',
+    categoria: 'CARPENTER',
+    catalogo: 'Carpenter',
+    nombre: 'Rattan',
+    descripcion: '',
+    url: [
+      'https://static.wixstatic.com/media/12b4f4_93ac3d363996493bafac8b6030488ea5.jpg/v1/fill/w_375,h_400,al_c,q_80,enc_auto/12b4f4_93ac3d363996493bafac8b6030488ea5.jpg'
+    ],
+    ancho: 140,
+    alto: 10,
+    peso: 300,
+    precio: 4990,
+    venta: ''
+  },
+  {
+    sku: 113,
+    familia: 'PAPEL CONSTRUCTORA',
+    categoria: 'CARPENTER',
+    catalogo: 'Carpenter',
+    nombre: 'Ceylan',
+    descripcion: '',
+    url: [
+      'https://static.wixstatic.com/media/12b4f4_824d9428908f41c89f6629b8851b09fe.jpg/v1/fill/w_375,h_400,al_c,q_80,enc_auto/12b4f4_824d9428908f41c89f6629b8851b09fe.jpg'
+    ],
+    ancho: 140,
+    alto: 10,
+    peso: 300,
+    precio: 4990,
+    venta: ''
+  },
+  {
+    sku: 114,
+    familia: 'PAPEL CONSTRUCTORA',
+    categoria: 'CARPENTER',
+    catalogo: 'Carpenter',
+    nombre: 'Square',
+    descripcion: '',
+    url: [
+      'https://static.wixstatic.com/media/12b4f4_251d6ca87b134e0d92a13c286eaa26a4~mv2.jpg/v1/fill/w_760,h_507,al_c,q_85,enc_auto/12b4f4_251d6ca87b134e0d92a13c286eaa26a4~mv2.jpg'
+    ],
+    ancho: 140,
+    alto: 10,
+    peso: 300,
+    precio: 4990,
+    venta: ''
+  },
+  {
+    sku: 115,
+    familia: 'PAPEL CONSTRUCTORA',
+    categoria: 'CARPENTER',
+    catalogo: 'Carpenter',
+    nombre: 'Niza',
+    descripcion: '',
+    url: [
+      'https://static.wixstatic.com/media/12b4f4_a372897eeb684c74bc7551d99afb9370~mv2.jpg/v1/fill/w_760,h_507,al_c,q_85,enc_auto/12b4f4_a372897eeb684c74bc7551d99afb9370~mv2.jpg'
+    ],
+    ancho: 140,
+    alto: 10,
+    peso: 300,
+    precio: 4990,
+    venta: ''
+  },
+  {
+    sku: 116,
+    familia: 'PAPEL CONSTRUCTORA',
+    categoria: 'CARPENTER',
+    catalogo: 'Carpenter',
+    nombre: 'Junco',
+    descripcion: '',
+    url: [
+      'https://static.wixstatic.com/media/12b4f4_5df7ca17601f4e22b1db9135dcb23dff.jpg/v1/fill/w_375,h_400,al_c,q_80,enc_auto/12b4f4_5df7ca17601f4e22b1db9135dcb23dff.jpg'
+    ],
+    ancho: 140,
+    alto: 10,
+    peso: 300,
+    precio: 4990,
+    venta: ''
+  },
+  {
+    sku: 117,
+    familia: 'PAPEL CONSTRUCTORA',
+    categoria: 'CARPENTER',
+    catalogo: 'Carpenter',
+    nombre: 'Intimate',
+    descripcion: '',
+    url: [
+      'https://static.wixstatic.com/media/12b4f4_d81299c57d804f22937aaafdcf89810e.jpg/v1/fill/w_375,h_400,al_c,q_80,enc_auto/12b4f4_d81299c57d804f22937aaafdcf89810e.jpg'
+    ],
+    ancho: 140,
+    alto: 10,
+    peso: 300,
+    precio: 4990,
+    venta: ''
+  },
+  {
+    sku: 118,
+    familia: 'PAPEL CONSTRUCTORA',
+    categoria: 'CARPENTER',
+    catalogo: 'Carpenter',
+    nombre: 'Elite',
+    descripcion: '',
+    url: [
+      'https://static.wixstatic.com/media/12b4f4_ff698f88b25345a4b8a5def923f5431c.jpg/v1/fill/w_375,h_400,al_c,q_80,enc_auto/12b4f4_ff698f88b25345a4b8a5def923f5431c.jpg'
+    ],
+    ancho: 140,
+    alto: 10,
+    peso: 300,
+    precio: 4990,
+    venta: ''
+  },
+  {
+    sku: 129,
+    familia: 'PAPEL CONSTRUCTORA',
+    categoria: 'CARPENTER',
+    catalogo: 'Carpenter',
+    nombre: 'Petate',
+    descripcion: '',
+    url: [
+      'https://static.wixstatic.com/media/12b4f4_833aeb12630a4dfbb80dd30dc5dd7208.jpg/v1/fill/w_375,h_400,al_c,q_80,enc_auto/12b4f4_833aeb12630a4dfbb80dd30dc5dd7208.jpg'
+    ],
+    ancho: 140,
+    alto: 10,
+    peso: 300,
+    precio: 4990,
+    venta: ''
+  },
+  {
+    sku: 119,
+    familia: 'PAPEL CONSTRUCTORA',
+    categoria: 'CARPENTER',
+    catalogo: 'Carpenter',
+    nombre: 'Cañamo',
+    descripcion: '',
+    url: [
+      'https://static.wixstatic.com/media/12b4f4_e26a124c49b74f1bb760827a3b59c94d.jpg/v1/fill/w_375,h_400,al_c,q_80,enc_auto/12b4f4_e26a124c49b74f1bb760827a3b59c94d.jpg'
+    ],
+    ancho: 140,
+    alto: 10,
+    peso: 300,
+    precio: 4990,
+    venta: ''
+  },
+  {
+    sku: 120,
+    familia: 'PAPEL CONSTRUCTORA',
+    categoria: 'CARPENTER',
+    catalogo: 'Carpenter',
+    nombre: 'Bermatex',
+    descripcion: '',
+    url: [
+      'https://static.wixstatic.com/media/12b4f4_42207c76b8c74696862389d607453413.jpg/v1/fill/w_375,h_400,al_c,q_80,enc_auto/12b4f4_42207c76b8c74696862389d607453413.jpg'
+    ],
+    ancho: 140,
+    alto: 10,
+    peso: 300,
+    precio: 4990,
+    venta: ''
+  },
+  {
+    sku: 110,
+    familia: 'PAPEL CONSTRUCTORA',
+    categoria: 'CARPENTER',
+    catalogo: 'Carpenter',
+    nombre: 'Oxford',
+    descripcion: '',
+    url: [
+      'https://static.wixstatic.com/media/12b4f4_1d2ee32d4dcf4dda8e74916970fc7f3e.jpg/v1/fill/w_375,h_400,al_c,q_80,enc_auto/12b4f4_1d2ee32d4dcf4dda8e74916970fc7f3e.jpg'],
+       
+    variaciones: [
+      {codigo: 1, url:'https://static.wixstatic.com/media/12b4f4_1d2ee32d4dcf4dda8e74916970fc7f3e.jpg/v1/fill/w_375,h_400,al_c,q_80,enc_auto/12b4f4_1d2ee32d4dcf4dda8e74916970fc7f3e.jpg'},
+      {codigo: 2, url:'https://static.wixstatic.com/media/12b4f4_036b0e58cfac438eb3140b605111dbd9.jpg/v1/fill/w_375,h_400,al_c,q_80,enc_auto/12b4f4_036b0e58cfac438eb3140b605111dbd9.jpg'},
+      {codigo: 3, url:'https://static.wixstatic.com/media/12b4f4_77607dd9d4c643f9874a22f4deec7d74.jpg/v1/fill/w_375,h_400,al_c,q_80,enc_auto/12b4f4_77607dd9d4c643f9874a22f4deec7d74.jpg'},
+      {codigo: 4, url:'https://static.wixstatic.com/media/12b4f4_1e722b8c510b406fa3485d30feb53930.jpg/v1/fill/w_375,h_400,al_c,q_80,enc_auto/12b4f4_1e722b8c510b406fa3485d30feb53930.jpg'},
+      {codigo: 5, url:'https://static.wixstatic.com/media/12b4f4_1e6f0388b01145f1b2d91d1b51327353.jpg/v1/fill/w_375,h_400,al_c,q_80,enc_auto/12b4f4_1e6f0388b01145f1b2d91d1b51327353.jpg'},
+      {codigo: 6, url:'https://static.wixstatic.com/media/12b4f4_0a7ac89e73fb4a418f3500957614aac6.jpg/v1/fill/w_375,h_400,al_c,q_80,enc_auto/12b4f4_0a7ac89e73fb4a418f3500957614aac6.jpg'},
+      {codigo: 7, url:'https://static.wixstatic.com/media/12b4f4_23c234868434416b8b0e1b5c7e7a92c1.jpg/v1/fill/w_375,h_400,al_c,q_80,enc_auto/12b4f4_23c234868434416b8b0e1b5c7e7a92c1.jpg'},
+      {codigo: 8, url:'https://static.wixstatic.com/media/12b4f4_8b4d9ec5bead4ec889d4d1604cb70f3d.jpg/v1/fill/w_375,h_400,al_c,q_80,enc_auto/12b4f4_8b4d9ec5bead4ec889d4d1604cb70f3d.jpg'},
+      {codigo: 9, url:'https://static.wixstatic.com/media/12b4f4_b2c961b7fcdd4109b9454102c4d7b2bf.jpg/v1/fill/w_375,h_400,al_c,q_80,enc_auto/12b4f4_b2c961b7fcdd4109b9454102c4d7b2bf.jpg'},
+      {codigo: 10, url:'https://static.wixstatic.com/media/12b4f4_a6c38a01fc3d4050ac5b15df8689d379.jpg/v1/fill/w_375,h_400,al_c,q_80,enc_auto/12b4f4_a6c38a01fc3d4050ac5b15df8689d379.jpg'},
+      {codigo: 11, url:'https://static.wixstatic.com/media/12b4f4_281d1fc3e7564346ba725a32d28c42d7.jpg/v1/fill/w_375,h_400,al_c,q_80,enc_auto/12b4f4_281d1fc3e7564346ba725a32d28c42d7.jpg'},
+    ],
+    ancho: 140,
+    alto: 10,
+    peso: 300,
+    precio: 4990,
+    venta: ''
+  },
 ]
 
 export default tablaProductos

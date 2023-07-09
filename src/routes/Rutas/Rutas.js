@@ -2,7 +2,8 @@ import { Routes, Route } from 'react-router-dom'
 import React, { useState } from 'react'
 
 import Agregarcarro from '../../pages/Agregarcarro/Agregarcarro'
-import Bobinas from '../../pages/Bobinas/Bobinas'
+import Bobina from '../../pages/Bobina/Bobina'
+import Metro from '../../pages/Metro/Metro'
 import Buscar from '../../pages/Buscar/Buscar'
 import Carrito from '../../pages/Carrito/Carrito'
 import Catalogo from '../../pages/Catalogo/Catalogo'
@@ -114,8 +115,12 @@ function Rutas() {
             element={<Rollos categoria={categoria} producto={producto} />}
           />
           <Route
-            path='/bobinas'
-            element={<Bobinas categoria={categoria} producto={producto} />}
+            path='/bobina'
+            element={<Bobina categoria={categoria} producto={producto} />}
+          />
+          <Route
+            path='/metro'
+            element={<Metro categoria={categoria} producto={producto} />}
           />
           <Route
             path='/agregarcarro'

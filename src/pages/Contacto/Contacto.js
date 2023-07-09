@@ -9,9 +9,11 @@ import CssBaseline from '@mui/material/CssBaseline'
 import { useState } from 'react'
 import Container from '@mui/material/Container'
 import { TextField, Button } from '@mui/material'
+import Avatar from '@mui/material/Avatar'
+import Typography from '@mui/material/Typography'
 //import validarContacto from "../Validar/ValidarContacto";
 
-function Contacto () {
+function Contacto() {
   const [open, setOpen] = React.useState(false)
 
   const handleClickOpen = () => {
@@ -36,12 +38,30 @@ function Contacto () {
     <div>
       <Button onClick={handleClickOpen} color='primary'>
         <EmailIcon color='primary' />
-        CONTACTANOS
+        Contáctanos
       </Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogContent>
           <Container component='main' maxWidth='xs' className='text-center'>
             <CssBaseline />
+            <Box
+              sx={{
+                marginTop: 4,
+                marginBottom: 4,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center'
+              }}
+            >
+              <Avatar sx={{ m: 1, bgcolor: 'primary.light' }}>
+                <EmailIcon />
+              </Avatar>
+              <Typography component='h1' variant='h5'>
+              Contáctanos
+              </Typography>
+            </Box>
+
+
             <Box
               component='form'
               sx={{ '& > :not(style)': { m: 1, width: '40ch' } }}
@@ -58,13 +78,6 @@ function Contacto () {
                 value={contacto.nombre}
                 variant='outlined'
               />
-            </Box>
-            <Box
-              component='form'
-              sx={{ '& > :not(style)': { m: 1, width: '40ch' } }}
-              Validate
-              autoComplete='off'
-            >
               <TextField
                 name='correo'
                 required
@@ -139,7 +152,7 @@ function Contacto () {
                 className='mt-3'
                 color='primary'
                 startIcon={<SendIcon />}
-                // onClick={registrarContacto}
+              // onClick={registrarContacto}
               >
                 {' '}
                 Enviar

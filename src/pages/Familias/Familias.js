@@ -84,7 +84,7 @@ export default function Familias ({ familia, setFamilia }) {
 
   return (
     <div>
-      <div className='bg-dark text-bg-dark pb-2  ps-5   text-center'>
+      <div className='bg-dark text-bg-dark pb-2   text-center'>
         <h3> CATEGORIAS </h3>
       </div>
       <Box

@@ -18,11 +18,11 @@ let tablaFamilias = [
     familia: 'PAPEL CONSTRUCTORA',
     width: '25%',
     url: 'https://static.wixstatic.com/media/12b4f4_1e722b8c510b406fa3485d30feb53930.jpg/v1/fill/w_375,h_400,al_c,q_80,enc_auto/12b4f4_1e722b8c510b406fa3485d30feb53930.jpg',
-    link: '/Bobinas',
+    link: '/Bobina',
     mensaje: ''
   },
   {
-    familia: 'CORTINAS',
+    familia: 'CORTINAS Y TOLDOS',
     width: '25%',
     url: 'https://static.wixstatic.com/media/12b4f4_ad9eda652db04dfeb94ed44874872a3a~mv2.jpg/v1/fill/w_1395,h_925,al_c,q_85,enc_auto/12b4f4_ad9eda652db04dfeb94ed44874872a3a~mv2.jpg',
     link: '/Cortinas',

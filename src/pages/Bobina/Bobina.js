@@ -21,7 +21,7 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary
 }))
 
-function Rollo ({ categoria, producto }) {
+function Bobina ({ categoria, producto }) {
   const navigate = useNavigate()
   let [cantidad, setCantidad] = useState(1)
   const handleSubmit = event => {
@@ -84,8 +84,7 @@ function Rollo ({ categoria, producto }) {
                     {' '}
                     {p.catalogo} - {p.nombre}
                   </h4>
-                  <h5> ${p.precio.toLocaleString()} por rollo </h5>
-                  <p>Las medidas son en centimetros.</p>
+                  <h5> ${p.precio.toLocaleString()} por bobina de {p.alto*p.ancho/100} mt2 </h5>
                   <Box
                     component='form'
                     onSubmit={handleSubmit}
@@ -117,9 +116,10 @@ function Rollo ({ categoria, producto }) {
                   </Box>
 
                   <h6 className='mt-4'>
-                    Ancho del rollo {p.ancho} centimetros
+                    Tamaño de la bobina:
                   </h6>
-                  <h6 className='mt-4'>Alto del rollo {p.alto} metros</h6>
+                  <p className='mt-4'>Ancho {p.ancho} cm </p>
+                  <p className='mt-4'>Alto {p.alto} mt </p>
                   <h5 className='mt-4 mb-4'>
                     Precio Total ${(p.precio * cantidad).toLocaleString()}
                   </h5>
@@ -144,4 +144,4 @@ function Rollo ({ categoria, producto }) {
   )
 }
 
-export default Rollo
+export default Bobina
