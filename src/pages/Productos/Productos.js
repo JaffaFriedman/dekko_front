@@ -48,7 +48,7 @@ function Productos ({ familia, categoria, producto, setProducto }) {
                     />
                   </Card.Body>
                   <Card.Footer>
-                    <Card.Text>Precio ${p.precio.toLocaleString()} </Card.Text>
+                    <Card.Text>Precio desde ${p.precio.toLocaleString()} {p.venta}</Card.Text>
                   </Card.Footer>
                 </Card>
               </Col>
