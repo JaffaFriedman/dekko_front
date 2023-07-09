@@ -217,36 +217,36 @@ let tablaProductos = [
     venta: ''
   },
   {
-  sku: 215,
-  familia: 'PAPEL CONSTRUCTORA',
-  categoria: 'MURAVINIL',
-  catalogo: 'MURAVINIL',
-  nombre: '215',
-  descripcion: '',
-  url: ["https://static.wixstatic.com/media/12b4f4_5c3d7cc2d8d14294a5d050e4dc714f93~mv2.png/v1/fill/w_903,h_764,al_c,q_90,usm_0.66_1.00_0.01,enc_auto/12b4f4_5c3d7cc2d8d14294a5d050e4dc714f93~mv2.png"
-  ],
-  ancho: 110,
-  alto: 30,
-  peso: 300,
-  precio: 80000,
-  venta: ''
-},
-{
-  sku: 216,
-  familia: 'PAPEL CONSTRUCTORA',
-  categoria: 'MURAVINIL',
-  catalogo: 'MURAVINIL',
-  nombre: '216',
-  descripcion: '',
-  url: ["https://static.wixstatic.com/media/12b4f4_146d4161b2004b90aa9bf2124b7f7043~mv2.png/v1/fill/w_914,h_764,al_c,q_90,usm_0.66_1.00_0.01,enc_auto/12b4f4_146d4161b2004b90aa9bf2124b7f7043~mv2.png"
-  ],
-  ancho: 110,
-  alto: 30,
-  peso: 300,
-  precio: 80000,
-  venta: ''
-},
-{
+    sku: 215,
+    familia: 'PAPEL CONSTRUCTORA',
+    categoria: 'MURAVINIL',
+    catalogo: 'MURAVINIL',
+    nombre: '215',
+    descripcion: '',
+    url: ["https://static.wixstatic.com/media/12b4f4_5c3d7cc2d8d14294a5d050e4dc714f93~mv2.png/v1/fill/w_903,h_764,al_c,q_90,usm_0.66_1.00_0.01,enc_auto/12b4f4_5c3d7cc2d8d14294a5d050e4dc714f93~mv2.png"
+    ],
+    ancho: 110,
+    alto: 30,
+    peso: 300,
+    precio: 80000,
+    venta: ''
+  },
+  {
+    sku: 216,
+    familia: 'PAPEL CONSTRUCTORA',
+    categoria: 'MURAVINIL',
+    catalogo: 'MURAVINIL',
+    nombre: '216',
+    descripcion: '',
+    url: ["https://static.wixstatic.com/media/12b4f4_146d4161b2004b90aa9bf2124b7f7043~mv2.png/v1/fill/w_914,h_764,al_c,q_90,usm_0.66_1.00_0.01,enc_auto/12b4f4_146d4161b2004b90aa9bf2124b7f7043~mv2.png"
+    ],
+    ancho: 110,
+    alto: 30,
+    peso: 300,
+    precio: 80000,
+    venta: ''
+  },
+  {
     sku: 13,
     familia: 'CORTINAS Y TOLDOS',
     categoria: 'CORTINA ROLLER',
@@ -536,20 +536,26 @@ let tablaProductos = [
     descripcion: '',
     url: [
       'https://static.wixstatic.com/media/12b4f4_1d2ee32d4dcf4dda8e74916970fc7f3e.jpg/v1/fill/w_375,h_400,al_c,q_80,enc_auto/12b4f4_1d2ee32d4dcf4dda8e74916970fc7f3e.jpg'],
-       
-    variaciones: [
-      {codigo: 1, url:'https://static.wixstatic.com/media/12b4f4_1d2ee32d4dcf4dda8e74916970fc7f3e.jpg/v1/fill/w_375,h_400,al_c,q_80,enc_auto/12b4f4_1d2ee32d4dcf4dda8e74916970fc7f3e.jpg'},
-      {codigo: 2, url:'https://static.wixstatic.com/media/12b4f4_036b0e58cfac438eb3140b605111dbd9.jpg/v1/fill/w_375,h_400,al_c,q_80,enc_auto/12b4f4_036b0e58cfac438eb3140b605111dbd9.jpg'},
-      {codigo: 3, url:'https://static.wixstatic.com/media/12b4f4_77607dd9d4c643f9874a22f4deec7d74.jpg/v1/fill/w_375,h_400,al_c,q_80,enc_auto/12b4f4_77607dd9d4c643f9874a22f4deec7d74.jpg'},
-      {codigo: 4, url:'https://static.wixstatic.com/media/12b4f4_1e722b8c510b406fa3485d30feb53930.jpg/v1/fill/w_375,h_400,al_c,q_80,enc_auto/12b4f4_1e722b8c510b406fa3485d30feb53930.jpg'},
-      {codigo: 5, url:'https://static.wixstatic.com/media/12b4f4_1e6f0388b01145f1b2d91d1b51327353.jpg/v1/fill/w_375,h_400,al_c,q_80,enc_auto/12b4f4_1e6f0388b01145f1b2d91d1b51327353.jpg'},
-      {codigo: 6, url:'https://static.wixstatic.com/media/12b4f4_0a7ac89e73fb4a418f3500957614aac6.jpg/v1/fill/w_375,h_400,al_c,q_80,enc_auto/12b4f4_0a7ac89e73fb4a418f3500957614aac6.jpg'},
-      {codigo: 7, url:'https://static.wixstatic.com/media/12b4f4_23c234868434416b8b0e1b5c7e7a92c1.jpg/v1/fill/w_375,h_400,al_c,q_80,enc_auto/12b4f4_23c234868434416b8b0e1b5c7e7a92c1.jpg'},
-      {codigo: 8, url:'https://static.wixstatic.com/media/12b4f4_8b4d9ec5bead4ec889d4d1604cb70f3d.jpg/v1/fill/w_375,h_400,al_c,q_80,enc_auto/12b4f4_8b4d9ec5bead4ec889d4d1604cb70f3d.jpg'},
-      {codigo: 9, url:'https://static.wixstatic.com/media/12b4f4_b2c961b7fcdd4109b9454102c4d7b2bf.jpg/v1/fill/w_375,h_400,al_c,q_80,enc_auto/12b4f4_b2c961b7fcdd4109b9454102c4d7b2bf.jpg'},
-      {codigo: 10, url:'https://static.wixstatic.com/media/12b4f4_a6c38a01fc3d4050ac5b15df8689d379.jpg/v1/fill/w_375,h_400,al_c,q_80,enc_auto/12b4f4_a6c38a01fc3d4050ac5b15df8689d379.jpg'},
-      {codigo: 11, url:'https://static.wixstatic.com/media/12b4f4_281d1fc3e7564346ba725a32d28c42d7.jpg/v1/fill/w_375,h_400,al_c,q_80,enc_auto/12b4f4_281d1fc3e7564346ba725a32d28c42d7.jpg'},
+
+    colores: [
+      { codigo: 1, url: 'https://static.wixstatic.com/media/12b4f4_1d2ee32d4dcf4dda8e74916970fc7f3e.jpg/v1/fill/w_375,h_400,al_c,q_80,enc_auto/12b4f4_1d2ee32d4dcf4dda8e74916970fc7f3e.jpg' },
+      { codigo: 2, url: 'https://static.wixstatic.com/media/12b4f4_036b0e58cfac438eb3140b605111dbd9.jpg/v1/fill/w_375,h_400,al_c,q_80,enc_auto/12b4f4_036b0e58cfac438eb3140b605111dbd9.jpg' },
+      { codigo: 3, url: 'https://static.wixstatic.com/media/12b4f4_77607dd9d4c643f9874a22f4deec7d74.jpg/v1/fill/w_375,h_400,al_c,q_80,enc_auto/12b4f4_77607dd9d4c643f9874a22f4deec7d74.jpg' },
+      { codigo: 4, url: 'https://static.wixstatic.com/media/12b4f4_1e722b8c510b406fa3485d30feb53930.jpg/v1/fill/w_375,h_400,al_c,q_80,enc_auto/12b4f4_1e722b8c510b406fa3485d30feb53930.jpg' },
+      { codigo: 5, url: 'https://static.wixstatic.com/media/12b4f4_1e6f0388b01145f1b2d91d1b51327353.jpg/v1/fill/w_375,h_400,al_c,q_80,enc_auto/12b4f4_1e6f0388b01145f1b2d91d1b51327353.jpg' },
+      { codigo: 6, url: 'https://static.wixstatic.com/media/12b4f4_0a7ac89e73fb4a418f3500957614aac6.jpg/v1/fill/w_375,h_400,al_c,q_80,enc_auto/12b4f4_0a7ac89e73fb4a418f3500957614aac6.jpg' },
+      { codigo: 7, url: 'https://static.wixstatic.com/media/12b4f4_23c234868434416b8b0e1b5c7e7a92c1.jpg/v1/fill/w_375,h_400,al_c,q_80,enc_auto/12b4f4_23c234868434416b8b0e1b5c7e7a92c1.jpg' },
+      { codigo: 8, url: 'https://static.wixstatic.com/media/12b4f4_8b4d9ec5bead4ec889d4d1604cb70f3d.jpg/v1/fill/w_375,h_400,al_c,q_80,enc_auto/12b4f4_8b4d9ec5bead4ec889d4d1604cb70f3d.jpg' },
+      { codigo: 9, url: 'https://static.wixstatic.com/media/12b4f4_b2c961b7fcdd4109b9454102c4d7b2bf.jpg/v1/fill/w_375,h_400,al_c,q_80,enc_auto/12b4f4_b2c961b7fcdd4109b9454102c4d7b2bf.jpg' },
+      { codigo: 10, url: 'https://static.wixstatic.com/media/12b4f4_a6c38a01fc3d4050ac5b15df8689d379.jpg/v1/fill/w_375,h_400,al_c,q_80,enc_auto/12b4f4_a6c38a01fc3d4050ac5b15df8689d379.jpg' },
+      { codigo: 11, url: 'https://static.wixstatic.com/media/12b4f4_281d1fc3e7564346ba725a32d28c42d7.jpg/v1/fill/w_375,h_400,al_c,q_80,enc_auto/12b4f4_281d1fc3e7564346ba725a32d28c42d7.jpg' },
     ],
+    pesos: [
+      { peso: 220, precio: 4990 },
+      { peso: 240, precio: 5990 },
+      { peso: 280, precio: 6990 },
+      { peso: 320, precio: 7990 },
+      { peso: 380, precio: 8990 }],
     ancho: 140,
     alto: 10,
     peso: 300,
