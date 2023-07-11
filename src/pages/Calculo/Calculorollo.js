@@ -24,45 +24,55 @@ const Item = styled(Paper)(({ theme }) => ({
     color: theme.palette.text.secondary
 }))
 
-
-export default function Calculo({ categoria, producto, mt, setMt }) {
+export default function Calculorollo({ categoria, producto, rollo, setRollo }) {
     let [open, setOpen] = useState(false)
     let [ancho, setAncho] = useState(100)
     let [alto, setAlto] = useState(100)
     let [pano, setPano] = useState('')
-    let [resto, setResto] = useState('')
+    let [panoRollo, setPanoRollo] = useState('')
+    let [altoPano, setAltoPano] = useState('')
+    let [texto, setTexto] = useState('')
     const p = tablaProductos.find(c => c.nombre.toString() === producto.toString() &&
         c.categoria.toString() === categoria.categoria &&
         c.familia === categoria.familia)
 
     const handleClickOpen = () => {
+        Calcular();
         setOpen(true)
     }
+
     const handleSubmit = event => {
-        Calcular();
         event.preventDefault()
     }
     const Calcular = () => {
-        const auxPano = Math.ceil(ancho / (p.ancho - 10))
+        const auxAltoPano = parseInt(alto) + 5 + parseInt(p.calce);
+        setAltoPano(auxAltoPano);
+        const auxPano = Math.ceil(ancho / p.ancho)
         setPano(auxPano);
-        let mtl = Math.ceil((alto * auxPano + 5 * auxPano) / 100);
+        const auxPanoRollo = Math.floor(p.alto * 100 / auxAltoPano)
+        setPanoRollo(auxPanoRollo);
+        const auxRollo = Math.ceil(auxPano / auxPanoRollo);
+        setRollo(auxRollo);
+        const auxSobra = auxPanoRollo   - auxPano
+        const auxTexto = "Para el ancho de tu muro, necesitas "+ pano+" paño(s) de " +altoPano+
+        " cm de altura. Debes comprar "+rollo+" rollos(s). El rollo rinde "+panoRollo+ " paños. "
+         if (auxSobra>0)
+        {    let auxResto = Math.floor( auxAltoPano*auxSobra/100 );
   
-        if (mtl < 10) {
-            let auxResto =  10 - mtl;
-            mtl = 10;
-            setResto("Te sobran " + auxResto + " mtl")
-        }
-        else setResto("")
-        setMt(Math.ceil(mtl));
+            setTexto(auxTexto +"Te sobra(n) " + auxSobra+ " paños que equivalen a "+ auxResto + " mt de largo por " + p.ancho+ " cm de ancho.")
+ 
+        } else  setTexto(auxTexto);
+
     }
 
     const handleClose = () => {
         setOpen(false)
     }
 
+
     return (
         <div>
-            <Button onClick={handleClickOpen} color="primary"><HelpCenterIcon color="primary" />Ayuda para calcular Metros Lineales</Button>
+            <Button onClick={handleClickOpen} color="primary"><HelpCenterIcon color="primary" />Ayuda para calcular Rollos</Button>
 
             <Dialog open={open} onClose={handleClose}>
                 <DialogContent>
@@ -80,15 +90,14 @@ export default function Calculo({ categoria, producto, mt, setMt }) {
                             <Avatar sx={{ m: 1, bgcolor: 'primary.light' }}>
                                 <HelpCenterIcon />
                             </Avatar>
-                            <h5>¿Cuántos metros lineales necesito?</h5>
+                            <h5>¿Cuántas rollos necesito?</h5>
                             <p>Debes medir la altura del muro de piso a techo (sin incluir guardapolvos
                                 y cornisas) y el ancho completo del muro
                                 no importando si existen puertas o ventanas. </p>
                             <p>El objetivo es saber el
-                                número de paños que requerimos para cubrir el muro y con eso calcular los metros lineales de papel</p>
-                            <p>Nosotros consideraremos un excedente de 5cm en el alto para diferencias en el muro y errores en la medida y los excedentes para el traslape de los paños en el ancho</p>
-                            <p>Si hay varios muros suma todos los anchos y usa la altura mayor. Si hay mucha diferencia de altura calcula los paños por separado. </p>
-                            <p>La compra minima es de 10 metros lineales, calcularemos cuando sobra por si tienes mas de un muro</p>
+                                número de paños que requerimos para cubrir el muro y el rendimiento de cada rollo.</p>
+                            <p>Nosotros consideraremos un excedente de 5cm en el ancho y alto para diferencias en el muro y errores en la medida</p>
+                            <p>Si hay varios muros suma todos los anchos y usa la altura mayor. Si hay mucha diferencia de altura calcula los paños por separado. {texto}</p>
                             <Stack
                                 spacing={4}
                                 direction='row'
@@ -102,8 +111,8 @@ export default function Calculo({ categoria, producto, mt, setMt }) {
                                     Validate
                                     sx={{ mt: 1 }}
                                 >
-                                    <Stack direction='row' spacing={2}>
-                                        <Item>
+                                    <Stack direction='row' spacing={2}>  
+                                          <Item>
                                             <TextField
                                                 margin='normal'
                                                 required
@@ -146,15 +155,15 @@ export default function Calculo({ categoria, producto, mt, setMt }) {
                                         </Item>
                                     </Stack>
                                 </Box>
-
-                                <h6 className="mt-5">Para tu muro, necesitas {pano} paño(s), debes comprar {mt} metros lineales. {resto} </h6>
+                                <p className="mt-5">Alto del rollo {p.alto} metros. Ancho del rollo {p.ancho} cm. Calce del papel entre bajadas {p.calce} cm.</p>
+                                <h6 className="mt-5" >{texto} </h6>
                             </Container>
                         </Box>
                     </Container>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={Calcular}><CalculateIcon color="primary" />Calcular</Button>
-                    <Button onClick={handleClose}><CancelIcon color="primary" />Salir</Button>
+                    <Button onClick={handleClose}><CancelIcon color="primary" />Cancelar</Button>
                 </DialogActions>
             </Dialog>
         </div >

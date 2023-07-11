@@ -6,6 +6,8 @@ import Bobina from '../../pages/Bobina/Bobina'
 import Metro from '../../pages/Metro/Metro'
 import Buscar from '../../pages/Buscar/Buscar'
 import Calculo from '../../pages/Calculo/Calculo'
+import Calculobobina from '../../pages/Calculo/Calculobobina'
+import Calculorollo from '../../pages/Calculo/Calculorollo'
 import Carrito from '../../pages/Carrito/Carrito'
 import Catalogo from '../../pages/Catalogo/Catalogo'
 import Checkout from '../../pages/Checkout/Checkout'
@@ -39,7 +41,9 @@ function Rutas() {
   let [familia, setFamilia] = useState({})
   let [categoria, setCategoria] = useState({})
   let [producto, setProducto] = useState('')
-  let [mt, setMt] = useState('')
+  let [mt, setMt] = useState(1)
+  let [bobina, setBobina] = useState(1)
+  let [rollo, setRollo] = useState(1)
   return (
     <div>
       <Routes>
@@ -113,15 +117,15 @@ function Rutas() {
           />
           <Route
             path='/rollos'
-            element={<Rollos categoria={categoria} producto={producto} />}
+            element={<Rollos categoria={categoria} producto={producto} rollo={rollo} setRollo={setRollo}  />}
           />
           <Route
             path='/bobina'
-            element={<Bobina categoria={categoria} producto={producto} />}
+            element={<Bobina categoria={categoria} producto={producto} bobina={bobina} setBobina={setBobina} />}
           />
           <Route
             path='/metro'
-            element={<Metro categoria={categoria} producto={producto} mt={mt} setMt={setMt}   />}
+            element={<Metro categoria={categoria} producto={producto} mt={mt} setMt={setMt} />}
           />
           <Route
             path='/agregarcarro'
@@ -129,7 +133,15 @@ function Rutas() {
           />
           <Route
             path='/calculo'
-            element={<Calculo mt={mt} setMt={setMt} />}
+            element={<Calculo categoria={categoria}  producto={producto}  mt={mt} setMt={setMt} />}
+          />
+          <Route
+            path='/calculobobina'
+            element={<Calculobobina categoria={categoria}  producto={producto}  bobina={bobina} setBobina={setBobina} />}
+          />
+          <Route
+            path='/calculorollo'
+            element={<Calculorollo  categoria={categoria}  producto={producto} rollo={rollo} setRollo={setRollo}/>}
           />
         </Route>
       </Routes>

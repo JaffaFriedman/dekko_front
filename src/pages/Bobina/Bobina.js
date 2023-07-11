@@ -19,7 +19,7 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
-
+import Calculobobina from '../../pages/Calculo/Calculobobina'
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
   ...theme.typography.body2,
@@ -28,14 +28,14 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary
 }))
 
-function Bobina({ categoria, producto }) {
+function Bobina({ categoria, producto, bobina, setBobina  }) {
   const navigate = useNavigate()
-  let [cantidad, setCantidad] = useState(1)
+
 
   const options = { style: 'currency', currency: 'CLP' };
 
 
- 
+
 
   let [color, setColor] = useState(0)
   let [gramaje, setGramaje] = useState(0)
@@ -68,10 +68,10 @@ function Bobina({ categoria, producto }) {
     c.categoria.toString() === categoria.categoria &&
     c.familia === categoria.familia)
 
-    const handleChange = (event: SelectChangeEvent) => {
-      setGramaje(event.target.value);
-    };
-  
+  const handleChange = (event: SelectChangeEvent) => {
+    setGramaje(event.target.value);
+  };
+
   return (
     <>
       <div className='bg-dark text-bg-dark pb-2 ps-5  mb-1 text-center'>
@@ -132,10 +132,10 @@ function Bobina({ categoria, producto }) {
                 }
               </h6>
               <h6  >
-                {' Precio mt2: ' +parseFloat((p.pesos[gramaje].precio).toFixed(0)).toLocaleString('es-CL', options)}
+                {' Precio mt2: ' + parseFloat((p.pesos[gramaje].precio).toFixed(0)).toLocaleString('es-CL', options)}
               </h6>
-              <h6 className='mb-4 '>        
-                { 'Precio Bobina: ' + parseFloat((p.pesos[gramaje].precio*33).toFixed(0)).toLocaleString('es-CL', options)  }
+              <h6 className='mb-4 '>
+                {'Precio Bobina: ' + parseFloat((p.pesos[gramaje].precio * 33).toFixed(0)).toLocaleString('es-CL', options)}
               </h6>
               <Box
                 component='form'
@@ -151,24 +151,27 @@ function Bobina({ categoria, producto }) {
                       fullWidth
                       variant='standard'
                       type='number'
-                      id='cantidad'
+                      id='bobina'
                       label='Cantidad de Bobinas'
-                      name='cantidad'
-                      autoComplete='cantidad'
-                      value={cantidad}
+                      name='bobina'
+                      autoComplete='bobina'
+                      value={bobina}
                       onChange={(
                         event: React.ChangeEvent<HTMLInputElement>
                       ) => {
-                        setCantidad(event.target.value)
+                        setBobina(event.target.value)
                       }}
                       autoFocus
                     />
                   </Item>
+                  <React.Fragment className='mt-4 mb-4'>
+                    <Calculobobina categoria={categoria} producto={producto} bobina={bobina} setBobina={setBobina} />
+                  </React.Fragment>
                 </Stack>
               </Box>
               <h5 className='mt-4 mb-4'>
-                { 'Precio: ' + parseFloat((p.pesos[gramaje].precio*33 * cantidad).toFixed(0)).toLocaleString('es-CL', options)
-              }
+                {'Precio: ' + parseFloat((p.pesos[gramaje].precio * 33 * bobina).toFixed(0)).toLocaleString('es-CL', options)
+                }
               </h5>
 
               <React.Fragment className='mt-4 mb-4'>

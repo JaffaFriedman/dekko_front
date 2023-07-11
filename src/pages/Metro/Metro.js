@@ -163,7 +163,7 @@ function Metro
                     />
                   </Item>
                   <React.Fragment className='mt-4 mb-4'>
-                    <Calculo mt={mt} setMt={setMt}  />
+                    <Calculo categoria={categoria} producto={producto} mt={mt} setMt={setMt}  />
                   </React.Fragment>
                 </Stack>
               </Box>

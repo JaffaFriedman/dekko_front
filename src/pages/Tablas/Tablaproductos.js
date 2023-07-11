@@ -415,7 +415,8 @@ let tablaProductos = [
     alto: 10,
     peso: 280,
     precio: 49990,
-    venta: 'rollo de 5mt2'
+    venta: 'rollo de 5mt2',
+    calce: 0,
   },
   {
     sku: 18,
@@ -432,7 +433,8 @@ let tablaProductos = [
     alto: 10,
     peso: 280,
     precio: 49990,
-    venta: 'rollo de 5mt2'
+    venta: 'rollo de 5mt2',
+    calce: 64,
   },
 
   {

@@ -11,8 +11,8 @@ import Stack from '@mui/material/Stack'
 import Paper from '@mui/material/Paper'
 import { styled } from '@mui/material/styles'
 import tablaProductos from '../../pages/Tablas/Tablaproductos'
-import { useState } from 'react'
 import Agregarcarro from '../../pages/Agregarcarro/Agregarcarro'
+import Calculorollo from '../../pages/Calculo/Calculorollo'
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
   ...theme.typography.body2,
@@ -21,9 +21,8 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary
 }))
 
-function Rollo ({ categoria, producto }) {
+function Rollos({ categoria, producto, rollo, setRollo }) {
   const navigate = useNavigate()
-  let [cantidad, setCantidad] = useState(1)
   const handleSubmit = event => {
     event.preventDefault()
     //const data = new FormData(event.currentTarget);
@@ -34,16 +33,11 @@ function Rollo ({ categoria, producto }) {
     navigate('/Productos')
   }
 
-  /*
-  const handleCarrito = (precioUnitario) => {
-    setMt2((alto * ancho)/ (100 * 100));
-    setPrecio(mt2*precioUnitario);
-     navigate("/Agregarcarro");
-   // setShow(true)
-  };
-  */
-  const options = { style: 'currency', currency: 'CLP' };
 
+  const options = { style: 'currency', currency: 'CLP' };
+  const p = tablaProductos.find(c => c.nombre.toString() === producto.toString() &&
+    c.categoria.toString() === categoria.categoria &&
+    c.familia === categoria.familia)
   return (
     <>
       <div className='bg-dark text-bg-dark pb-2 ps-5  mb-1 text-center'>
@@ -54,14 +48,7 @@ function Rollo ({ categoria, producto }) {
       </div>
       <Container>
         <Box sx={{ flexGrow: 1 }}>
-          {tablaProductos
-            .filter(
-              c =>
-                c.nombre.toString() === producto.toString() &&
-                c.categoria.toString() === categoria.categoria &&
-                c.familia === categoria.familia
-            )
-            .map((p, idx) => (
+ 
               <Grid container spacing={2}>
                 <Grid item xs={8}>
                   <Carousel className='pt-4 pb-4 ps-2 centered '>
@@ -101,19 +88,21 @@ function Rollo ({ categoria, producto }) {
                           fullWidth
                           variant='standard'
                           type='number'
-                          id='cantidad'
-                          label='Cantidad'
-                          name='cantidad'
-                          autoComplete='cantidad'
-                          value={cantidad}
+                          id='rollo'
+                          label='rollo'
+                          name='Cantidad de Rollos'
+                          value={rollo}
                           onChange={(
                             event: React.ChangeEvent<HTMLInputElement>
                           ) => {
-                            setCantidad(event.target.value)
+                            setRollo(event.target.value)
                           }}
                           autoFocus
                         />
                       </Item>
+                      <React.Fragment className='mt-4 mb-4'>
+                        <Calculorollo categoria={categoria} producto={producto} rollo={rollo} setRollo={setRollo} />
+                      </React.Fragment>
                     </Stack>
                   </Box>
 
@@ -122,7 +111,7 @@ function Rollo ({ categoria, producto }) {
                   </h6>
                   <h6 className='mt-4'>Alto del rollo {p.alto} metros</h6>
                   <h5 className='mt-4 mb-4'>
-                    Precio Total {(p.precio * cantidad).toLocaleString('es-CL', options)}
+                    Precio Total {(p.precio * rollo).toLocaleString('es-CL', options)}
                   </h5>
                   <React.Fragment className='mt-4 mb-4'>
                     <Agregarcarro />
@@ -138,11 +127,11 @@ function Rollo ({ categoria, producto }) {
                   </Button>
                 </Grid>
               </Grid>
-            ))}
+        
         </Box>
       </Container>
     </>
   )
 }
 
-export default Rollo
+export default Rollos
