@@ -24,55 +24,62 @@ const Item = styled(Paper)(({ theme }) => ({
     color: theme.palette.text.secondary
 }))
 
-export default function Calculobobina({ categoria, producto, bobina, setBobina }) {
+export default function Calculobobina({ categoria, producto, cantidad, setCantidad }) {
     let [open, setOpen] = useState(false)
     let [ancho, setAncho] = useState(100)
     let [alto, setAlto] = useState(100)
-    let [pano, setPano] = useState('')
-    let [altoPano, setAltoPano] = useState('')
     let [texto, setTexto] = useState('')
+    let [texto1, setTexto1] = useState('')
+    let [texto2, setTexto2] = useState('')
+
     const p = tablaProductos.find(c => c.nombre.toString() === producto.toString() &&
         c.categoria.toString() === categoria.categoria &&
         c.familia === categoria.familia)
+
     const handleClickOpen = () => {
         Calcular();
         setOpen(true)
-
     }
+
     const handleSubmit = event => {
         event.preventDefault()
     }
     const Calcular = () => {
         const auxAltoPano = parseInt(alto) + 5;
-        setAltoPano(auxAltoPano);
-        const auxPano = Math.ceil(ancho / (p.ancho - 10))
-        setPano(auxPano);
-        const auxPanoBobina = Math.floor(p.alto * 100 / auxAltoPano)
+        const auxPano = Math.ceil(parseInt(ancho) / (parseInt(p.ancho) - 10))
+        const auxPanoBobina = Math.floor(parseInt(p.alto) * 100 / auxAltoPano)
         const auxBobina = Math.ceil(auxPano / auxPanoBobina);
-        setBobina(auxBobina);
-        const auxSobra = auxPanoBobina   - auxPano
-        const auxTexto = "Para el ancho de tu muro, necesitas "+ pano+" paño(s) de " +altoPano+
-        " cm de altura. Debes comprar "+bobina+" bobinas(s). "
-         if (auxSobra>0)
-        {    let auxResto = Math.floor( auxAltoPano*auxSobra/100 );
-        setTexto(auxTexto +"Te sobra(n) "+ auxResto + " mt de largo por " + p.ancho+ " cm de ancho.")  
-         } else  setTexto(auxTexto);
+        setCantidad(auxBobina);
+        let textoBobinas = " bobinas "
+        if (auxBobina === 1) textoBobinas = " bobina "
+        setTexto("Debes comprar " + auxBobina + textoBobinas);
+        let textoPano = " paños";
+        if (auxPano === 1) { textoPano = " paño"; }
+        const auxTexto1 = "Para el ancho de tu muro, necesitas " + auxPano + textoPano + " de " + auxAltoPano +
+            " cm de altura. "
+        setTexto1(auxTexto1);
 
+        const auxSobra = auxPanoBobina * auxBobina - auxPano
+        if (auxSobra > 0) {
+            let textoSobra = "Te sobra ";
+            if (auxSobra > 1) { textoSobra = "Te sobran "; }
+            let auxResto = Math.floor(auxAltoPano * auxSobra / 100);
+            setTexto2(textoSobra + auxResto + " mt de largo por " + p.ancho + " cm de ancho.")
+        } else setTexto2("");
     }
-
-
 
     const handleClose = () => {
         setOpen(false)
     }
 
+
     return (
         <div>
-            <Button onClick={handleClickOpen} color="primary"><HelpCenterIcon color="primary" />Ayuda para calcular bobinas</Button>
+            <Button onClick={handleClickOpen} color="primary"><HelpCenterIcon color="primary" />Calculadora de bobinas</Button>
 
             <Dialog open={open} onClose={handleClose}>
                 <DialogContent>
-                    <Container component='main' maxWidth='xs' className='text-center'>
+                    <Container component='main' className='text-center'>
                         <CssBaseline />
                         <Box
                             sx={{
@@ -90,10 +97,7 @@ export default function Calculobobina({ categoria, producto, bobina, setBobina }
                             <p>Debes medir la altura del muro de piso a techo (sin incluir guardapolvos
                                 y cornisas) y el ancho completo del muro
                                 no importando si existen puertas o ventanas. </p>
-                            <p>El objetivo es saber el
-                                número de paños que requerimos para cubrir el muro y el rendimiento de cada bobina.</p>
-                            <p>Nosotros consideraremos un excedente de 5cm en el alto para diferencias en el muro y errores en la medida y los excedentes para el traslape de los paños en el ancho</p>
-                            <p>Si hay varios muros suma todos los anchos y usa la altura mayor. Si hay mucha diferencia de altura calcula los paños por separado.</p>
+                            <p>Si hay varios muros suma todos los anchos y usa la altura mayor. Si hay mucha diferencia de altura calcula los muros con diferencia por separado. </p>
                             <Stack
                                 spacing={4}
                                 direction='row'
@@ -151,10 +155,11 @@ export default function Calculobobina({ categoria, producto, bobina, setBobina }
                                         </Item>
                                     </Stack>
                                 </Box>
-                                <p className="mt-2">Alto de la bobina {p.alto} metros. Ancho de la bobina {p.ancho} cm.</p>
-                                <h6 className="mt-2">{texto}</h6>
-
                             </Container>
+                            <p className="mt-5">Alto del bobina {p.alto} metros. Ancho del bobina {p.ancho} cm. </p>
+                            <p>{texto1}</p>
+                            <strong>{texto} </strong>
+                            <p>{texto2}</p>
                         </Box>
                     </Container>
                 </DialogContent>

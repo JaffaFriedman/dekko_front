@@ -32,7 +32,7 @@ const Item = styled(Paper)(({ theme }) => ({
 const options = { style: 'currency', currency: 'CLP' };
 
 function Metro
-  ({ categoria, producto,  mt, setMt  }) {
+  ({ categoria, producto,  cantidad, setCantidad  }) {
   const navigate = useNavigate()
  
   let [color, setColor] = useState(0)
@@ -149,26 +149,26 @@ function Metro
                       fullWidth
                       variant='standard'
                       type='number'
-                      id='mt'
+                      id='cantidad'
                       label='Cantidad de Metros Lineales'
-                      name='mt'
-                      autoComplete='mt'
-                      value={mt}
+                      name='cantidad'
+                      autoComplete='cantidad'
+                      value={cantidad}
                       onChange={(
                         event: React.ChangeEvent<HTMLInputElement>
                       ) => {
-                        setMt(event.target.value)
+                        setCantidad(event.target.value)
                       }}
                       autoFocus
                     />
                   </Item>
                   <React.Fragment className='mt-4 mb-4'>
-                    <Calculo categoria={categoria} producto={producto} mt={mt} setMt={setMt}  />
+                    <Calculo categoria={categoria} producto={producto}  cantidad={cantidad} setCantidad={setCantidad}  />
                   </React.Fragment>
                 </Stack>
               </Box>
               <h5 className='mt-4 mb-4'>
-                {'Precio: ' + parseFloat((p.pesos[gramaje].precio * 1.4 * mt).toFixed(0)).toLocaleString('es-CL', options)}
+                {'Precio: ' + parseFloat((p.pesos[gramaje].precio * 1.4 * cantidad).toFixed(0)).toLocaleString('es-CL', options)}
               </h5>
 
               <React.Fragment className='mt-4 mb-4'>

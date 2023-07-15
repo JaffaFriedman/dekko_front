@@ -41,9 +41,7 @@ function Rutas() {
   let [familia, setFamilia] = useState({})
   let [categoria, setCategoria] = useState({})
   let [producto, setProducto] = useState('')
-  let [mt, setMt] = useState(1)
-  let [bobina, setBobina] = useState(1)
-  let [rollo, setRollo] = useState(1)
+  let [cantidad, setCantidad] = useState(1)
   return (
     <div>
       <Routes>
@@ -117,15 +115,15 @@ function Rutas() {
           />
           <Route
             path='/rollos'
-            element={<Rollos categoria={categoria} producto={producto} rollo={rollo} setRollo={setRollo}  />}
+            element={<Rollos categoria={categoria} producto={producto} cantidad={cantidad} setCantidad={setCantidad} />}
           />
           <Route
             path='/bobina'
-            element={<Bobina categoria={categoria} producto={producto} bobina={bobina} setBobina={setBobina} />}
+            element={<Bobina categoria={categoria} producto={producto} cantidad={cantidad} setCantidad={setCantidad}/>}
           />
           <Route
             path='/metro'
-            element={<Metro categoria={categoria} producto={producto} mt={mt} setMt={setMt} />}
+            element={<Metro categoria={categoria} producto={producto} cantidad={cantidad} setCantidad={setCantidad}/>}
           />
           <Route
             path='/agregarcarro'
@@ -133,15 +131,15 @@ function Rutas() {
           />
           <Route
             path='/calculo'
-            element={<Calculo categoria={categoria}  producto={producto}  mt={mt} setMt={setMt} />}
+            element={<Calculo categoria={categoria}  producto={producto}  cantidad={cantidad} setCantidad={setCantidad} />}
           />
           <Route
             path='/calculobobina'
-            element={<Calculobobina categoria={categoria}  producto={producto}  bobina={bobina} setBobina={setBobina} />}
+            element={<Calculobobina categoria={categoria}  producto={producto}  cantidad={cantidad} setCantidad={setCantidad} />}
           />
           <Route
             path='/calculorollo'
-            element={<Calculorollo  categoria={categoria}  producto={producto} rollo={rollo} setRollo={setRollo}/>}
+            element={<Calculorollo  categoria={categoria}  producto={producto} cantidad={cantidad} setCantidad={setCantidad}/>}
           />
         </Route>
       </Routes>

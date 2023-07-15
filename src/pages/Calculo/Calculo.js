@@ -8,7 +8,6 @@ import CssBaseline from '@mui/material/CssBaseline'
 import Container from '@mui/material/Container'
 import Box from '@mui/material/Box'
 import { styled } from '@mui/material/styles'
-import HelpCenterIcon from '@mui/icons-material/HelpCenter';
 import CalculateIcon from '@mui/icons-material/Calculate';
 import CancelIcon from '@mui/icons-material/Cancel';
 import Paper from '@mui/material/Paper'
@@ -25,17 +24,17 @@ const Item = styled(Paper)(({ theme }) => ({
 }))
 
 
-export default function Calculo({ categoria, producto, mt, setMt }) {
+export default function Calculo({ categoria, producto, cantidad, setCantidad }) {
     let [open, setOpen] = useState(false)
     let [ancho, setAncho] = useState(100)
     let [alto, setAlto] = useState(100)
-    let [pano, setPano] = useState('')
     let [resto, setResto] = useState('')
     const p = tablaProductos.find(c => c.nombre.toString() === producto.toString() &&
         c.categoria.toString() === categoria.categoria &&
         c.familia === categoria.familia)
 
     const handleClickOpen = () => {
+        Calcular();
         setOpen(true)
     }
     const handleSubmit = event => {
@@ -44,16 +43,16 @@ export default function Calculo({ categoria, producto, mt, setMt }) {
     }
     const Calcular = () => {
         const auxPano = Math.ceil(ancho / (p.ancho - 10))
-        setPano(auxPano);
+
         let mtl = Math.ceil((alto * auxPano + 5 * auxPano) / 100);
-  
         if (mtl < 10) {
-            let auxResto =  10 - mtl;
+            let auxResto = 10 - mtl;
             mtl = 10;
-            setResto("Te sobran " + auxResto + " mtl")
+            if (auxResto >1)  setResto(" Te sobran " + auxResto + " mtl.")
+            else setResto(" Te sobra " + auxResto + " mtl.")
         }
         else setResto("")
-        setMt(Math.ceil(mtl));
+        setCantidad(Math.ceil(mtl));
     }
 
     const handleClose = () => {
@@ -62,11 +61,11 @@ export default function Calculo({ categoria, producto, mt, setMt }) {
 
     return (
         <div>
-            <Button onClick={handleClickOpen} color="primary"><HelpCenterIcon color="primary" />Ayuda para calcular Metros Lineales</Button>
+            <Button onClick={handleClickOpen} color="primary"><CalculateIcon color="primary" />Calculadora de mt lineales</Button>
 
             <Dialog open={open} onClose={handleClose}>
                 <DialogContent>
-                    <Container component='main' maxWidth='xs' className='text-center'>
+                    <Container component='main' className='text-center'>
                         <CssBaseline />
                         <Box
                             sx={{
@@ -78,17 +77,14 @@ export default function Calculo({ categoria, producto, mt, setMt }) {
                             }}
                         >
                             <Avatar sx={{ m: 1, bgcolor: 'primary.light' }}>
-                                <HelpCenterIcon />
+                                <CalculateIcon />
                             </Avatar>
                             <h5>¿Cuántos metros lineales necesito?</h5>
                             <p>Debes medir la altura del muro de piso a techo (sin incluir guardapolvos
                                 y cornisas) y el ancho completo del muro
                                 no importando si existen puertas o ventanas. </p>
-                            <p>El objetivo es saber el
-                                número de paños que requerimos para cubrir el muro y con eso calcular los metros lineales de papel</p>
-                            <p>Nosotros consideraremos un excedente de 5cm en el alto para diferencias en el muro y errores en la medida y los excedentes para el traslape de los paños en el ancho</p>
-                            <p>Si hay varios muros suma todos los anchos y usa la altura mayor. Si hay mucha diferencia de altura calcula los paños por separado. </p>
-                            <p>La compra minima es de 10 metros lineales, calcularemos cuando sobra por si tienes mas de un muro</p>
+                            <p>Si hay varios muros suma todos los anchos y usa la altura mayor. Si hay mucha diferencia de altura calcula los muros con diferencia por separado. </p>
+                            <p>En el calculo consideraremos los excedentes necesarios. La compra minima es de 10 metros lineales</p>
                             <Stack
                                 spacing={4}
                                 direction='row'
@@ -147,7 +143,8 @@ export default function Calculo({ categoria, producto, mt, setMt }) {
                                     </Stack>
                                 </Box>
 
-                                <h6 className="mt-5">Para tu muro, necesitas {pano} paño(s), debes comprar {mt} metros lineales. {resto} </h6>
+                                <strong className="mt-5">Para tu muro debes comprar {cantidad} mtl.</strong>
+                                <p>{resto}</p>
                             </Container>
                         </Box>
                     </Container>

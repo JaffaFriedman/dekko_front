@@ -28,7 +28,7 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary
 }))
 
-function Bobina({ categoria, producto, bobina, setBobina  }) {
+function Bobina({ categoria, producto, cantidad, setCantidad   }) {
   const navigate = useNavigate()
 
 
@@ -151,26 +151,26 @@ function Bobina({ categoria, producto, bobina, setBobina  }) {
                       fullWidth
                       variant='standard'
                       type='number'
-                      id='bobina'
+                      id='cantidad'
                       label='Cantidad de Bobinas'
-                      name='bobina'
-                      autoComplete='bobina'
-                      value={bobina}
+                      name='cantidad'
+                      autoComplete='cantidad'
+                      value={cantidad}
                       onChange={(
                         event: React.ChangeEvent<HTMLInputElement>
                       ) => {
-                        setBobina(event.target.value)
+                        setCantidad(event.target.value)
                       }}
                       autoFocus
                     />
                   </Item>
                   <React.Fragment className='mt-4 mb-4'>
-                    <Calculobobina categoria={categoria} producto={producto} bobina={bobina} setBobina={setBobina} />
+                    <Calculobobina categoria={categoria} producto={producto}  cantidad={cantidad} setCantidad={setCantidad} />
                   </React.Fragment>
                 </Stack>
               </Box>
               <h5 className='mt-4 mb-4'>
-                {'Precio: ' + parseFloat((p.pesos[gramaje].precio * 33 * bobina).toFixed(0)).toLocaleString('es-CL', options)
+                {'Precio: ' + parseFloat((p.pesos[gramaje].precio * 33 * cantidad).toFixed(0)).toLocaleString('es-CL', options)
                 }
               </h5>
 

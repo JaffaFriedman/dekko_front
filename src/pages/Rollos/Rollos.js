@@ -21,7 +21,7 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary
 }))
 
-function Rollos({ categoria, producto, rollo, setRollo }) {
+function Rollos({ categoria, producto, cantidad, setCantidad  }) {
   const navigate = useNavigate()
   const handleSubmit = event => {
     event.preventDefault()
@@ -88,20 +88,20 @@ function Rollos({ categoria, producto, rollo, setRollo }) {
                           fullWidth
                           variant='standard'
                           type='number'
-                          id='rollo'
-                          label='rollo'
+                          id='cantidad'
+                          label='cantidad'
                           name='Cantidad de Rollos'
-                          value={rollo}
+                          value={cantidad}
                           onChange={(
                             event: React.ChangeEvent<HTMLInputElement>
                           ) => {
-                            setRollo(event.target.value)
+                            setCantidad(event.target.value)
                           }}
                           autoFocus
                         />
                       </Item>
                       <React.Fragment className='mt-4 mb-4'>
-                        <Calculorollo categoria={categoria} producto={producto} rollo={rollo} setRollo={setRollo} />
+                        <Calculorollo categoria={categoria} producto={producto} cantidad={cantidad} setCantidad={setCantidad}  />
                       </React.Fragment>
                     </Stack>
                   </Box>
@@ -111,7 +111,7 @@ function Rollos({ categoria, producto, rollo, setRollo }) {
                   </h6>
                   <h6 className='mt-4'>Alto del rollo {p.alto} metros</h6>
                   <h5 className='mt-4 mb-4'>
-                    Precio Total {(p.precio * rollo).toLocaleString('es-CL', options)}
+                    Precio Total {(p.precio * cantidad).toLocaleString('es-CL', options)}
                   </h5>
                   <React.Fragment className='mt-4 mb-4'>
                     <Agregarcarro />

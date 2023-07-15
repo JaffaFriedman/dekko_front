@@ -8,7 +8,6 @@ import CssBaseline from '@mui/material/CssBaseline'
 import Container from '@mui/material/Container'
 import Box from '@mui/material/Box'
 import { styled } from '@mui/material/styles'
-import HelpCenterIcon from '@mui/icons-material/HelpCenter';
 import CalculateIcon from '@mui/icons-material/Calculate';
 import CancelIcon from '@mui/icons-material/Cancel';
 import Paper from '@mui/material/Paper'
@@ -24,14 +23,13 @@ const Item = styled(Paper)(({ theme }) => ({
     color: theme.palette.text.secondary
 }))
 
-export default function Calculorollo({ categoria, producto, rollo, setRollo }) {
+export default function Calculorollo({ categoria, producto, cantidad, setCantidad }) {
     let [open, setOpen] = useState(false)
     let [ancho, setAncho] = useState(100)
     let [alto, setAlto] = useState(100)
-    let [pano, setPano] = useState('')
-    let [panoRollo, setPanoRollo] = useState('')
-    let [altoPano, setAltoPano] = useState('')
     let [texto, setTexto] = useState('')
+    let [texto1, setTexto1] = useState('')
+    let [texto2, setTexto2] = useState('')
     const p = tablaProductos.find(c => c.nombre.toString() === producto.toString() &&
         c.categoria.toString() === categoria.categoria &&
         c.familia === categoria.familia)
@@ -46,23 +44,26 @@ export default function Calculorollo({ categoria, producto, rollo, setRollo }) {
     }
     const Calcular = () => {
         const auxAltoPano = parseInt(alto) + 5 + parseInt(p.calce);
-        setAltoPano(auxAltoPano);
         const auxPano = Math.ceil(ancho / p.ancho)
-        setPano(auxPano);
         const auxPanoRollo = Math.floor(p.alto * 100 / auxAltoPano)
-        setPanoRollo(auxPanoRollo);
         const auxRollo = Math.ceil(auxPano / auxPanoRollo);
-        setRollo(auxRollo);
-        const auxSobra = auxPanoRollo   - auxPano
-        const auxTexto = "Para el ancho de tu muro, necesitas "+ pano+" paño(s) de " +altoPano+
-        " cm de altura. Debes comprar "+rollo+" rollos(s). El rollo rinde "+panoRollo+ " paños. "
-         if (auxSobra>0)
-        {    let auxResto = Math.floor( auxAltoPano*auxSobra/100 );
-  
-            setTexto(auxTexto +"Te sobra(n) " + auxSobra+ " paños que equivalen a "+ auxResto + " mt de largo por " + p.ancho+ " cm de ancho.")
- 
-        } else  setTexto(auxTexto);
+        setCantidad(auxRollo);
+        let textoRollos = " rollos "
+        if (auxRollo === 1) textoRollos = " rollo "
+        setTexto("Debes comprar " + auxRollo + textoRollos);
+        let textoPano = " paños";
+        if (auxPano === 1) { textoPano = " paño"; }
+        const auxTexto1 = "Para el ancho de tu muro, necesitas " + auxPano + textoPano + " de " + auxAltoPano +
+            " cm de altura.  El rollo rinde " + auxPanoRollo + " paños. "
+        setTexto1(auxTexto1);
 
+        const auxSobra = auxPanoRollo * auxRollo - auxPano
+        if (auxSobra > 0) {
+            let textoSobra = "Te sobra ";
+            if (auxSobra > 1) { textoSobra = "Te sobran "; }
+            let auxResto = Math.floor(auxAltoPano * auxSobra / 100);
+            setTexto2(textoSobra   + auxResto + " mt de largo por " + p.ancho + " cm de ancho.")
+        } else setTexto2("");
     }
 
     const handleClose = () => {
@@ -72,11 +73,11 @@ export default function Calculorollo({ categoria, producto, rollo, setRollo }) {
 
     return (
         <div>
-            <Button onClick={handleClickOpen} color="primary"><HelpCenterIcon color="primary" />Ayuda para calcular Rollos</Button>
+            <Button onClick={handleClickOpen} color="primary"><CalculateIcon color="primary" />Calculadora de Rollos</Button>
 
             <Dialog open={open} onClose={handleClose}>
                 <DialogContent>
-                    <Container component='main' maxWidth='xs' className='text-center'>
+                    <Container component='main' className='text-center'>
                         <CssBaseline />
                         <Box
                             sx={{
@@ -88,16 +89,13 @@ export default function Calculorollo({ categoria, producto, rollo, setRollo }) {
                             }}
                         >
                             <Avatar sx={{ m: 1, bgcolor: 'primary.light' }}>
-                                <HelpCenterIcon />
+                                <CalculateIcon />
                             </Avatar>
                             <h5>¿Cuántas rollos necesito?</h5>
                             <p>Debes medir la altura del muro de piso a techo (sin incluir guardapolvos
                                 y cornisas) y el ancho completo del muro
                                 no importando si existen puertas o ventanas. </p>
-                            <p>El objetivo es saber el
-                                número de paños que requerimos para cubrir el muro y el rendimiento de cada rollo.</p>
-                            <p>Nosotros consideraremos un excedente de 5cm en el ancho y alto para diferencias en el muro y errores en la medida</p>
-                            <p>Si hay varios muros suma todos los anchos y usa la altura mayor. Si hay mucha diferencia de altura calcula los paños por separado. {texto}</p>
+                            <p>Si hay varios muros suma todos los anchos y usa la altura mayor. Si hay mucha diferencia de altura calcula los muros con diferencia por separado. </p>
                             <Stack
                                 spacing={4}
                                 direction='row'
@@ -111,8 +109,8 @@ export default function Calculorollo({ categoria, producto, rollo, setRollo }) {
                                     Validate
                                     sx={{ mt: 1 }}
                                 >
-                                    <Stack direction='row' spacing={2}>  
-                                          <Item>
+                                    <Stack direction='row' spacing={2}>
+                                        <Item>
                                             <TextField
                                                 margin='normal'
                                                 required
@@ -155,9 +153,11 @@ export default function Calculorollo({ categoria, producto, rollo, setRollo }) {
                                         </Item>
                                     </Stack>
                                 </Box>
-                                <p className="mt-5">Alto del rollo {p.alto} metros. Ancho del rollo {p.ancho} cm. Calce del papel entre bajadas {p.calce} cm.</p>
-                                <h6 className="mt-5" >{texto} </h6>
                             </Container>
+                            <p className="mt-5">Alto del rollo {p.alto} metros. Ancho del rollo {p.ancho} cm. Calce del papel entre bajadas {p.calce} cm.</p>
+                            <p>{texto1}</p>
+                            <strong>{texto} </strong>
+                            <p>{texto2}</p>
                         </Box>
                     </Container>
                 </DialogContent>
