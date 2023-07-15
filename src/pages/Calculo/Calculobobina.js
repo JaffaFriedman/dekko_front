@@ -29,8 +29,8 @@ export default function Calculobobina({ categoria, producto, cantidad, setCantid
     let [ancho, setAncho] = useState(100)
     let [alto, setAlto] = useState(100)
     let [texto, setTexto] = useState('')
-    let [texto1, setTexto1] = useState('')
-    let [texto2, setTexto2] = useState('')
+    let [textoReq, setTextoReq] = useState('')
+    let [textoResto, setTextoResto] = useState('')
 
     const p = tablaProductos.find(c => c.nombre.toString() === producto.toString() &&
         c.categoria.toString() === categoria.categoria &&
@@ -52,20 +52,20 @@ export default function Calculobobina({ categoria, producto, cantidad, setCantid
         setCantidad(auxBobina);
         let textoBobinas = " bobinas "
         if (auxBobina === 1) textoBobinas = " bobina "
-        setTexto("Debes comprar " + auxBobina + textoBobinas);
+        setTexto("Para tus medidas debes comprar " + auxBobina + textoBobinas);
         let textoPano = " paños";
         if (auxPano === 1) { textoPano = " paño"; }
         const auxTexto1 = "Para el ancho de tu muro, necesitas " + auxPano + textoPano + " de " + auxAltoPano +
             " cm de altura. "
-        setTexto1(auxTexto1);
+        setTextoReq(auxTexto1);
 
         const auxSobra = auxPanoBobina * auxBobina - auxPano
         if (auxSobra > 0) {
             let textoSobra = "Te sobra ";
             if (auxSobra > 1) { textoSobra = "Te sobran "; }
             let auxResto = Math.floor(auxAltoPano * auxSobra / 100);
-            setTexto2(textoSobra + auxResto + " mt de largo por " + p.ancho + " cm de ancho.")
-        } else setTexto2("");
+            setTextoResto(textoSobra + auxResto + " mt de largo por " + p.ancho + " cm de ancho.")
+        } else setTextoResto("");
     }
 
     const handleClose = () => {
@@ -157,9 +157,9 @@ export default function Calculobobina({ categoria, producto, cantidad, setCantid
                                 </Box>
                             </Container>
                             <p className="mt-5">Alto del bobina {p.alto} metros. Ancho del bobina {p.ancho} cm. </p>
-                            <p>{texto1}</p>
+                            <p>{textoReq}</p>
                             <strong>{texto} </strong>
-                            <p>{texto2}</p>
+                            <p>{textoResto}</p>
                         </Box>
                     </Container>
                 </DialogContent>
