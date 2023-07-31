@@ -47,6 +47,23 @@ let tablaTelas = [
     nombre: 'Cortina Roller',
     descripcion: 'Traslucent grafito',
     url: 'https://static.wixstatic.com/media/12b4f4_9216304130cf4489a9481fcca50d7524~mv2.jpg/v1/fill/w_500,h_403,al_c,q_80,enc_auto/12b4f4_9216304130cf4489a9481fcca50d7524~mv2.jpg'
+  },
+  {
+    id: 5,
+    familia: 'CORTINAS Y TOLDOS',
+    categoria: 'PERSIANA',
+    nombre: 'Persiana de Aluminio',
+    descripcion: 'White Pearl Perforada',
+    url: 'https://static.wixstatic.com/media/12b4f4_e1493764efa844b9a7db44caf7fff642~mv2.jpg/v1/fill/w_964,h_174,al_c,q_80,usm_0.66_1.00_0.01,enc_auto/12b4f4_e1493764efa844b9a7db44caf7fff642~mv2.jpg'
+  },
+  
+  {
+    id: 5,
+    familia: 'CORTINAS Y TOLDOS',
+    categoria: 'PERSIANA',
+    nombre: 'Persiana de Aluminio',
+    descripcion: 'White Pearl Lisa',
+    url: 'https://static.wixstatic.com/media/12b4f4_f7774f9315a2470ca21d82fb37ad5b5c~mv2.jpg/v1/fill/w_968,h_172,al_c,q_80,usm_0.66_1.00_0.01,enc_auto/12b4f4_f7774f9315a2470ca21d82fb37ad5b5c~mv2.jpg'
   }
 ]
 

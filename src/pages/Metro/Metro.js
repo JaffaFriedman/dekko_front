@@ -92,17 +92,7 @@ function Metro
                 <h6  >
                   {'Código Color: ' + p.colores[color].codigo}
                 </h6>
-                <div >
-                  <Button
-                    variant='text'
-                    className='mt-1 mb-4 text-center'
-                    sx={{ mb: 3 }}
-                    color='primary'
-                    onClick={() => handleTextura()}
-                  >
-                    Selecciona otro color
-                  </Button>
-                </div>
+
               </Container>
             </Grid>
             <Grid item xs={4} className='mt-4'>
@@ -125,6 +115,17 @@ function Metro
                   ))}
                 </RadioGroup>
               </FormControl>
+              <div >
+                  <Button
+                    variant='text'
+                    className='mt-1 mb-4 text-center'
+                    sx={{ mb: 3 }}
+                    color='primary'
+                    onClick={() => handleTextura()}
+                  >
+                    Selecciona otro color
+                  </Button>
+                </div>
               <h6 >
                 {'Gramaje por mt2: ' + p.pesos[gramaje].peso + ' gramos'
                 }

@@ -40,14 +40,6 @@ let tablaCategorias = [
   },
   {
     familia: 'MURALES A MEDIDA',
-    categoria: 'NATURALEZA',
-    descripcion:
-      'MURALES A MEDIDA murales infantiles para niños, niñas o unisex',
-    url: 'https://static.innovaweb.cl/wordpress/dekko_tienda_wp/2023/02/NAT01_I_M01.jpg',
-    link: '', width: '20%'
-  },
-  {
-    familia: 'MURALES A MEDIDA',
     categoria: 'MAPAS',
     descripcion: 'Mapas de adultos o infantiles',
     url: 'https://static.innovaweb.cl/wordpress/dekko_tienda_wp/2018/08/MAP01_W_M01.jpg',
@@ -110,7 +102,7 @@ let tablaCategorias = [
     categoria: 'MURAVINIL',
     descripcion: '',
     url: 'https://static.wixstatic.com/media/12b4f4_0029913753e0451aab1b4880598e7f1d~mv2.jpg/v1/fill/w_920,h_610,al_c,q_85,enc_auto/12b4f4_0029913753e0451aab1b4880598e7f1d~mv2.jpg://static.wixstatic.com/media/12b4f4_3ca67eb6fafd46a485e8c6ae230880ee~mv2.jpg/v1/fill/w_1000,h_698,al_c,q_85,enc_auto/12b4f4_3ca67eb6fafd46a485e8c6ae230880ee~mv2.jpg',
-      link: '/Bobina', width: '20%'
+    link: '/Bobina', width: '20%'
   },
   {
     familia: 'PAPEL CONSTRUCTORA',
