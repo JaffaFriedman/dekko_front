@@ -52,14 +52,14 @@ export default function Registro () {
             <CssBaseline />
             <Box
               sx={{
-                marginTop: 4,
-                marginBottom: 4,
+                marginTop: 2,
+                marginBottom: 2,
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center'
               }}
             >
-              <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
+              <Avatar sx={{   bgcolor: 'primary.main' }}>
                 <AccountCircle />
               </Avatar>
               <Typography component='h1' variant='h5'>
@@ -68,7 +68,7 @@ export default function Registro () {
               <Box
                 component='form'
                 sx={{
-                  '& > :not(style)': { m: 1, width: '50ch' },
+                  '& > :not(style)': {   width: '50ch' },
                   marginTop: 8
                 }}
                 noValidate
@@ -80,9 +80,9 @@ export default function Registro () {
                   variant='outlined'
                   helperText='Será nombre de su cuenta'
                 />
-                <FormControl sx={{ m: 1, width: '50ch' }} variant='outlined'>
+                <FormControl sx={{   width: '50ch' }} variant='outlined'>
                   <InputLabel htmlFor='outlined-adornment-password'>
-                    Clave
+                    Contraseña
                   </InputLabel>
                   <OutlinedInput
                     id='outlined-adornment-password'
@@ -105,6 +105,14 @@ export default function Registro () {
               </Box>
               <Box
                 component='form'
+                sx={{ '& > :not(style)': { mt: 1,  width: '50ch' } }}
+                noValidate
+                autoComplete='off'
+              >
+                <TextField id='rut' label='Rut' variant='outlined' />
+              </Box>
+              <Box
+                component='form'
                 sx={{ '& > :not(style)': { m: 1, width: '50ch' } }}
                 noValidate
                 autoComplete='off'
@@ -113,7 +121,7 @@ export default function Registro () {
               </Box>
               <Box
                 component='form'
-                sx={{ '& > :not(style)': { m: 1, width: '50ch' } }}
+                sx={{ '& > :not(style)': {   width: '50ch' } }}
                 noValidate
                 autoComplete='off'
               >
@@ -126,7 +134,7 @@ export default function Registro () {
               </Box>
               <Box
                 component='form'
-                sx={{ '& > :not(style)': { m: 1, width: '50ch' } }}
+                sx={{ '& > :not(style)': {   width: '50ch' } }}
                 noValidate
                 autoComplete='off'
               >
