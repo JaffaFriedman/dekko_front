@@ -1,5 +1,5 @@
 import { Routes, Route } from 'react-router-dom'
-import React, { useState } from 'react'
+import  { useState } from 'react'
 
 import Agregarcarro from '../../pages/Agregarcarro/Agregarcarro'
 import Bobina from '../../pages/Bobina/Bobina'
@@ -11,7 +11,6 @@ import Calculorollo from '../../pages/Calculo/Calculorollo'
 import Carrito from '../../pages/Carrito/Carrito'
 import Catalogo from '../../pages/Catalogo/Catalogo'
 import Checkout from '../../pages/Checkout/Checkout'
-import Colores from '../../pages/Colores/Colores'
 import Construccion from '../../pages/Construccion/Construccion'
 import Contacto from '../../pages/Contacto/Contacto'
 import Cortinas from '../../pages/Cortinas/Cortinas'
@@ -51,7 +50,6 @@ function Rutas() {
           <Route path='/carrito' element={<Carrito />} />
           <Route path='/carrito' element={<Carrito />} />
           <Route path='/checkout' element={<Checkout />} />
-          <Route path='/colores' element={<Colores />} />
           <Route path='/construccion' element={<Construccion />} />
           <Route path='/contacto' element={<Contacto />} />
           <Route path='/footer' element={<Footer />} />
@@ -142,6 +140,7 @@ function Rutas() {
             element={<Calculorollo  categoria={categoria}  producto={producto} cantidad={cantidad} setCantidad={setCantidad}/>}
           />
         </Route>
+        <Route path="*" element={<h1>Not Found</h1>} />
       </Routes>
     </div>
   )

@@ -1,4 +1,3 @@
-import React from 'react'
 import Container from 'react-bootstrap/Container'
 
 import Box from '@mui/material/Box'
@@ -6,7 +5,7 @@ import Grid from '@mui/material/Grid'
 const Instructivo = () => {
   return (
     <>
-    <section instalar className='mb-5'>
+    <section className='mb-5'>
       <div className='bg-dark text-bg-dark pb-2 mb-5   mb-1 text-center'>
         <h3> INSTALACIÓN DE MURALES  </h3>
       </div>
@@ -22,7 +21,7 @@ const Instructivo = () => {
             <Container>
               <div>
                 <iframe title='int1' src="https://player.vimeo.com/video/710547394?h=8e9baed86d&#038;title=0&#038;byline=0&#038;portrait=0"
-                  frameborder="0" width="800" height="600" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+                  frameBorder="0" width="800" height="600" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
               </div>
               <p><script src="https://player.vimeo.com/api/player.js"></script></p>
             </Container>

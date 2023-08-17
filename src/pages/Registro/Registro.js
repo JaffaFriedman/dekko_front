@@ -18,6 +18,11 @@ import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
 import AccountCircle from '@mui/icons-material/AccountCircle'
 import Avatar from '@mui/material/Avatar'
+import { useState } from 'react'
+import { useContext } from 'react'
+import { UserContext } from '../../context/user/userContext'
+import { types } from '../../context/user/userReducer'
+import axios from 'axios'
 export default function Registro () {
   const [showPassword, setShowPassword] = React.useState(false)
 
@@ -37,6 +42,50 @@ export default function Registro () {
 
   const handleClose = () => {
     setOpen(false)
+  }
+
+  const [, dispatch] = useContext(UserContext)
+
+  const initialUser = {
+    email: '',
+    password: '',
+    nombre: '',
+    rut: '',
+    direccion: '',
+    comuna: '',
+    telefono: ''
+  }
+  const [formUser, setFormUser] = useState(initialUser)
+
+  const handleChange = e => {
+    setFormUser({
+      ...formUser,
+      [e.target.name]: e.target.value
+    })
+  }
+  const api = axios.create({
+    //baseURL: "https://uddjaffa.onrender.com:27017"
+    baseURL: 'http://localhost:27017'
+  })
+
+  const handleSubmit = async e => {
+    e.preventDefault()
+    try {
+      console.log(formUser)
+      const { data } = await api.post('/users', JSON.stringify(formUser), {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      dispatch({
+        type: types.setUserState,
+        payload: data
+      })
+      window.alert('Usuario registrado')
+    } catch (error) {
+      window.alert('Error al registrar usuario')
+      console.log(error)
+    }
   }
 
   return (
@@ -59,7 +108,7 @@ export default function Registro () {
                 alignItems: 'center'
               }}
             >
-              <Avatar sx={{   bgcolor: 'primary.main' }}>
+              <Avatar sx={{ bgcolor: 'primary.main' }}>
                 <AccountCircle />
               </Avatar>
               <Typography component='h1' variant='h5'>
@@ -68,24 +117,23 @@ export default function Registro () {
               <Box
                 component='form'
                 sx={{
-                  '& > :not(style)': {   width: '50ch' },
+                  '& > :not(style)': { mt: 1, width: '50ch' },
                   marginTop: 8
                 }}
                 noValidate
                 autoComplete='off'
               >
                 <TextField
-                  id='correo'
-                  label='Correo Electronico'
-                  variant='outlined'
-                  helperText='Será nombre de su cuenta'
+                  name='email'
+                  onChange={handleChange}
+                  label='Correo electrónico'
+                  variant='standard'
                 />
-                <FormControl sx={{   width: '50ch' }} variant='outlined'>
-                  <InputLabel htmlFor='outlined-adornment-password'>
-                    Contraseña
-                  </InputLabel>
+                <FormControl sx={{ mt: 1, width: '50ch' }} variant='standard'>
+                  <InputLabel htmlFor='password'>Contraseña</InputLabel>
                   <OutlinedInput
-                    id='outlined-adornment-password'
+                    name='password'
+                    onChange={handleChange}
                     type={showPassword ? 'text' : 'password'}
                     endAdornment={
                       <InputAdornment position='end'>
@@ -99,58 +147,81 @@ export default function Registro () {
                         </IconButton>
                       </InputAdornment>
                     }
-                    label='Password'
+                    label='Contraseña'
                   />
                 </FormControl>
               </Box>
               <Box
                 component='form'
-                sx={{ '& > :not(style)': { mt: 1,  width: '50ch' } }}
-                noValidate
-                autoComplete='off'
-              >
-                <TextField id='rut' label='Rut' variant='outlined' />
-              </Box>
-              <Box
-                component='form'
-                sx={{ '& > :not(style)': { m: 1, width: '50ch' } }}
-                noValidate
-                autoComplete='off'
-              >
-                <TextField id='nombre' label='Nombre' variant='outlined' />
-              </Box>
-              <Box
-                component='form'
-                sx={{ '& > :not(style)': {   width: '50ch' } }}
+                sx={{ '& > :not(style)': { mt: 1, width: '50ch' } }}
                 noValidate
                 autoComplete='off'
               >
                 <TextField
-                  id='direccion'
-                  label='Direccion'
-                  helperText='La dirección será usada para sus envios'
-                  variant='outlined'
+                  name='nombre'
+                  onChange={handleChange}
+                  label='Nombre'
+                  variant='standard'
+                  type='text'
                 />
               </Box>
               <Box
                 component='form'
-                sx={{ '& > :not(style)': {   width: '50ch' } }}
+                sx={{ '& > :not(style)': { mt: 1, width: '50ch' } }}
                 noValidate
                 autoComplete='off'
               >
-                <TextField id='comuna' label='Comuna' variant='outlined' />
+                <TextField
+                  name='rut'
+                  onChange={handleChange}
+                  label='Rut'
+                  variant='standard'
+                />
               </Box>
+
               <Box
                 component='form'
-                sx={{ '& > :not(style)': { m: 1, width: '50ch' } }}
+                sx={{ '& > :not(style)': { mt: 1, width: '50ch' } }}
                 noValidate
                 autoComplete='off'
               >
-                <TextField id='telefono' label='Teléfono' variant='outlined' />
+                <TextField
+                  name='direccion'
+                  label='Dirección'
+                  onChange={handleChange}
+                  variant='standard'
+                />
               </Box>
               <Box
                 component='form'
-                sx={{ '& > :not(style)': { m: 1, width: '31ch' } }}
+                sx={{ '& > :not(style)': { mt: 1, width: '50ch' } }}
+                noValidate
+                autoComplete='off'
+              >
+                <TextField
+                  name='comuna'
+                  onChange={handleChange}
+                  label='Comuna'
+                  variant='standard'
+                />
+              </Box>
+              <Box
+                component='form'
+                sx={{ '& > :not(style)': { mt: 1, width: '50ch' } }}
+                noValidate
+                autoComplete='off'
+              >
+                <TextField
+                  name='telefono'
+                  onChange={handleChange}
+                  label='Teléfono'
+                  variant='standard'
+                  type='number'
+                />
+              </Box>
+              <Box
+                component='form'
+                sx={{ '& > :not(style)': { mt: 1, width: '31ch' } }}
                 noValidate
                 autoComplete='off'
               >
@@ -158,7 +229,9 @@ export default function Registro () {
                   variant='contained'
                   size='large'
                   startIcon={<SaveIcon />}
-                  href='/login'
+                  type='submit'
+                  onClick={handleSubmit}
+                  sx={{ mt: 3, mb: 2 }}
                 >
                   {' '}
                   Enviar
@@ -168,7 +241,9 @@ export default function Registro () {
           </Container>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancelar</Button>
+          <Button onClick={handleClose} href='/login'>
+            Regresar
+          </Button>
         </DialogActions>
       </Dialog>
     </div>

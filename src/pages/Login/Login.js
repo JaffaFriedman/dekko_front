@@ -1,4 +1,9 @@
 import * as React from 'react'
+import { useState, useContext } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { UserContext } from '../../context/user/userContext'
+import { types } from '../../context/user/userReducer'
+import axios from 'axios'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 import Dialog from '@mui/material/Dialog'
@@ -15,24 +20,85 @@ import Container from '@mui/material/Container'
 import AccountCircle from '@mui/icons-material/AccountCircle'
 import Olvido from '../../pages/Olvido/Olvido'
 import Registro from '../../pages/Registro/Registro'
+import FormControl from '@mui/material/FormControl'
+import OutlinedInput from '@mui/material/OutlinedInput'
+import IconButton from '@mui/material/IconButton'
+import InputLabel from '@mui/material/InputLabel'
+import InputAdornment from '@mui/material/InputAdornment'
+import Visibility from '@mui/icons-material/Visibility'
+import VisibilityOff from '@mui/icons-material/VisibilityOff'
+import jwtDecode from 'jwt-decode'
 
 export default function Login () {
-  const handleSubmit = event => {
+  const [showPassword, setShowPassword] = React.useState(false)
+
+  const handleClickShowPassword = () => setShowPassword(show => !show)
+
+  const handleMouseDownPassword = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
     event.preventDefault()
-    const data = new FormData(event.currentTarget)
-    console.log({
-      email: data.get('email'),
-      password: data.get('password')
-    })
   }
+
   const [open, setOpen] = React.useState(false)
+  const [msg, setMsg] = useState('')
 
   const handleClickOpen = () => {
+    setMsg('');
     setOpen(true)
   }
 
   const handleClose = () => {
     setOpen(false)
+    setMsg('');
+  }
+
+  const [, dispatch] = useContext(UserContext)
+  const navigate = useNavigate()
+
+  const initialUser = {
+    email: '',
+    password: ''
+  }
+  const [user, setUser] = useState(initialUser)
+
+  const handleChange = e => {
+    setUser({
+      ...user,
+      [e.target.name]: e.target.value
+    })
+  }
+
+  const api = axios.create({
+    //baseURL: "https://uddjaffa.onrender.com:27017"
+    baseURL: 'http://localhost:27017'
+  })
+
+  const handleSubmit = async e => {
+    console.log(user)
+    e.preventDefault()
+    try {
+      const { data } = await api.post('/users/login', user, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      const tokenDecodificado = jwtDecode(data.token)
+      console.log(tokenDecodificado)
+      dispatch({
+        type: types.setUserState,
+        payload: data
+      })
+      setMsg('Usuario conectado')
+      navigate('/')
+    } catch (error) {
+      console.log(error)
+      setMsg('Error de conexion')
+      dispatch({
+        type: types.setError,
+        payload: error
+      })
+    }
   }
 
   return (
@@ -73,19 +139,34 @@ export default function Login () {
                   id='email'
                   label='Correo electrónico'
                   name='email'
+                  onChange={handleChange}
                   autoComplete='email'
                   autoFocus
                 />
-                <TextField
-                  margin='normal'
-                  required
-                  fullWidth
-                  name='password'
-                  label='Contraseña'
-                  type='password'
-                  id='password'
-                  autoComplete='current-password'
-                />
+                <FormControl sx={{ width: '50ch' }} variant='outlined'>
+                  <InputLabel htmlFor='outlined-adornment-password'>
+                    Contraseña
+                  </InputLabel>
+                  <OutlinedInput
+                    id='password'
+                    name='password'
+                    type={showPassword ? 'text' : 'password'}
+                    onChange={handleChange}
+                    endAdornment={
+                      <InputAdornment position='end'>
+                        <IconButton
+                          aria-label='toggle password visibility'
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          edge='end'
+                        >
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    }
+                    label='Contraseña'
+                  />
+                </FormControl>
                 <FormControlLabel
                   control={<Checkbox value='remember' color='primary' />}
                   label='Recordar la contraseña'
@@ -93,11 +174,13 @@ export default function Login () {
                 <Button
                   type='submit'
                   fullWidth
+                  onClick={handleSubmit}
                   variant='contained'
                   sx={{ mt: 3, mb: 2 }}
                 >
                   Ingresa a tu cuenta
                 </Button>
+
                 <Grid container>
                   <Grid item xs>
                     <Olvido />
@@ -107,6 +190,13 @@ export default function Login () {
                   </Grid>
                 </Grid>
               </Box>
+              <TextField
+                  margin='normal'
+                  fullWidth
+                  variant='standard'
+                  name='msg'
+                  value={msg}
+                />
             </Box>
           </Container>
         </DialogContent>

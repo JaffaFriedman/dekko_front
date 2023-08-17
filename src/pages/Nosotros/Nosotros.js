@@ -1,9 +1,9 @@
-import * as React from 'react'
 import ImageList from '@mui/material/ImageList'
 import ImageListItem from '@mui/material/ImageListItem'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import Card from 'react-bootstrap/Card'
+
 function srcset (image: string, size: number, rows = 1, cols = 1) {
   return {
     src: `${image}?w=${size * cols}&h=${size * rows}&fit=crop&auto=format`,
@@ -75,7 +75,7 @@ const itemData = [
 
 const Nosotros = () => {
   return (
-    <section nosotros className='mb-5'>
+    <section className='mb-5'>
       <div className='bg-dark text-bg-dark pb-2 mb-5 ps-5  mb-1 text-center'>
         <h3> SOBRE NOSOTROS </h3>
       </div>
