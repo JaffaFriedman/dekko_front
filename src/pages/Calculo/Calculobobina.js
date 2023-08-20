@@ -1,4 +1,7 @@
-import React, { useState } from 'react'
+import   { useState, useContext } from 'react'
+import { GlobalContext } from '../../context/global/globalContext'
+
+
 import Button from '@mui/material/Button'
 import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
@@ -24,10 +27,12 @@ const Item = styled(Paper)(({ theme }) => ({
     color: theme.palette.text.secondary
 }))
 
-export default function Calculobobina({ categoria, producto, cantidad, setCantidad }) {
+export default function Calculobobina() {
+    const { categoria, producto, setCantidad,alto,
+        setAlto,
+        ancho,
+        setAncho } = useContext(GlobalContext);
     let [open, setOpen] = useState(false)
-    let [ancho, setAncho] = useState(100)
-    let [alto, setAlto] = useState(100)
     let [texto, setTexto] = useState('')
     let [textoReq, setTextoReq] = useState('')
     let [textoResto, setTextoResto] = useState('')
@@ -72,7 +77,12 @@ export default function Calculobobina({ categoria, producto, cantidad, setCantid
         setOpen(false)
     }
 
-
+    const handleChangeAncho = (event) => {
+        setAncho(event.target.value)
+      }
+      const handleChangeAlto = (event) => {
+        setAlto(event.target.value)
+      }
     return (
         <div>
             <Button onClick={handleClickOpen} color="primary"><HelpCenterIcon color="primary" />Calculadora de bobinas</Button>
@@ -125,11 +135,7 @@ export default function Calculobobina({ categoria, producto, cantidad, setCantid
                                                 name='ancho'
                                                 autoComplete='ancho'
                                                 value={ancho}
-                                                onChange={(
-                                                    event: React.ChangeEvent<HTMLInputElement>
-                                                ) => {
-                                                    setAncho(event.target.value)
-                                                }}
+                                                onChange={handleChangeAncho}
                                                 autoFocus
                                             />
                                         </Item>
@@ -146,11 +152,7 @@ export default function Calculobobina({ categoria, producto, cantidad, setCantid
                                                 placeholder='Ingresa el alto del muro en cm'
                                                 autoComplete='alto'
                                                 value={alto}
-                                                onChange={(
-                                                    event: React.ChangeEvent<HTMLInputElement>
-                                                ) => {
-                                                    setAlto(event.target.value)
-                                                }}
+                                                onChange={handleChangeAlto}
                                             />
                                         </Item>
                                     </Stack>

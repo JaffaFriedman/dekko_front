@@ -29,7 +29,7 @@ export default function Registro () {
   const handleClickShowPassword = () => setShowPassword(show => !show)
 
   const handleMouseDownPassword = (
-    event: React.MouseEvent<HTMLButtonElement>
+    event
   ) => {
     event.preventDefault()
   }

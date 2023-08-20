@@ -1,6 +1,5 @@
 import * as React from 'react'
 import { useState, useContext } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { UserContext } from '../../context/user/userContext'
 import { types } from '../../context/user/userReducer'
 import axios from 'axios'
@@ -28,72 +27,74 @@ import InputAdornment from '@mui/material/InputAdornment'
 import Visibility from '@mui/icons-material/Visibility'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
 import jwtDecode from 'jwt-decode'
+import Mensaje from '../../pages/Mensaje/Mensaje'
+import { GlobalContext } from '../../context/global/globalContext'
 
 export default function Login () {
+  const {setVisible,setMensaje}  = useContext(GlobalContext);
   const [showPassword, setShowPassword] = React.useState(false)
 
   const handleClickShowPassword = () => setShowPassword(show => !show)
 
-  const handleMouseDownPassword = (
-    event
-  ) => {
+  const handleMouseDownPassword = event => {
     event.preventDefault()
   }
 
   const [open, setOpen] = React.useState(false)
-  const [msg, setMsg] = useState('')
 
   const handleClickOpen = () => {
-    setMsg('');
     setOpen(true)
+  }
+
+  const despliegaMensaje = (m) => {
+    setMensaje(m)
+    setVisible(true)
   }
 
   const handleClose = () => {
     setOpen(false)
-    setMsg('');
   }
 
-  const [, dispatch] = useContext(UserContext)
-  const navigate = useNavigate()
+  const [state, dispatch] = useContext(UserContext)
 
   const initialUser = {
+    name: 'ACCEDER',
     email: '',
     password: ''
   }
-  const [user, setUser] = useState(initialUser)
+  const [formUser, setFormUser] = useState(initialUser)
 
   const handleChange = e => {
-    setUser({
-      ...user,
+    setFormUser({
+      ...formUser,
       [e.target.name]: e.target.value
     })
   }
 
+  let tokenDecodificado = {}
   const api = axios.create({
-    baseURL: "https://uddjaffa.onrender.com"
-   // baseURL: 'http://localhost:27017'
+    baseURL: 'https://uddjaffa.onrender.com'
+    // baseURL: 'http://localhost:27017'
   })
 
   const handleSubmit = async e => {
-    console.log(user)
     e.preventDefault()
     try {
-      const { data } = await api.post('/users/login', user, {
+      const { data } = await api.post('/users/login', formUser, {
         headers: {
           'Content-Type': 'application/json'
         }
       })
-      const tokenDecodificado = jwtDecode(data.token)
+      tokenDecodificado = jwtDecode(data.token)
       console.log(tokenDecodificado)
       dispatch({
         type: types.setUserState,
-        payload: data
+        payload: tokenDecodificado
       })
-      setMsg('Usuario conectado')
-      navigate('/')
+      despliegaMensaje( 'Bienvenido ' + state.user.nombre)
     } catch (error) {
       console.log(error)
-      setMsg('Error de conexion')
+      despliegaMensaje('Error de conexion')
       dispatch({
         type: types.setError,
         payload: error
@@ -105,8 +106,10 @@ export default function Login () {
     <div>
       <Button onClick={handleClickOpen} color='primary'>
         <AccountCircle color='primary' />
-        ACCEDER
+        {state?.user ? <p> {state.user.nombre}</p> : <p>Inicia sesión</p>}
       </Button>
+
+
       <Dialog open={open} onClose={handleClose}>
         <DialogContent>
           <Container component='main' maxWidth='xs' className='text-center'>
@@ -180,6 +183,7 @@ export default function Login () {
                 >
                   Ingresa a tu cuenta
                 </Button>
+                <Mensaje />
 
                 <Grid container>
                   <Grid item xs>
@@ -190,13 +194,6 @@ export default function Login () {
                   </Grid>
                 </Grid>
               </Box>
-              <TextField
-                  margin='normal'
-                  fullWidth
-                  variant='standard'
-                  name='msg'
-                  value={msg}
-                />
             </Box>
           </Container>
         </DialogContent>

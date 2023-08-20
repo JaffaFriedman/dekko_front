@@ -1,3 +1,5 @@
+import { useContext } from 'react';
+import { GlobalContext } from '../../context/global/globalContext'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import { Container } from 'react-bootstrap'
@@ -73,7 +75,8 @@ const ImageMarked = styled('span')(({ theme }) => ({
   transition: theme.transitions.create('opacity')
 }))
 
-export default function Familias ({ familia, setFamilia }) {
+export default function Familias () {
+  const {setFamilia } = useContext(GlobalContext);
   const navigate = useNavigate()
   const handleFamilia = p => {
     setFamilia(p)

@@ -1,4 +1,7 @@
 import React from 'react'
+import { useContext } from 'react'
+import { GlobalContext } from '../../context/global/globalContext'
+
 import Container from 'react-bootstrap/Container'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
@@ -24,27 +27,37 @@ const Item = styled(Paper)(({ theme }) => ({
   width: '12rem',
   color: theme.palette.text.secondary
 }))
-const options = { style: 'currency', currency: 'CLP' };
+const options = { style: 'currency', currency: 'CLP' }
 
-function Cortinas({ familia, categoria, producto }) {
+function Cortinas () {
+  const {
+    familia,
+    categoria,
+    producto,
+    cantidad,
+    alto,
+    ancho,
+    mt2,
+    precio,
+    precioMt2,
+    setCantidad,
+    setAlto,
+    setAncho,
+    setMt2,
+    setPrecio,
+    setPrecioMt2
+  } = useContext(GlobalContext)
   const [show, setShow] = useState(false)
-  const [precioMt2, setPrecioMt2] = useState('')
-  let [ancho, setAncho] = useState(100)
-  let [alto, setAlto] = useState(100)
-  let [mt2, setMt2] = useState(1)
-  let [precio, setPrecio] = useState(0)
   let [cortina, setCortina] = useState('')
   let [glosa, setGlosa] = useState('')
-  //  const [precioMural, setPrecioMural] = useState("");
-  let [cantidad, setCantidad] = useState(1)
+
   const navigate = useNavigate()
 
   const handleSubmit = event => {
     event.preventDefault()
-    //const data = new FormData(event.currentTarget);
   }
 
-  const handleCategoria = p => {
+  const handleCategoria = () => {
     navigate('/Productos')
   }
 
@@ -58,33 +71,52 @@ function Cortinas({ familia, categoria, producto }) {
     setGlosa('')
   }
 
-  const handleGlosa = p => {
+  const recalcula  = () => {
     setMt2((ancho * alto) / (100 * 100))
     setPrecio(mt2 * precioMt2)
+  }
+
+  const handleChangeCantidad = event => {
+    setCantidad(event.target.value)
+    recalcula()
+  }
+  const handleChangeAncho = event => {
+    setAncho(event.target.value)
+    recalcula()
+  }
+  const handleChangeAlto = event => {
+    setAlto(event.target.value)
+    recalcula()
+  }
+
+  const handleGlosa = p => {
+    recalcula()
     setGlosa(
       p.nombre +
-      '  - ' +
-      cortina +
-      '  ' +
-      '. Medidas ancho: ' +
-      ancho +
-      ' cm. alto: ' +
-      alto +
-      ' cm. mt2: ' +
-      mt2.toFixed(2)
+        '  - ' +
+        cortina +
+        '  ' +
+        '. Medidas ancho: ' +
+        ancho +
+        ' cm. alto: ' +
+        alto +
+        ' cm. mt2: ' +
+        mt2.toFixed(2)
     )
     setShow(false)
   }
 
   const handleCortina = (p, v) => {
-    setMt2((ancho * alto) / (100 * 100))
     setPrecioMt2(p.precio)
-    setPrecio(mt2 * precioMt2)
     setCortina(v.descripcion)
+    recalcula()
   }
-  const p = tablaProductos.find(c => c.nombre.toString() === producto.toString() &&
-    c.categoria.toString() === categoria.categoria &&
-    c.familia === categoria.familia)
+  const p = tablaProductos.find(
+    c =>
+      c.nombre.toString() === producto.toString() &&
+      c.categoria.toString() === categoria.categoria &&
+      c.familia === categoria.familia
+  )
 
   return (
     <>
@@ -96,12 +128,11 @@ function Cortinas({ familia, categoria, producto }) {
       </div>
       <Container>
         <Box sx={{ flexGrow: 1 }}>
-
           <Grid container spacing={2}>
             <Grid item xs={8}>
               <Carousel className='pt-4 pb-4 ps-3 centered '>
                 {p.url.map((v, i) => (
-                  <Carousel.Item>
+                  <Carousel.Item key={i}>
                     <img
                       className='d-block w-100 image-responsive justify-content-center '
                       alt={p.descripcion}
@@ -137,7 +168,10 @@ function Cortinas({ familia, categoria, producto }) {
                 {precio === 0
                   ? ''
                   : 'Precio ' +
-                  parseFloat(precio.toFixed(0)).toLocaleString('es-CL', options)}{' '}
+                    parseFloat(precio.toFixed(0)).toLocaleString(
+                      'es-CL',
+                      options
+                    )}{' '}
               </h6>
               <Box
                 component='form'
@@ -157,11 +191,7 @@ function Cortinas({ familia, categoria, producto }) {
                     name='cantidad'
                     autoComplete='cantidad'
                     value={cantidad}
-                    onChange={(
-                      event: React.ChangeEvent<HTMLInputElement>
-                    ) => {
-                      setCantidad(event.target.value)
-                    }}
+                    onChange={handleChangeCantidad}
                     autoFocus
                   />
                 </Stack>
@@ -171,9 +201,10 @@ function Cortinas({ familia, categoria, producto }) {
                 {precio === 0
                   ? ''
                   : 'Precio Total ' +
-                  parseFloat(
-                    (precio * cantidad).toFixed(0)
-                  ).toLocaleString('es-CL', options)}{' '}
+                    parseFloat((precio * cantidad).toFixed(0)).toLocaleString(
+                      'es-CL',
+                      options
+                    )}{' '}
               </h5>
               <React.Fragment className='mt-4 mb-4'>
                 <Agregarcarro />
@@ -203,12 +234,11 @@ function Cortinas({ familia, categoria, producto }) {
                         .filter(
                           t =>
                             t.nombre.toString() === producto.toString() &&
-                            t.categoria.toString() ===
-                            categoria.categoria &&
+                            t.categoria.toString() === categoria.categoria &&
                             t.familia === categoria.familia
                         )
                         .map((v, i) => (
-                          <Item>
+                          <Item key={i}>
                             <img
                               className='d-block w-40 image-responsive justify-content-center '
                               style={{
@@ -256,13 +286,7 @@ function Cortinas({ familia, categoria, producto }) {
                             name='ancho'
                             autoComplete='ancho'
                             value={ancho}
-                            onChange={(
-                              event: React.ChangeEvent<HTMLInputElement>
-                            ) => {
-                              setAncho(event.target.value)
-                              setMt2((ancho * alto) / (100 * 100))
-                              setPrecio(mt2 * precioMt2)
-                            }}
+                            onChange={handleChangeAncho}
                             autoFocus
                           />
                         </Item>
@@ -279,13 +303,7 @@ function Cortinas({ familia, categoria, producto }) {
                             placeholder='Ingresa el alto en cm'
                             autoComplete='alto'
                             value={alto}
-                            onChange={(
-                              event: React.ChangeEvent<HTMLInputElement>
-                            ) => {
-                              setAlto(event.target.value)
-                              setMt2((ancho * alto) / (100 * 100))
-                              setPrecio(mt2 * precioMt2)
-                            }}
+                            onChange={handleChangeAlto}
                           />
                         </Item>
                       </Stack>
@@ -312,7 +330,6 @@ function Cortinas({ familia, categoria, producto }) {
               </Button>
             </Grid>
           </Grid>
-
         </Box>
       </Container>
     </>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import  { useState, useContext } from 'react'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import Button from '@mui/material/Button'
 import Dialog from '@mui/material/Dialog'
@@ -10,13 +10,15 @@ import Container from '@mui/material/Container'
 import Box from '@mui/material/Box'
 import Badge from '@mui/material/Badge'
 import Stack from '@mui/material/Stack'
+import { GlobalContext } from '../../context/global/globalContext'
+
 
 export default function Carrito () {
+  const {cantidadCarro,setCantidadCarro}   = useContext(GlobalContext);
   let [open, setOpen] = useState(false)
-  let [cantidad, setCantidad] = useState(0)
-  const handleClickOpen = () => {
+   const handleClickOpen = () => {
     setOpen(true)
-    setCantidad(cantidad + 1)
+    setCantidadCarro(cantidadCarro + 1)
   }
 
   const handleClose = () => {
@@ -25,7 +27,7 @@ export default function Carrito () {
 
   return (
     <div>
-      <Badge color='secondary' badgeContent={cantidad}>
+      <Badge color='secondary' badgeContent={cantidadCarro}>
         <Button onClick={handleClickOpen} color='secondary'>
           <ShoppingCartIcon color='primary' />
         </Button>
@@ -56,6 +58,9 @@ export default function Carrito () {
                 </Badge>
               </Stack>
             </Box>
+            <ul>
+
+    </ul>
           </Container>
         </DialogContent>
         <DialogActions>

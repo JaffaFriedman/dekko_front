@@ -1,6 +1,4 @@
 import { Routes, Route } from 'react-router-dom'
-import  { useState } from 'react'
-
 import Agregarcarro from '../../pages/Agregarcarro/Agregarcarro'
 import Bobina from '../../pages/Bobina/Bobina'
 import Metro from '../../pages/Metro/Metro'
@@ -11,7 +9,7 @@ import Calculorollo from '../../pages/Calculo/Calculorollo'
 import Carrito from '../../pages/Carrito/Carrito'
 import Catalogo from '../../pages/Catalogo/Catalogo'
 import Checkout from '../../pages/Checkout/Checkout'
-import Construccion from '../../pages/Construccion/Construccion'
+
 import Contacto from '../../pages/Contacto/Contacto'
 import Cortinas from '../../pages/Cortinas/Cortinas'
 import Familias from '../../pages/Familias/Familias'
@@ -21,7 +19,6 @@ import Home from '../../pages/Home/Home'
 import Instructivo from '../../pages/Instructivo/Instructivo'
 import Layout from '../../components/Layout/Layout'
 import Login from '../../pages/Login/Login'
-import Migas from '../../pages/Migas/Migas'
 import Navigation from '../Navigation/Navigation'
 import Nosotros from '../../pages/Nosotros/Nosotros'
 import Olvido from '../../pages/Olvido/Olvido'
@@ -29,18 +26,13 @@ import Pago from '../../pages/Pago/Pago'
 import Papeles from '../../pages/Papeles/Papeles'
 import Perfil from '../../pages/Perfil/Perfil'
 import Productos from '../../pages/Productos/Productos'
-import Prueba from '../../pages/Prueba/Prueba'
+
 import Recuperar from '../../pages/Recuperar/Recuperar'
 import Registro from '../../pages/Registro/Registro'
 import Rollos from '../../pages/Rollos/Rollos'
 import Separador from '../../pages/Separador/Separador'
 
-
-function Rutas() {
-  let [familia, setFamilia] = useState({})
-  let [categoria, setCategoria] = useState({})
-  let [producto, setProducto] = useState('')
-  let [cantidad, setCantidad] = useState(1)
+function Rutas () {
   return (
     <div>
       <Routes>
@@ -48,99 +40,34 @@ function Rutas() {
           <Route path='/' element={<Home />} />
           <Route path='/buscar' element={<Buscar />} />
           <Route path='/carrito' element={<Carrito />} />
-          <Route path='/carrito' element={<Carrito />} />
           <Route path='/checkout' element={<Checkout />} />
-          <Route path='/construccion' element={<Construccion />} />
           <Route path='/contacto' element={<Contacto />} />
           <Route path='/footer' element={<Footer />} />
           <Route path='/garantias' element={<Garantias />} />
           <Route path='/instructivo' element={<Instructivo />} />
           <Route path='/login' element={<Login />} />
-          <Route path='/migas' element={<Migas />} />
           <Route path='/navigation' element={<Navigation />} />
           <Route path='/nosotros' element={<Nosotros />} />
           <Route path='/olvido' element={<Olvido />} />
           <Route path='/pago' element={<Pago />} />
           <Route path='/perfil' element={<Perfil />} />
-          <Route path='/prueba' element={<Prueba />} />
           <Route path='/recuperar' element={<Recuperar />} />
           <Route path='/registro' element={<Registro />} />
           <Route path='/separador' element={<Separador />} />
-          <Route
-            path='/familias'
-            element={<Familias familia={familia} setFamilia={setFamilia} />}
-          />
-          <Route
-            path='/catalogo'
-            element={
-              <Catalogo
-                familia={familia}
-                categoria={categoria}
-                setCategoria={setCategoria}
-              />
-            }
-          />
-          <Route
-            path='/productos'
-            element={
-              <Productos
-                familia={familia}
-                categoria={categoria}
-                producto={producto}
-                setProducto={setProducto}
-              />
-            }
-          />
-          <Route
-            path='/papeles'
-            element={
-              <Papeles
-                familia={familia}
-                categoria={categoria}
-                producto={producto}
-              />
-            }
-          />
-          <Route
-            path='/cortinas'
-            element={
-              <Cortinas
-                familia={familia}
-                categoria={categoria}
-                producto={producto}
-              />
-            }
-          />
-          <Route
-            path='/rollos'
-            element={<Rollos categoria={categoria} producto={producto} cantidad={cantidad} setCantidad={setCantidad} />}
-          />
-          <Route
-            path='/bobina'
-            element={<Bobina categoria={categoria} producto={producto} cantidad={cantidad} setCantidad={setCantidad}/>}
-          />
-          <Route
-            path='/metro'
-            element={<Metro categoria={categoria} producto={producto} cantidad={cantidad} setCantidad={setCantidad}/>}
-          />
-          <Route
-            path='/agregarcarro'
-            element={<Agregarcarro producto={producto} />}
-          />
-          <Route
-            path='/calculo'
-            element={<Calculo categoria={categoria}  producto={producto}  cantidad={cantidad} setCantidad={setCantidad} />}
-          />
-          <Route
-            path='/calculobobina'
-            element={<Calculobobina categoria={categoria}  producto={producto}  cantidad={cantidad} setCantidad={setCantidad} />}
-          />
-          <Route
-            path='/calculorollo'
-            element={<Calculorollo  categoria={categoria}  producto={producto} cantidad={cantidad} setCantidad={setCantidad}/>}
-          />
+          <Route path='/familias' element={<Familias />} />
+          <Route path='/catalogo' element={<Catalogo />} />
+          <Route path='/productos' element={<Productos />} />
+          <Route path='/papeles' element={<Papeles />} />
+          <Route path='/cortinas' element={<Cortinas />} />
+          <Route path='/rollos' element={<Rollos />} />
+          <Route path='/bobina' element={<Bobina />} />
+          <Route path='/metro' element={<Metro />} />
+          <Route path='/agregarcarro' element={<Agregarcarro />} />
+          <Route path='/calculo' element={<Calculo />} />
+          <Route path='/calculobobina' element={<Calculobobina />} />
+          <Route path='/calculorollo' element={<Calculorollo />} />
         </Route>
-        <Route path="*" element={<h1>Not Found</h1>} />
+        <Route path='*' element={<h1>Not Found</h1>} />
       </Routes>
     </div>
   )

@@ -1,4 +1,6 @@
 import React from 'react'
+import { useContext } from 'react';
+import { GlobalContext } from '../../context/global/globalContext'
 import Container from 'react-bootstrap/Container'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
@@ -12,14 +14,14 @@ import Form from 'react-bootstrap/Form'
 import { styled } from '@mui/material/styles'
 import tablaProductos from '../../pages/Tablas/Tablaproductos'
 import { useState } from 'react'
-import Agregarcarro from '../../pages/Agregarcarro/Agregarcarro'
-import { SelectChangeEvent } from '@mui/material/Select';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import Calculobobina from '../../pages/Calculo/Calculobobina'
+ 
+
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
   ...theme.typography.body2,
@@ -28,14 +30,13 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary
 }))
 
-function Bobina({ categoria, producto, cantidad, setCantidad   }) {
+function Bobina() {
+  const { categoria, producto, cantidad, setCantidad    } = useContext(GlobalContext);
   const navigate = useNavigate()
 
+ 
 
   const options = { style: 'currency', currency: 'CLP' };
-
-
-
 
   let [color, setColor] = useState(0)
   let [gramaje, setGramaje] = useState(0)
@@ -49,7 +50,7 @@ function Bobina({ categoria, producto, cantidad, setCantidad   }) {
     setShow(true)
 
   }
-  const handleCategoria = p => {
+  const handleCategoria = () => {
     //setShow(true);
     navigate('/Productos')
   }
@@ -58,20 +59,24 @@ function Bobina({ categoria, producto, cantidad, setCantidad   }) {
     setShow(false)
   }
 
-  const handleGlosa = p => {
+  const handleGlosa = () => {
     setShow(false)
   }
-
-
+  const agregarAlCarrito= () => {
+    setShow(false)
+  }
 
   const p = tablaProductos.find(c => c.nombre.toString() === producto.toString() &&
     c.categoria.toString() === categoria.categoria &&
     c.familia === categoria.familia)
 
-  const handleChange = (event: SelectChangeEvent) => {
+  const handleChange = (event) => {
     setGramaje(event.target.value);
   };
 
+  const handleChangeCantidad = (event) => {
+    setCantidad(event.target.value);
+  };
   return (
     <>
       <div className='bg-dark text-bg-dark pb-2 ps-5  mb-1 text-center'>
@@ -113,7 +118,7 @@ function Bobina({ categoria, producto, cantidad, setCantidad   }) {
                   onChange={handleChange}
                 >
                   {p.pesos.map((v, i) => (
-                    <FormControlLabel value={i} control={<Radio />} label={v.peso} />
+                    <FormControlLabel key={i} value={i} control={<Radio />} label={v.peso} />
                   ))}
                 </RadioGroup>
               </FormControl>
@@ -157,11 +162,7 @@ function Bobina({ categoria, producto, cantidad, setCantidad   }) {
                       name='cantidad'
                       autoComplete='cantidad'
                       value={cantidad}
-                      onChange={(
-                        event: React.ChangeEvent<HTMLInputElement>
-                      ) => {
-                        setCantidad(event.target.value)
-                      }}
+                      onChange={handleChangeCantidad}
                       autoFocus
                     />
                   </Item>
@@ -175,9 +176,15 @@ function Bobina({ categoria, producto, cantidad, setCantidad   }) {
                 }
               </h5>
 
-              <React.Fragment className='mt-4 mb-4'>
-                <Agregarcarro />
-              </React.Fragment>
+ 
+              <Button
+                variant='text'
+                sx={{ mt: 3, mb: 2 }}
+                color='primary'
+                onClick={() => agregarAlCarrito()}
+              >
+                Agregar Carro 
+              </Button>
               <Form>
                 <Modal
                   show={show}
@@ -201,7 +208,7 @@ function Bobina({ categoria, producto, cantidad, setCantidad   }) {
                     >
                       {p.colores
                         .map((v, i) => (
-                          <Item>
+                          <Item  key={i} >
                             <img
                               className='d-block w-40 image-responsive justify-content-center '
                               style={{
@@ -223,9 +230,6 @@ function Bobina({ categoria, producto, cantidad, setCantidad   }) {
                           </Item>
                         ))}
                     </Stack>
-
-
-
                     <Box
                       component='form'
                       onSubmit={handleSubmit}

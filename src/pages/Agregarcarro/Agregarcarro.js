@@ -1,15 +1,19 @@
 import * as React from 'react'
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import Avatar from '@mui/material/Avatar';
-import CssBaseline from '@mui/material/CssBaseline';
-import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import Button from '@mui/material/Button'
+import Dialog from '@mui/material/Dialog'
+import DialogActions from '@mui/material/DialogActions'
+import DialogContent from '@mui/material/DialogContent'
+import Avatar from '@mui/material/Avatar'
+import CssBaseline from '@mui/material/CssBaseline'
+import Box from '@mui/material/Box'
+import Container from '@mui/material/Container'
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
+import { useContext } from 'react'
+import { GlobalContext } from '../../context/global/globalContext'
 
-export default function Agregarcarro({ categoria, producto, ancho, alto, cantidad, setCantidad, mt2, precio }) {
+export default function Agregarcarro () {
+  const { glosa, cantidad, precio, agregarItemCarrito } =
+    useContext(GlobalContext)
   /*
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -17,20 +21,24 @@ export default function Agregarcarro({ categoria, producto, ancho, alto, cantida
     });
   };
   */
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(false)
   const handleClickOpen = () => {
-    setOpen(true);
-  };
+    setOpen(true)
+    agregarItemCarrito()
+  }
   const handleClose = () => {
-    setOpen(false);
-  };
+    setOpen(false)
+  }
 
   return (
     <div>
-      <Button onClick={handleClickOpen} color="primary"><ShoppingCartIcon color="primary" />Agregar al Carro</Button>
+      <Button onClick={handleClickOpen} color='primary'>
+        <ShoppingCartIcon color='primary' />
+        Agregar al Carro
+      </Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogContent>
-          <Container component="main" maxWidth="xs" className="text-center">
+          <Container component='main' maxWidth='xs' className='text-center'>
             <CssBaseline />
             <Box
               sx={{
@@ -38,32 +46,31 @@ export default function Agregarcarro({ categoria, producto, ancho, alto, cantida
                 marginBottom: 4,
                 display: 'flex',
                 flexDirection: 'column',
-                alignItems: 'center',
+                alignItems: 'center'
               }}
             >
-              <p>Ancho {ancho} </p>
-              <p>alto {alto} </p>
-              <p>cantidad {cantidad} </p>
-              <p>producto {producto} </p>
-              <p>precio {precio} </p>
               <Avatar sx={{ m: 1, bgcolor: 'primary.light' }}>
                 <ShoppingCartIcon />
               </Avatar>
+              <p>Se agrego al carro {cantidad} </p>
+              <p> {glosa} </p>
+              <p>Precio Unitario {precio} </p>
+
               <Button
-                type="submit"
+                type='submit'
                 fullWidth
-                variant="contained"
+                variant='contained'
                 sx={{ mt: 3, mb: 2 }}
               >
-                Pagar
+                Ir a Pagar
               </Button>
             </Box>
           </Container>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} >Cancelar</Button>
+          <Button onClick={handleClose}>Seguir Comprando</Button>
         </DialogActions>
       </Dialog>
     </div>
-  );
+  )
 }

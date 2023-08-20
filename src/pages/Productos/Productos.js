@@ -3,9 +3,16 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import { useNavigate } from 'react-router-dom'
 import tablaProductos from '../../pages/Tablas/Tablaproductos'
+import { useContext } from 'react';
+import { GlobalContext } from '../../context/global/globalContext'
 
-function Productos ({ familia, categoria, producto, setProducto }) {
+function Productos () {
+  const { familia, categoria, setProducto, setCantidad,setAncho,setAlto,setMt2 }  = useContext(GlobalContext);
   const navigate = useNavigate()
+  setCantidad(1);
+  setAlto(100);
+  setAncho(100);
+  setMt2(100);
 
   const handleProducto = p => {
     setProducto(p.nombre)

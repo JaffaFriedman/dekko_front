@@ -1,28 +1,20 @@
-import * as React from 'react'
+import {useContext}  from 'react'
+import { GlobalContext } from '../../context/global/globalContext'
+
+
 import Box from '@mui/material/Box'
 import Alert from '@mui/material/Alert'
 import IconButton from '@mui/material/IconButton'
 import Collapse from '@mui/material/Collapse'
-import Button from '@mui/material/Button'
 import CloseIcon from '@mui/icons-material/Close'
 
-export default function Recuperar () {
-  const [open, setOpen] = React.useState(false)
+export default function Mensaje () {
+  const {mensaje ,setVisible, visible} = useContext(GlobalContext);
+
 
   return (
     <Box sx={{ width: '100%' }}>
-      <Button
-        disabled={open}
-        variant='contained'
-        sx={{ mt: 3, mb: 2 }}
-        onClick={() => {
-          setOpen(true)
-        }}
-      >
-        {' '}
-        Enviar código de recuperación
-      </Button>
-      <Collapse in={open}>
+      <Collapse in={visible}>
         <Alert
           action={
             <IconButton
@@ -30,7 +22,7 @@ export default function Recuperar () {
               color='inherit'
               size='small'
               onClick={() => {
-                setOpen(false)
+                setVisible(false)
               }}
             >
               <CloseIcon fontSize='inherit' />
@@ -38,7 +30,7 @@ export default function Recuperar () {
           }
           sx={{ mb: 2 }}
         >
-          Código de recuperación enviado al correo
+         { mensaje}
         </Alert>
       </Collapse>
     </Box>

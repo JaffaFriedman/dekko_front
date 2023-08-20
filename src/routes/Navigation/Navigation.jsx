@@ -64,17 +64,7 @@ const Navigation = () => {
               <NavDropdown.Item as={NavLink} to="/perfil">
                 Perfil
               </NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item as={NavLink} to="/migas">
-                Migas
-              </NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item as={NavLink} to="/construccion">
-                Construccion
-              </NavDropdown.Item>
-              <NavDropdown.Item as={NavLink} to="/prueba">
-                Prueba
-              </NavDropdown.Item>
+       
             </NavDropdown>
           </Nav>
         </Navbar.Collapse>
