@@ -7,16 +7,18 @@ import { useContext } from 'react';
 import { GlobalContext } from '../../context/global/globalContext'
 
 function Productos () {
-  const { familia, categoria, setGlosa,setProducto, setCantidad,setAncho,setAlto,setMt2 }  = useContext(GlobalContext);
+  const { familia, categoria, setGlosa,setProducto, setCantidad,setAncho,setAlto,setMt2,setPrecio }  = useContext(GlobalContext);
   const navigate = useNavigate()
   setCantidad(1);
   setAlto(100);
   setAncho(100);
-  setMt2(100);
+  setMt2(1);
   setGlosa('');
 
   const handleProducto = p => {
     setProducto(p.nombre)
+    setPrecio(p.precio)
+
     if (categoria.link !=='' ) navigate(categoria.link);
     else   navigate(familia.link)
   }

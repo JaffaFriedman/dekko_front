@@ -45,12 +45,14 @@ function Cortinas () {
     setAncho,
     setMt2,
     setPrecio,
+    setImagen,
+    setGlosa,
+    glosa,
     setPrecioMt2
   } = useContext(GlobalContext)
   const [show, setShow] = useState(false)
   let [cortina, setCortina] = useState('')
-  let [glosa, setGlosa] = useState('')
-
+ 
   const navigate = useNavigate()
 
   const handleSubmit = event => {
@@ -63,12 +65,10 @@ function Cortinas () {
 
   const handleTextura = () => {
     setShow(true)
-    setGlosa('')
   }
 
   const handleSalir = () => {
     setShow(false)
-    setGlosa('')
   }
 
   const recalcula  = () => {
@@ -130,6 +130,7 @@ function Cortinas () {
         <Box sx={{ flexGrow: 1 }}>
           <Grid container spacing={2}>
             <Grid item xs={8}>
+          
               <Carousel className='pt-4 pb-4 ps-3 centered '>
                 {p.url.map((v, i) => (
                   <Carousel.Item key={i}>
@@ -138,6 +139,7 @@ function Cortinas () {
                       alt={p.descripcion}
                       src={v}
                     />
+                      {setImagen(v)}
                     <Carousel.Caption>
                       <h5>{p.descripcion}</h5>
                     </Carousel.Caption>
@@ -165,8 +167,12 @@ function Cortinas () {
               </h6>
               <h6>
                 {' '}
-                {precio === 0
-                  ? ''
+                {glosa === ''
+                  ? 'Precio mt2 desde ' +
+                  parseFloat(precio.toFixed(0)).toLocaleString(
+                    'es-CL',
+                    options)
+                  
                   : 'Precio ' +
                     parseFloat(precio.toFixed(0)).toLocaleString(
                       'es-CL',
@@ -206,9 +212,13 @@ function Cortinas () {
                       options
                     )}{' '}
               </h5>
-              <React.Fragment className='mt-4 mb-4'>
-                <Agregarcarro />
-              </React.Fragment>
+              {glosa === '' ? (
+                <p>{familia.mensaje}</p>
+              ) : (
+                <React.Fragment className='mt-4 mb-4'>
+                  <Agregarcarro />
+                </React.Fragment>
+              )}
               <Form>
                 <Modal
                   show={show}

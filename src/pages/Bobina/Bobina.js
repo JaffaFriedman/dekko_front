@@ -1,5 +1,5 @@
 import React from 'react'
-import { useContext } from 'react';
+import { useContext } from 'react'
 import { GlobalContext } from '../../context/global/globalContext'
 import Container from 'react-bootstrap/Container'
 import Box from '@mui/material/Box'
@@ -14,13 +14,13 @@ import Form from 'react-bootstrap/Form'
 import { styled } from '@mui/material/styles'
 import tablaProductos from '../../pages/Tablas/Tablaproductos'
 import { useState } from 'react'
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel'
+import FormControl from '@mui/material/FormControl'
+import FormLabel from '@mui/material/FormLabel'
+import Radio from '@mui/material/Radio'
+import RadioGroup from '@mui/material/RadioGroup'
 import Calculobobina from '../../pages/Calculo/Calculobobina'
- 
+import Agregarcarro from '../../pages/Agregarcarro/Agregarcarro'
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -30,13 +30,12 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary
 }))
 
-function Bobina() {
-  const { categoria, producto, cantidad, setCantidad    } = useContext(GlobalContext);
+function Bobina () {
+  const { categoria, producto, cantidad, setImagen, setCantidad, setGlosa } =
+    useContext(GlobalContext)
   const navigate = useNavigate()
 
- 
-
-  const options = { style: 'currency', currency: 'CLP' };
+  const options = { style: 'currency', currency: 'CLP' }
 
   let [color, setColor] = useState(0)
   let [gramaje, setGramaje] = useState(0)
@@ -48,8 +47,13 @@ function Bobina() {
   }
   const handleTextura = () => {
     setShow(true)
-
   }
+
+  const handleColor = i => {
+    setColor(i)
+    // setImagen(p.colores[color].url)
+  }
+
   const handleCategoria = () => {
     //setShow(true);
     navigate('/Productos')
@@ -62,21 +66,21 @@ function Bobina() {
   const handleGlosa = () => {
     setShow(false)
   }
-  const agregarAlCarrito= () => {
-    setShow(false)
+
+  const p = tablaProductos.find(
+    c =>
+      c.nombre.toString() === producto.toString() &&
+      c.categoria.toString() === categoria.categoria &&
+      c.familia === categoria.familia
+  )
+
+  const handleChange = event => {
+    setGramaje(event.target.value)
   }
 
-  const p = tablaProductos.find(c => c.nombre.toString() === producto.toString() &&
-    c.categoria.toString() === categoria.categoria &&
-    c.familia === categoria.familia)
-
-  const handleChange = (event) => {
-    setGramaje(event.target.value);
-  };
-
-  const handleChangeCantidad = (event) => {
-    setCantidad(event.target.value);
-  };
+  const handleChangeCantidad = event => {
+    setCantidad(event.target.value)
+  }
   return (
     <>
       <div className='bg-dark text-bg-dark pb-2 ps-5  mb-1 text-center'>
@@ -87,20 +91,28 @@ function Bobina() {
       </div>
       <Container>
         <Box sx={{ flexGrow: 1 }}>
-
           <Grid container spacing={2}>
             <Grid item xs={8}>
-
               <img
                 className='d-block w-100 image-responsive justify-content-center ps-5'
                 alt={p.descripcion}
                 src={p.colores[color].url}
               />
+              {setImagen(p.colores[color].url)}
               <h6 className='mt-1 text-center'>
                 {'Código Color: ' + p.colores[color].codigo}
               </h6>
-
-
+              {categoria.familia} - {categoria.categoria} {categoria.familia} -{' '}
+              {categoria.categoria}{' '}
+              {setGlosa(
+                categoria.familia +
+                  ' ' +
+                  categoria.categoria +
+                  ' Código Color ' +
+                  p.colores[color].codigo +
+                  ' Gramaje ' +
+                  p.pesos[gramaje].peso +'gr por mt'
+              )}
             </Grid>
             <Grid item xs={4} className='mt-4'>
               <h4>
@@ -109,16 +121,23 @@ function Bobina() {
               </h4>
               <h6>Las bobinas son de 33mt2 (Ancho 110 cm, Largo 30 mt) </h6>
               <FormControl className='mt-4 mb-4'>
-                <FormLabel id="demo-row-radio-buttons-group-label">Selecciona el Gramaje por mt2</FormLabel>
+                <FormLabel id='demo-row-radio-buttons-group-label'>
+                  Selecciona el Gramaje por mt2
+                </FormLabel>
                 <RadioGroup
                   row
-                  aria-labelledby="demo-row-radio-buttons-group-label"
-                  name="row-radio-buttons-group"
+                  aria-labelledby='demo-row-radio-buttons-group-label'
+                  name='row-radio-buttons-group'
                   value={gramaje}
                   onChange={handleChange}
                 >
                   {p.pesos.map((v, i) => (
-                    <FormControlLabel key={i} value={i} control={<Radio />} label={v.peso} />
+                    <FormControlLabel
+                      key={i}
+                      value={i}
+                      control={<Radio />}
+                      label={v.peso}
+                    />
                   ))}
                 </RadioGroup>
               </FormControl>
@@ -133,15 +152,19 @@ function Bobina() {
                   Selecciona otro color
                 </Button>
               </div>
-              <h6 >
-                {'Gramaje por mt2: ' + p.pesos[gramaje].peso + ' gramos'
-                }
-              </h6>
-              <h6  >
-                {' Precio mt2: ' + parseFloat((p.pesos[gramaje].precio).toFixed(0)).toLocaleString('es-CL', options)}
+              <h6>{'Gramaje por mt2: ' + p.pesos[gramaje].peso + ' gramos'}</h6>
+              <h6>
+                {' Precio mt2: ' +
+                  parseFloat(p.pesos[gramaje].precio.toFixed(0)).toLocaleString(
+                    'es-CL',
+                    options
+                  )}
               </h6>
               <h6 className='mb-4 '>
-                {'Precio Bobina: ' + parseFloat((p.pesos[gramaje].precio * 33).toFixed(0)).toLocaleString('es-CL', options)}
+                {'Precio Bobina: ' +
+                  parseFloat(
+                    (p.pesos[gramaje].precio * 33).toFixed(0)
+                  ).toLocaleString('es-CL', options)}
               </h6>
               <Box
                 component='form'
@@ -167,24 +190,24 @@ function Bobina() {
                     />
                   </Item>
                   <React.Fragment className='mt-4 mb-4'>
-                    <Calculobobina categoria={categoria} producto={producto}  cantidad={cantidad} setCantidad={setCantidad} />
+                    <Calculobobina
+                      categoria={categoria}
+                      producto={producto}
+                      cantidad={cantidad}
+                      setCantidad={setCantidad}
+                    />
                   </React.Fragment>
                 </Stack>
               </Box>
               <h5 className='mt-4 mb-4'>
-                {'Precio: ' + parseFloat((p.pesos[gramaje].precio * 33 * cantidad).toFixed(0)).toLocaleString('es-CL', options)
-                }
+                {'Precio: ' +
+                  parseFloat(
+                    (p.pesos[gramaje].precio * 33 * cantidad).toFixed(0)
+                  ).toLocaleString('es-CL', options)}
               </h5>
-
- 
-              <Button
-                variant='text'
-                sx={{ mt: 3, mb: 2 }}
-                color='primary'
-                onClick={() => agregarAlCarrito()}
-              >
-                Agregar Carro 
-              </Button>
+              <React.Fragment className='mt-4 mb-4'>
+                <Agregarcarro />
+              </React.Fragment>
               <Form>
                 <Modal
                   show={show}
@@ -206,37 +229,35 @@ function Bobina() {
                       flexWrap='wrap'
                       spacing={2}
                     >
-                      {p.colores
-                        .map((v, i) => (
-                          <Item  key={i} >
-                            <img
-                              className='d-block w-40 image-responsive justify-content-center '
-                              style={{
-                                maxHeight: '10rem',
-                                maxWidth: '11rem'
-                              }}
-                              alt={v.codigo}
-                              src={v.url}
-                            />
-                            <Form.Check
-                              inline
-                              label={v.codigo}
-                              value={v}
-                              name='textura'
-                              type='radio'
-                              id={i}
-                              onClick={() => setColor(i)}
-                            />
-                          </Item>
-                        ))}
+                      {p.colores.map((v, i) => (
+                        <Item key={i}>
+                          <img
+                            className='d-block w-40 image-responsive justify-content-center '
+                            style={{
+                              maxHeight: '10rem',
+                              maxWidth: '11rem'
+                            }}
+                            alt={v.codigo}
+                            src={v.url}
+                          />
+                          <Form.Check
+                            inline
+                            label={v.codigo}
+                            value={v}
+                            name='textura'
+                            type='radio'
+                            id={i}
+                            onClick={() => handleColor(i)}
+                          />
+                        </Item>
+                      ))}
                     </Stack>
                     <Box
                       component='form'
                       onSubmit={handleSubmit}
                       Validate
                       sx={{ mt: 1 }}
-                    >
-                    </Box>
+                    ></Box>
 
                     <Button
                       variant='text'

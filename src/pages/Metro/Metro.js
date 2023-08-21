@@ -1,7 +1,6 @@
 import React from 'react'
 import { useContext } from 'react'
 import { GlobalContext } from '../../context/global/globalContext'
-
 import Container from 'react-bootstrap/Container'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
@@ -34,7 +33,7 @@ const Item = styled(Paper)(({ theme }) => ({
 const options = { style: 'currency', currency: 'CLP' }
 
 function Metro () {
-  const { categoria, producto, cantidad, setCantidad } =
+  const { categoria, producto, cantidad, setCantidad,setImagen, setGlosa } =
     useContext(GlobalContext)
   const navigate = useNavigate()
 
@@ -95,6 +94,16 @@ function Metro () {
                   title={'Código Color: ' + p.colores[color].codigo}
                 />
                 <h6>{'Código Color: ' + p.colores[color].codigo}</h6>
+                {setImagen(p.colores[color].url)}
+                {setGlosa(
+                categoria.familia +
+                  ' ' +
+                  categoria.categoria +
+                  ' Código Color ' +
+                  p.colores[color].codigo +
+                  ' Gramaje ' +
+                  p.pesos[gramaje].peso +'gr por mt'
+              )}
               </Container>
             </Grid>
             <Grid item xs={4} className='mt-4'>

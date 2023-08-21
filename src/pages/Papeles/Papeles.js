@@ -46,9 +46,11 @@ function Papeles () {
     setGlosa,
     cantidad,
     setCantidad,
-    setImagen
+    setImagen,
+    setTextura
   } = useContext(GlobalContext)
   const [show, setShow] = useState(false)
+
   let [papel, setPapel] = useState(0)
   const navigate = useNavigate()
 
@@ -109,6 +111,7 @@ function Papeles () {
   const handlePapel = v => {
     setPrecioMt2(v.precio)
     setPapel(v.nombre)
+    setTextura(v.url)
     recalcula()
   }
   const handleChangeAncho = event => {
@@ -156,23 +159,20 @@ function Papeles () {
                 {' '}
                 {p.catalogo} - {p.nombre}
               </h4>
-              <p className='mt: 3'> {familia.mensaje}</p>
-              <Button
-                variant='text'
-                sx={{ mb: 2 }}
-                color='primary'
-                onClick={() => handleTextura()}
-              >
-                Configura tu producto
-              </Button>
+              <p className='mt: 3'> </p>
+
               <h6>
                 {' '}
                 {glosa === '' ? '' : 'Producto: '} {glosa}{' '}
               </h6>
               <h6>
                 {' '}
-                {precio === 0
-                  ? ''
+                {glosa === ''
+                  ? 'Precio mt2 desde ' +
+                  parseFloat(precio.toFixed(0)).toLocaleString(
+                    'es-CL',
+                    options)
+                  
                   : 'Precio ' +
                     parseFloat(precio.toFixed(0)).toLocaleString(
                       'es-CL',
@@ -203,9 +203,10 @@ function Papeles () {
                   />
                 </Stack>
               </Box>
+
               <h5 className='mt-4 mb-4'>
                 {' '}
-                {precio === 0
+                {glosa === ''
                   ? ''
                   : 'Precio Total ' +
                     parseFloat((precio * cantidad).toFixed(0)).toLocaleString(
@@ -213,9 +214,21 @@ function Papeles () {
                       options
                     )}{' '}
               </h5>
-              <React.Fragment className='mt-4 mb-4'>
-                <Agregarcarro />
-              </React.Fragment>
+              <Button
+                variant='text'
+                sx={{ mb: 2 }}
+                color='primary'
+                onClick={() => handleTextura()}
+              >
+                Configura tu producto
+              </Button>
+              {glosa === '' ? (
+                <p>{familia.mensaje}</p>
+              ) : (
+                <React.Fragment className='mt-4 mb-4'>
+                  <Agregarcarro />
+                </React.Fragment>
+              )}
               <Form>
                 <Modal
                   show={show}

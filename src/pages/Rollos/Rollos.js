@@ -24,7 +24,7 @@ const Item = styled(Paper)(({ theme }) => ({
 }))
 
 function Rollos () {
-  const { categoria, producto, cantidad, setCantidad, setGlosa } =
+  const { categoria, producto, cantidad,  setImagen,setCantidad, setGlosa } =
     useContext(GlobalContext)
   const navigate = useNavigate()
   const handleSubmit = event => {
@@ -68,6 +68,7 @@ function Rollos () {
                       alt={p.descripcion}
                       src={v}
                     />
+                    {setImagen(v)}
                     <Carousel.Caption>
                       <h5>{p.descripcion}</h5>
                     </Carousel.Caption>
