@@ -98,7 +98,7 @@ export default function Catalogo () {
             {tablaCategorias
               .filter(c => c.familia.toString() === familia.familia)
               .map((p, idx) => (
-                <Col image={p}>
+                <Col image={p} key={idx}>
                   <ImageButton
                     focusRipple
                     key={p.categoria}

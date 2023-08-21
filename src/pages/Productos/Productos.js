@@ -7,12 +7,13 @@ import { useContext } from 'react';
 import { GlobalContext } from '../../context/global/globalContext'
 
 function Productos () {
-  const { familia, categoria, setProducto, setCantidad,setAncho,setAlto,setMt2 }  = useContext(GlobalContext);
+  const { familia, categoria, setGlosa,setProducto, setCantidad,setAncho,setAlto,setMt2 }  = useContext(GlobalContext);
   const navigate = useNavigate()
   setCantidad(1);
   setAlto(100);
   setAncho(100);
   setMt2(100);
+  setGlosa('');
 
   const handleProducto = p => {
     setProducto(p.nombre)

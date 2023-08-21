@@ -10,26 +10,31 @@ import Container from '@mui/material/Container'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import { useContext } from 'react'
 import { GlobalContext } from '../../context/global/globalContext'
+import { CarritoContext } from '../../context/carrito/carritoContext'
+import { useNavigate } from 'react-router-dom'
 
 export default function Agregarcarro () {
-  const { glosa, cantidad, precio, agregarItemCarrito } =
-    useContext(GlobalContext)
-  /*
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    });
-  };
-  */
+  const { imagen, glosa, cantidad, precio } = useContext(GlobalContext)
+  const options = { style: 'currency', currency: 'CLP' }
   const [open, setOpen] = React.useState(false)
+
+  const { dispatch } = useContext(CarritoContext)
+
   const handleClickOpen = () => {
     setOpen(true)
-    agregarItemCarrito()
+    const item = {
+      imagen,
+      glosa,
+      cantidad,
+      precio
+    }
+    dispatch({ type: 'AGREGAR_ITEM', item })
   }
+  const navigate = useNavigate()
   const handleClose = () => {
     setOpen(false)
+    navigate('/Productos')
   }
-
   return (
     <div>
       <Button onClick={handleClickOpen} color='primary'>
@@ -52,10 +57,27 @@ export default function Agregarcarro () {
               <Avatar sx={{ m: 1, bgcolor: 'primary.light' }}>
                 <ShoppingCartIcon />
               </Avatar>
-              <p>Se agrego al carro {cantidad} </p>
-              <p> {glosa} </p>
-              <p>Precio Unitario {precio} </p>
-
+              <h5>Producto agregado al carro</h5>
+              <p>Cantidad: {cantidad} </p>
+              <img
+                className='d-block w-100 image-responsive justify-content-center '
+                src={imagen}
+              />
+              <p>Producto: {glosa} </p>
+              <p>
+                Precio Unitario:
+                {parseFloat(precio.toFixed(0)).toLocaleString(
+                  'es-CL',
+                  options
+                )}{' '}
+              </p>
+              <p>
+                Precio Total:
+                {parseFloat((precio * cantidad).toFixed(0)).toLocaleString(
+                  'es-CL',
+                  options
+                )}{' '}
+              </p>
               <Button
                 type='submit'
                 fullWidth
@@ -68,7 +90,7 @@ export default function Agregarcarro () {
           </Container>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Seguir Comprando</Button>
+          <Button onClick={handleClose}>SALIR</Button>
         </DialogActions>
       </Dialog>
     </div>

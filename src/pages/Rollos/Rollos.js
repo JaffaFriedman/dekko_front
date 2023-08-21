@@ -24,7 +24,7 @@ const Item = styled(Paper)(({ theme }) => ({
 }))
 
 function Rollos () {
-  const { categoria, producto, cantidad, setCantidad } =
+  const { categoria, producto, cantidad, setCantidad, setGlosa } =
     useContext(GlobalContext)
   const navigate = useNavigate()
   const handleSubmit = event => {
@@ -32,13 +32,14 @@ function Rollos () {
     //const data = new FormData(event.currentTarget);
   }
 
+  setGlosa('')
   const handleCategoria = () => {
     //setShow(true);
     navigate('/Productos')
   }
-  const handleChangeCantidad = (event) => {
-    setCantidad(event.target.value);
-  };
+  const handleChangeCantidad = event => {
+    setCantidad(event.target.value)
+  }
   const options = { style: 'currency', currency: 'CLP' }
   const p = tablaProductos.find(
     c =>
@@ -79,6 +80,7 @@ function Rollos () {
                 {' '}
                 {p.catalogo} - {p.nombre}
               </h4>
+              {setGlosa(p.catalogo + ' - '+ p.nombre)}
               <h5> {p.precio.toLocaleString('es-CL', options)} por rollo </h5>
               <p>Las medidas son en centimetros.</p>
               <Box
@@ -104,12 +106,7 @@ function Rollos () {
                     />
                   </Item>
                   <React.Fragment className='mt-4 mb-4'>
-                    <Calculorollo
-                      categoria={categoria}
-                      producto={producto}
-                      cantidad={cantidad}
-                      setCantidad={setCantidad}
-                    />
+                    <Calculorollo />
                   </React.Fragment>
                 </Stack>
               </Box>

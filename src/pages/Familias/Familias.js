@@ -94,7 +94,7 @@ export default function Familias () {
         <Container>
           <Row xs={1} md={2} lg={4} className='g-10 text-center'>
             {tablaFamilias.map((p, idx) => (
-              <Col image={p}>
+              <Col image={p} key={idx}>
                 <ImageButton
                   focusRipple
                   key={p.familia}

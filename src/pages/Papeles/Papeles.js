@@ -42,8 +42,11 @@ function Papeles () {
     setMt2,
     precioMt2,
     setPrecioMt2,
-    glosa,setGlosa,
-    cantidad,setCantidad
+    glosa,
+    setGlosa,
+    cantidad,
+    setCantidad,
+    setImagen
   } = useContext(GlobalContext)
   const [show, setShow] = useState(false)
   let [papel, setPapel] = useState(0)
@@ -140,6 +143,7 @@ function Papeles () {
                       alt={p.descripcion}
                       src={v}
                     />
+                    {setImagen(v)}
                     <Carousel.Caption>
                       <h5>{p.descripcion}</h5>
                     </Carousel.Caption>
