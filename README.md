@@ -8,6 +8,10 @@ La aplicación esta dividida en un modulo para el frontend y otro para el backen
 
 La aplicación cuenta con paginas para el cliente final y una sección de administración.
 
+## Aplicación Backend
+Esta aplicación permite interactuar con la base de datos mongodb que contiene los datos de los productos, clientes y sus compras.
+
+# Aplicación Frontend
 ### Sección para el cliente final
 
 Este sitio tiene las siguientes paginas para el cliente final:
