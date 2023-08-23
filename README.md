@@ -30,7 +30,7 @@ Sección de administración que permite:
 Revisar las compras
 Revisar los productos
 
-## Instalación
+### Instalación
 
 Para crear la aplicacion usamos
 npx create-react-app dekko_front
@@ -72,6 +72,6 @@ y luego instalamos las siguientes librerias con npm:
 ##### npm i @testing-library/react
 ##### npm i @testing-library/user-event
 
-## Deploy
+### Deploy
 
 Las aplicaciones se subieron a github y se uso Netlify para el deployment.
