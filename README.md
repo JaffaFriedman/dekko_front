@@ -18,6 +18,7 @@ Papel de constructora, aca hay 2 opciones unos
 Reservas permite reservar una mesa, desde hoy a 60 dias mas.
 Inicio de Sesión con opción de registro y olvido de clave
 Contacto para dejar un mensaje.
+
 ### Sección de administración
 Sección de administración que permite:
     Revisar los contactos
@@ -28,7 +29,7 @@ Sección de administración que permite:
 ## Instalación
 
 Para crear la aplicacion usamos
-npx create-react-app venezia 
+npx create-react-app dekko_front 
 
 y luego instalamos las siguientes librerias con npm:
 
