@@ -33,7 +33,7 @@ Revisar los productos
 ## Instalación
 
 Para crear la aplicacion usamos
-npx create-react-app venezia 
+npx create-react-app dekko_front
 
 y luego instalamos las siguientes librerias con npm:
 
