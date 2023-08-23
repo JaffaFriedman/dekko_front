@@ -15,7 +15,6 @@ import CancelIcon from '@mui/icons-material/Cancel'
 import Paper from '@mui/material/Paper'
 import Stack from '@mui/material/Stack'
 import TextField from '@mui/material/TextField'
-import tablaProductos from '../../pages/Tablas/Tablaproductos'
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
   ...theme.typography.body2,
@@ -26,7 +25,7 @@ const Item = styled(Paper)(({ theme }) => ({
 }))
 
 export default function Calculorollo () {
-  const { categoria, producto, alto,
+  const {   producto, alto,
     setAlto,
     ancho,
     setAncho,  setCantidad } =
@@ -35,12 +34,8 @@ export default function Calculorollo () {
   let [texto, setTexto] = useState('')
   let [textoReq, setTextoReq] = useState('')
   let [textoResto, setTextoResto] = useState('')
-  const p = tablaProductos.find(
-    c =>
-      c.nombre.toString() === producto.toString() &&
-      c.categoria.toString() === categoria.categoria &&
-      c.familia === categoria.familia
-  )
+  const p = producto;
+
 
   const handleClickOpen = () => {
     Calcular()

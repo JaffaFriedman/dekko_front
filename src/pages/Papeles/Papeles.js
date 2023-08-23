@@ -10,9 +10,8 @@ import Modal from 'react-bootstrap/Modal'
 import Stack from '@mui/material/Stack'
 import Paper from '@mui/material/Paper'
 import { styled } from '@mui/material/styles'
-import tablaProductos from '../../pages/Tablas/Tablaproductos'
-import tablaTexturas from '../../pages/Tablas/Tablatexturas'
 import Agregarcarro from '../../pages/Agregarcarro/Agregarcarro'
+import axios from 'axios'
 import { useState } from 'react'
 import Form from 'react-bootstrap/Form'
 import { useContext } from 'react'
@@ -36,7 +35,6 @@ function Papeles () {
     setAlto,
     ancho,
     setAncho,
-    mt2,
     precio,
     setPrecio,
     setMt2,
@@ -49,6 +47,24 @@ function Papeles () {
     setImagen,
     setTextura
   } = useContext(GlobalContext)
+
+  const [tablaTexturas, setTablaTexturas] = useState([])
+  const recuperaTexturas = async (f) => {
+    const url = `http://localhost:4000/texturas/familia/${f}`
+    try {
+      const { data } = await axios.get(url, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      setTablaTexturas(data.info)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+
+
   const [show, setShow] = useState(false)
 
   let [papel, setPapel] = useState(0)
@@ -56,7 +72,6 @@ function Papeles () {
 
   const handleSubmit = event => {
     event.preventDefault()
-    //const data = new FormData(event.currentTarget);
   }
 
   const handleCategoria = () => {
@@ -64,20 +79,21 @@ function Papeles () {
   }
 
   const handleTextura = () => {
+    recuperaTexturas(producto.familia)
     setShow(true)
     setGlosa('')
   }
 
   const handleSalir = () => {
     setShow(false)
-    setGlosa('')
   }
 
   const handleGlosa = p => {
     const nuevoAncho = parseInt(ancho) + 5
     const nuevoAlto = parseInt(alto) + 5
-    setMt2((nuevoAncho * nuevoAlto) / (100 * 100))
-    setPrecio(mt2 * precioMt2)
+    const nuevoMt2=(nuevoAncho * nuevoAlto) / (100 * 100);
+    const nuevoPrecio=nuevoMt2*precioMt2
+    handleSubmit;
     setGlosa(
       'Catálogo: ' +
         p.catalogo +
@@ -90,37 +106,29 @@ function Papeles () {
         ' cm. Alto: ' +
         nuevoAlto +
         ' cm. Mt2: ' +
-        mt2.toFixed(2)
+        nuevoMt2.toFixed(2)
     )
+    setMt2(nuevoMt2)
+    setAlto(nuevoAncho)
+    setAncho(nuevoAlto)
+    setPrecio(nuevoPrecio)
     setShow(false)
   }
   const options = { style: 'currency', currency: 'CLP' }
 
-  const p = tablaProductos.find(
-    c =>
-      c.nombre.toString() === producto.toString() &&
-      c.categoria.toString() === categoria.categoria &&
-      c.familia === categoria.familia
-  )
-  function recalcula () {
-    const nuevoAncho = parseInt(ancho) + 5
-    const nuevoAlto = parseInt(alto) + 5
-    setMt2((nuevoAncho * nuevoAlto) / (100 * 100))
-    setPrecio(mt2 * precioMt2)
-  }
+  const p = producto;
+
+ 
   const handlePapel = v => {
     setPrecioMt2(v.precio)
     setPapel(v.nombre)
     setTextura(v.url)
-    recalcula()
   }
   const handleChangeAncho = event => {
     setAncho(event.target.value)
-    recalcula()
   }
   const handleChangeAlto = event => {
     setAlto(event.target.value)
-    recalcula()
   }
   const handleChangeCantidad = event => {
     setCantidad(event.target.value)
@@ -173,7 +181,7 @@ function Papeles () {
                     'es-CL',
                     options)
                   
-                  : 'Precio ' +
+                  : 'Precio Mural ' +
                     parseFloat(precio.toFixed(0)).toLocaleString(
                       'es-CL',
                       options
@@ -244,6 +252,12 @@ function Papeles () {
                     </Modal.Title>
                   </Modal.Header>
                   <Modal.Body>
+                  <Box
+                      component='form'
+                      onSubmit={handleSubmit}
+                      Validate
+                      sx={{ mt: 1 }}
+                    >
                     <Stack
                       direction='row'
                       useFlexGap
@@ -286,12 +300,7 @@ function Papeles () {
                       Agregaremos automáticamente 5cm de excedente al ancho y
                       alto para margen de error
                     </p>
-                    <Box
-                      component='form'
-                      onSubmit={handleSubmit}
-                      Validate
-                      sx={{ mt: 1 }}
-                    >
+
                       <Stack direction='row' spacing={2}>
                         <Item>
                           <TextField

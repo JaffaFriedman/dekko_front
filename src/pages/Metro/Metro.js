@@ -12,7 +12,6 @@ import Paper from '@mui/material/Paper'
 import Stack from '@mui/material/Stack'
 import Form from 'react-bootstrap/Form'
 import { styled } from '@mui/material/styles'
-import tablaProductos from '../../pages/Tablas/Tablaproductos'
 import { useState } from 'react'
 import Agregarcarro from '../../pages/Agregarcarro/Agregarcarro'
 import Calculo from '../../pages/Calculo/Calculo'
@@ -61,12 +60,8 @@ function Metro () {
     setShow(false)
   }
 
-  const p = tablaProductos.find(
-    c =>
-      c.nombre.toString() === producto.toString() &&
-      c.categoria.toString() === categoria.categoria &&
-      c.familia === categoria.familia
-  )
+  const p = producto;
+
 
   const handleChangeGramaje = event => {
     setGramaje(event.target.value)

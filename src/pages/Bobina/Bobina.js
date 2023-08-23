@@ -12,7 +12,6 @@ import Paper from '@mui/material/Paper'
 import Stack from '@mui/material/Stack'
 import Form from 'react-bootstrap/Form'
 import { styled } from '@mui/material/styles'
-import tablaProductos from '../../pages/Tablas/Tablaproductos'
 import { useState } from 'react'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import FormControl from '@mui/material/FormControl'
@@ -31,7 +30,7 @@ const Item = styled(Paper)(({ theme }) => ({
 }))
 
 function Bobina () {
-  const { categoria, producto, cantidad, setImagen, setCantidad, setGlosa } =
+  const { categoria, producto, cantidad, setImagen, setCantidad, setGlosa} =
     useContext(GlobalContext)
   const navigate = useNavigate()
 
@@ -67,13 +66,12 @@ function Bobina () {
     setShow(false)
   }
 
-  const p = tablaProductos.find(
-    c =>
-      c.nombre.toString() === producto.toString() &&
-      c.categoria.toString() === categoria.categoria &&
-      c.familia === categoria.familia
-  )
+ 
+ 
 
+  const p=producto;
+
+ 
   const handleChange = event => {
     setGramaje(event.target.value)
   }

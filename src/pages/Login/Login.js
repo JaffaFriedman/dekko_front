@@ -73,8 +73,8 @@ export default function Login () {
 
   let tokenDecodificado = {}
   const api = axios.create({
-    baseURL: 'https://uddjaffa.onrender.com'
-    // baseURL: 'http://localhost:27017'
+    //baseURL: 'https://uddjaffa.onrender.com'
+     baseURL: 'http://localhost:4000'
   })
 
   const handleSubmit = async e => {
@@ -108,8 +108,6 @@ export default function Login () {
         <AccountCircle color='primary' />
         {state?.user ? <p> {state.user.nombre}</p> : <p>Inicia sesión</p>}
       </Button>
-
-
       <Dialog open={open} onClose={handleClose}>
         <DialogContent>
           <Container component='main' maxWidth='xs' className='text-center'>

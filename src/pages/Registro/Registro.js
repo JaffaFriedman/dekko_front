@@ -64,8 +64,8 @@ export default function Registro () {
     })
   }
   const api = axios.create({
-    //baseURL: "https://uddjaffa.onrender.com:27017"
-    baseURL: 'http://localhost:27017'
+    //baseURL: "https://uddjaffa.onrender.com:4000"
+    baseURL: 'http://localhost:4000'
   })
 
   const handleSubmit = async e => {

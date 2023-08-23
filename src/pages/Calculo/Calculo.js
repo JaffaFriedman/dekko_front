@@ -15,7 +15,6 @@ import CancelIcon from '@mui/icons-material/Cancel'
 import Paper from '@mui/material/Paper'
 import Stack from '@mui/material/Stack'
 import TextField from '@mui/material/TextField'
-import tablaProductos from '../../pages/Tablas/Tablaproductos'
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
   ...theme.typography.body2,
@@ -27,7 +26,7 @@ const Item = styled(Paper)(({ theme }) => ({
 
 export default function Calculo () {
   const {
-    categoria,
+    
     producto,
     cantidad,
     alto,
@@ -38,12 +37,7 @@ export default function Calculo () {
   } = useContext(GlobalContext)
   let [open, setOpen] = useState(false)
   let [resto, setResto] = useState('')
-  const p = tablaProductos.find(
-    c =>
-      c.nombre.toString() === producto.toString() &&
-      c.categoria.toString() === categoria.categoria &&
-      c.familia === categoria.familia
-  )
+  const p=producto;
 
   const handleClickOpen = () => {
     Calcular()

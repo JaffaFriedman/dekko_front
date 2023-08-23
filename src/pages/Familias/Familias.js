@@ -1,12 +1,14 @@
-import { useContext } from 'react';
+import { useContext } from 'react'
 import { GlobalContext } from '../../context/global/globalContext'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import { Container } from 'react-bootstrap'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-import tablaFamilias from '../../pages/Tablas/Tablafamilias'
-import { useNavigate } from 'react-router-dom'
+import { useState } from 'react'
+import axios from 'axios'
+import { useNavigate  } from 'react-router-dom'
+import {  useEffect } from 'react'
 import { styled } from '@mui/material/styles'
 import ButtonBase from '@mui/material/ButtonBase'
 
@@ -76,7 +78,29 @@ const ImageMarked = styled('span')(({ theme }) => ({
 }))
 
 export default function Familias () {
-  const {setFamilia } = useContext(GlobalContext);
+
+  const { setFamilia } = useContext(GlobalContext)
+ const [tablaFamilias, setTablaFamilias] = useState([])
+  const recuperaFamilias = async () => {scrollTo
+    try {
+      const { data } = await axios.get('http://localhost:4000/familias', {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      setTablaFamilias(data.info)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  
+  useEffect(() => {
+    recuperaFamilias();
+  }, []); 
+
+
+
   const navigate = useNavigate()
   const handleFamilia = p => {
     setFamilia(p)

@@ -13,10 +13,10 @@ import Modal from 'react-bootstrap/Modal'
 import Stack from '@mui/material/Stack'
 import Paper from '@mui/material/Paper'
 import { styled } from '@mui/material/styles'
-import tablaProductos from '../../pages/Tablas/Tablaproductos'
-import tablaTelas from '../../pages/Tablas/Tablatelas'
+
 import Agregarcarro from '../../pages/Agregarcarro/Agregarcarro'
 import { useState } from 'react'
+import axios from 'axios'
 import Form from 'react-bootstrap/Form'
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -48,8 +48,26 @@ function Cortinas () {
     setImagen,
     setGlosa,
     glosa,
+
+
+    
     setPrecioMt2
   } = useContext(GlobalContext)
+  const [tablaTelas, setTablaTelas] = useState([])
+  const recuperaTelas = async (f,c) => {
+    const url = `http://localhost:4000/telas/familia/${f}/categoria/${c}`
+    try {
+      const { data } = await axios.get(url, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      setTablaTelas(data.info)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   const [show, setShow] = useState(false)
   let [cortina, setCortina] = useState('')
  
@@ -63,7 +81,8 @@ function Cortinas () {
     navigate('/Productos')
   }
 
-  const handleTextura = () => {
+  const handleTela= (f,c) => {
+    recuperaTelas(f,c);
     setShow(true)
   }
 
@@ -111,12 +130,7 @@ function Cortinas () {
     setCortina(v.descripcion)
     recalcula()
   }
-  const p = tablaProductos.find(
-    c =>
-      c.nombre.toString() === producto.toString() &&
-      c.categoria.toString() === categoria.categoria &&
-      c.familia === categoria.familia
-  )
+  const p = producto;
 
   return (
     <>
@@ -157,7 +171,7 @@ function Cortinas () {
                 variant='text'
                 sx={{ mb: 2 }}
                 color='primary'
-                onClick={() => handleTextura()}
+                onClick={() => handleTela(p.familia,p.categoria)}
               >
                 Configura tu producto
               </Button>
@@ -241,12 +255,6 @@ function Cortinas () {
                       spacing={2}
                     >
                       {tablaTelas
-                        .filter(
-                          t =>
-                            t.nombre.toString() === producto.toString() &&
-                            t.categoria.toString() === categoria.categoria &&
-                            t.familia === categoria.familia
-                        )
                         .map((v, i) => (
                           <Item key={i}>
                             <img
@@ -262,7 +270,7 @@ function Cortinas () {
                               inline
                               label={v.descripcion}
                               value={v}
-                              name='textura'
+                              name='tela'
                               type='radio'
                               id={i}
                               onClick={() => handleCortina(p, v)}

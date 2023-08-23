@@ -6,7 +6,8 @@ import { GlobalContext } from './globalContext'
 export function GlobalProvider ({ children }) {
   const [familia, setFamilia] = React.useState({})
   const [categoria, setCategoria] = React.useState({})
-  const [producto, setProducto] = React.useState('')
+  const [producto, setProducto] = React.useState({})
+
   const [mensaje, setMensaje] = React.useState('')
   const [alto, setAlto] = React.useState('100')
   const [ancho, setAncho] = React.useState('100')

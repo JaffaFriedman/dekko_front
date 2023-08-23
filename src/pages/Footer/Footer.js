@@ -37,7 +37,7 @@ const Footer = () => {
         >
           <Grid item md={2}>
             <Typography level='body' sx={{ color: grey[50] }}>
-              <LocationOnIcon fontSize='medium' /> Isabel la Católica 7350, Las
+              <LocationOnIcon fontSize='medium' /> Manquehue Sur 897 local 3, Las
               Condes
             </Typography>
             <Link
@@ -49,11 +49,11 @@ const Footer = () => {
               <NotListedLocationIcon fontSize='medium' /> Como llegar
             </Link>
             <Typography level='body' className='bg-dark text-bg-dark'>
-              <EmailIcon fontSize='medium' /> contacto@katzmania.cl{' '}
+              <EmailIcon fontSize='medium' /> contacto@dekkoww.cl{' '}
             </Typography>
             <Typography level='body' sx={{ color: grey[50] }}>
-              <CallIcon fontSize='medium' /> Telefonos: +569 3251 3550 +569 4235
-              0685{' '}
+              <CallIcon fontSize='medium' /> Telefonos: +569 1111 2222 +569 3333
+              4444{' '}
             </Typography>
             <Typography level='body' sx={{ color: grey[50] }}>
               <AccessTimeIcon fontSize='medium' /> Lunes a Jueves 10:00 a 18:00,

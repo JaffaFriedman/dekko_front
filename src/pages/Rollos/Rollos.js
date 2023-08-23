@@ -12,7 +12,6 @@ import { GlobalContext } from '../../context/global/globalContext'
 import Stack from '@mui/material/Stack'
 import Paper from '@mui/material/Paper'
 import { styled } from '@mui/material/styles'
-import tablaProductos from '../../pages/Tablas/Tablaproductos'
 import Agregarcarro from '../../pages/Agregarcarro/Agregarcarro'
 import Calculorollo from '../../pages/Calculo/Calculorollo'
 const Item = styled(Paper)(({ theme }) => ({
@@ -41,12 +40,8 @@ function Rollos () {
     setCantidad(event.target.value)
   }
   const options = { style: 'currency', currency: 'CLP' }
-  const p = tablaProductos.find(
-    c =>
-      c.nombre.toString() === producto.toString() &&
-      c.categoria.toString() === categoria.categoria &&
-      c.familia === categoria.familia
-  )
+  const p = producto;
+
   return (
     <>
       <div className='bg-dark text-bg-dark pb-2 ps-5  mb-1 text-center'>
