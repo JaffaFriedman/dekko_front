@@ -1,12 +1,13 @@
 import * as React from 'react'
 import { Nav, Navbar } from 'react-bootstrap'
 import { NavLink } from 'react-router-dom'
-import NavDropdown from 'react-bootstrap/NavDropdown'
 import logo from '../../images/logo.JPG'
 import Carrito from '../../pages/Carrito/Carrito'
 import Login from '../../pages/Login/Login'
 import Buscar from '../../pages/Buscar/Buscar'
 import Contacto from '../../pages/Contacto/Contacto'
+import MiPerfil from '../../pages/MiPerfil/MiPerfil'
+
 const Navigation = () => {
   return (
     <div className='ps-5'>
@@ -40,9 +41,10 @@ const Navigation = () => {
             </Nav.Link>
             <Nav.Link>
               <React.Fragment>
-                <Contacto />
+                <MiPerfil />
               </React.Fragment>
             </Nav.Link>
+
             <Nav.Link>
               <React.Fragment>
                 <Login />
@@ -53,17 +55,11 @@ const Navigation = () => {
                 <Carrito />
               </React.Fragment>
             </Nav.Link>
-            <NavDropdown title='Desarrollo'>
-              <NavDropdown.Item as={NavLink} to='/Checkout'>
-                Checkout
-              </NavDropdown.Item>
-              <NavDropdown.Item as={NavLink} to='/Pago'>
-                Pago
-              </NavDropdown.Item>
-              <NavDropdown.Item as={NavLink} to='/perfil'>
-                Perfil
-              </NavDropdown.Item>
-            </NavDropdown>
+            <Nav.Link>
+              <React.Fragment>
+                <Contacto />
+              </React.Fragment>
+            </Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Navbar>

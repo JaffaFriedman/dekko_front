@@ -81,11 +81,11 @@ export default function Pago () {
                 noValidate
               >
                 <TextField
-                  name='email'
+                  id='email'
                   onChange={handleChange}
                   label='Correo electrónico'
                   variant='outlined'
-                  value={state.email}
+                  
                 />
               </Box>
               <Box

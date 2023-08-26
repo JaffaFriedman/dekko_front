@@ -8,8 +8,7 @@ import Calculobobina from '../../pages/Calculo/Calculobobina'
 import Calculorollo from '../../pages/Calculo/Calculorollo'
 import Carrito from '../../pages/Carrito/Carrito'
 import Catalogo from '../../pages/Catalogo/Catalogo'
-import Checkout from '../../pages/Checkout/Checkout'
-
+import MiPerfil from '../../pages/MiPerfil/MiPerfil'
 import Contacto from '../../pages/Contacto/Contacto'
 import Cortinas from '../../pages/Cortinas/Cortinas'
 import Familias from '../../pages/Familias/Familias'
@@ -24,7 +23,6 @@ import Nosotros from '../../pages/Nosotros/Nosotros'
 import Olvido from '../../pages/Olvido/Olvido'
 import Pago from '../../pages/Pago/Pago'
 import Papeles from '../../pages/Papeles/Papeles'
-import Perfil from '../../pages/Perfil/Perfil'
 import Productos from '../../pages/Productos/Productos'
 
 import Recuperar from '../../pages/Recuperar/Recuperar'
@@ -40,7 +38,7 @@ function Rutas () {
           <Route path='/' element={<Home />} />
           <Route path='/buscar' element={<Buscar />} />
           <Route path='/carrito' element={<Carrito />} />
-          <Route path='/checkout' element={<Checkout />} />
+          <Route path='/miPerfil' element={<MiPerfil />} />
           <Route path='/contacto' element={<Contacto />} />
           <Route path='/footer' element={<Footer />} />
           <Route path='/garantias' element={<Garantias />} />
@@ -50,7 +48,6 @@ function Rutas () {
           <Route path='/nosotros' element={<Nosotros />} />
           <Route path='/olvido' element={<Olvido />} />
           <Route path='/pago' element={<Pago />} />
-          <Route path='/perfil' element={<Perfil />} />
           <Route path='/recuperar' element={<Recuperar />} />
           <Route path='/registro' element={<Registro />} />
           <Route path='/separador' element={<Separador />} />

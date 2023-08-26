@@ -10,8 +10,6 @@ import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import Avatar from '@mui/material/Avatar'
 import CssBaseline from '@mui/material/CssBaseline'
-import FormControlLabel from '@mui/material/FormControlLabel'
-import Checkbox from '@mui/material/Checkbox'
 import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
@@ -31,7 +29,7 @@ import Mensaje from '../../pages/Mensaje/Mensaje'
 import { GlobalContext } from '../../context/global/globalContext'
 
 export default function Login () {
-  const {setVisible,setMensaje}  = useContext(GlobalContext);
+  const { setVisible, setMensaje } = useContext(GlobalContext)
   const [showPassword, setShowPassword] = React.useState(false)
 
   const handleClickShowPassword = () => setShowPassword(show => !show)
@@ -46,7 +44,7 @@ export default function Login () {
     setOpen(true)
   }
 
-  const despliegaMensaje = (m) => {
+  const despliegaMensaje = m => {
     setMensaje(m)
     setVisible(true)
   }
@@ -74,7 +72,7 @@ export default function Login () {
   let tokenDecodificado = {}
   const api = axios.create({
     //baseURL: 'https://uddjaffa.onrender.com'
-     baseURL: 'http://localhost:4000'
+    baseURL: 'http://localhost:4000'
   })
 
   const handleSubmit = async e => {
@@ -85,13 +83,17 @@ export default function Login () {
           'Content-Type': 'application/json'
         }
       })
+
       tokenDecodificado = jwtDecode(data.token)
-      console.log(tokenDecodificado)
+      localStorage.setItem('token', JSON.stringify(data.token))
+
       dispatchUser({
         type: types.setUserState,
         payload: tokenDecodificado
       })
-      despliegaMensaje( 'Bienvenido ' + tokenDecodificado.nombre)
+      localStorage.setItem('email', JSON.stringify(tokenDecodificado.email))
+      localStorage.setItem('idUser', JSON.stringify(tokenDecodificado._id))
+      despliegaMensaje('Bienvenido ' + tokenDecodificado.nombre)
     } catch (error) {
       console.log(error)
       despliegaMensaje('Error de conexion')
@@ -168,10 +170,7 @@ export default function Login () {
                     label='Contraseña'
                   />
                 </FormControl>
-                <FormControlLabel
-                  control={<Checkbox value='remember' color='primary' />}
-                  label='Recordar la contraseña'
-                />
+
                 <Button
                   type='submit'
                   fullWidth

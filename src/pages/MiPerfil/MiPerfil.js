@@ -18,12 +18,11 @@ import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
 import AccountCircle from '@mui/icons-material/AccountCircle'
 import Avatar from '@mui/material/Avatar'
-import { useState } from 'react'
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { UserContext } from '../../context/user/userContext'
 import { types } from '../../context/user/userReducer'
 import axios from 'axios'
-export default function Registro () {
+export default function MiPerfil () {
   const [showPassword, setShowPassword] = React.useState(false)
 
   const handleClickShowPassword = () => setShowPassword(show => !show)
@@ -44,16 +43,18 @@ export default function Registro () {
 
   const [, dispatchUser] = useContext(UserContext)
 
-  const initialUser = {
+  const [formUser, setFormUser] = useState({
     email: '',
     password: '',
     nombre: '',
     rut: '',
     direccion: '',
     comuna: '',
-    telefono: ''
-  }
-  const [formUser, setFormUser] = useState(initialUser)
+    telefono: 0,
+    rol: '',
+    premium: false,
+    dob: ''
+  })
 
   const handleChange = e => {
     setFormUser({
@@ -79,9 +80,37 @@ export default function Registro () {
         type: types.setUserState,
         payload: data
       })
-      window.alert('Usuario registrado')
+      window.alert('Usuario actualizado')
     } catch (error) {
-      window.alert('Error al registrar usuario')
+      window.alert('Error al actualizar usuario')
+      console.log(error)
+    }
+  }
+  const recuperaUsuario = async i => {
+    let token = ''
+    const dataToken = localStorage.getItem('token')
+    if (dataToken) {
+      token = JSON.parse(dataToken)
+    }
+    const dataI = localStorage.getItem('idUser')
+    if (dataI) {
+      i = JSON.parse(dataI)
+    }
+    window.alert(`/users/${i}`)
+    try {
+      const { data } = await api.get(`/users/${i}`, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        }
+      })
+      setFormUser(data.detail)
+
+      console.log('data:', data)
+      console.log('detail:', formUser)
+      console.log('nombre:', formUser.nombre)
+    } catch (error) {
+      window.alert('Error al recuperar usuario')
       console.log(error)
     }
   }
@@ -90,7 +119,7 @@ export default function Registro () {
     <div>
       <Button onClick={handleClickOpen}>
         <AccountCircle />
-        Registro
+        Mi Perfil
       </Button>
 
       <Dialog open={open} onClose={handleClose}>
@@ -110,7 +139,7 @@ export default function Registro () {
                 <AccountCircle />
               </Avatar>
               <Typography component='h1' variant='h5'>
-                Crea tu cuenta
+                Mi Perfil
               </Typography>
               <Box
                 component='form'
@@ -123,6 +152,7 @@ export default function Registro () {
               >
                 <TextField
                   name='email'
+                  value={formUser.email}
                   onChange={handleChange}
                   label='Correo electrónico'
                   variant='outlined'
@@ -155,11 +185,13 @@ export default function Registro () {
                 noValidate
                 autoComplete='off'
               >
-                <TextField 
-                id='nombre' 
-                label='Nombre' 
-                onChange={handleChange}
-                variant='outlined' />
+                <TextField
+                  name='nombre'
+                  value={formUser.nombre}
+                  label='Nombre'
+                  onChange={handleChange}
+                  variant='outlined'
+                />
               </Box>
               <Box
                 component='form'
@@ -169,6 +201,7 @@ export default function Registro () {
               >
                 <TextField
                   name='rut'
+                  value={formUser.rut}
                   onChange={handleChange}
                   label='Rut'
                   variant='outlined'
@@ -184,6 +217,7 @@ export default function Registro () {
                 <TextField
                   name='direccion'
                   label='Dirección'
+                  value={formUser.direccion}
                   onChange={handleChange}
                   variant='outlined'
                 />
@@ -197,6 +231,7 @@ export default function Registro () {
                 <TextField
                   name='comuna'
                   onChange={handleChange}
+                  value={formUser.comuna}
                   label='Comuna'
                   variant='outlined'
                 />
@@ -211,6 +246,7 @@ export default function Registro () {
                   name='telefono'
                   onChange={handleChange}
                   label='Teléfono'
+                  value={formUser.telefono}
                   variant='outlined'
                   type='number'
                 />
@@ -230,13 +266,16 @@ export default function Registro () {
                   sx={{ mt: 3, mb: 2 }}
                 >
                   {' '}
-                  Enviar
+                  Actualizar
                 </Button>
               </Box>
             </Box>
           </Container>
         </DialogContent>
         <DialogActions>
+          <Button onClick={recuperaUsuario} href='/login'>
+            Buscar
+          </Button>
           <Button onClick={handleClose} href='/login'>
             Regresar
           </Button>

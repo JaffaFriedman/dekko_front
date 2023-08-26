@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from 'react'
 import { useState, useContext } from 'react'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import Button from '@mui/material/Button'
@@ -65,8 +65,8 @@ export default function Carrito () {
                 ).toLocaleString('es-CL', options)}
               </h4>
               <React.Fragment className='mt-4 mb-4'>
-                  <Pago />
-                </React.Fragment>
+                <Pago />
+              </React.Fragment>
             </Box>
           </Container>
 
@@ -74,7 +74,7 @@ export default function Carrito () {
             {carritoCompra.items.map((item, index) => (
               <div key={index}>
                 <Media as='li' border='primary' p='3' mb='3'>
-                <BImg src={item.imagen} mr='3' ps='2' width='200' />
+                  <BImg src={item.imagen} mr='3' ps='2' width='200' />
                   <Media.Body>
                     <BH6 mt='0'>{item.glosa}</BH6>
                     <Stack direction='row' spacing={1}>
@@ -113,7 +113,10 @@ export default function Carrito () {
                       />
                       <Button
                         onClick={() =>
-                          dispatchCarrito({ type: 'ELIMINAR_ITEM', indice: index })
+                          dispatchCarrito({
+                            type: 'ELIMINAR_ITEM',
+                            indice: index
+                          })
                         }
                       >
                         <DeleteForeverIcon color='primary' />
