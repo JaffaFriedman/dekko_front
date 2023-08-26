@@ -12,9 +12,9 @@ const initialState = {
 
  
 export const CarritoProvider = ({ children }) => {
-  let [carritoCompra, dispatch] = useReducer(carritoReducer, initialState)
+  let [carritoCompra, dispatchCarrito] = useReducer(carritoReducer, initialState)
   return (
-    <CarritoContext.Provider value={{carritoCompra, dispatch}}>
+    <CarritoContext.Provider value={{carritoCompra, dispatchCarrito}}>
       {children}
     </CarritoContext.Provider>
   )

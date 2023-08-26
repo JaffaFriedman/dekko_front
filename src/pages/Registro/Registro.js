@@ -28,9 +28,7 @@ export default function Registro () {
 
   const handleClickShowPassword = () => setShowPassword(show => !show)
 
-  const handleMouseDownPassword = (
-    event
-  ) => {
+  const handleMouseDownPassword = event => {
     event.preventDefault()
   }
 
@@ -44,7 +42,7 @@ export default function Registro () {
     setOpen(false)
   }
 
-  const [, dispatch] = useContext(UserContext)
+  const [, dispatchUser] = useContext(UserContext)
 
   const initialUser = {
     email: '',
@@ -77,7 +75,7 @@ export default function Registro () {
           'Content-Type': 'application/json'
         }
       })
-      dispatch({
+      dispatchUser({
         type: types.setUserState,
         payload: data
       })
@@ -127,9 +125,9 @@ export default function Registro () {
                   name='email'
                   onChange={handleChange}
                   label='Correo electrónico'
-                  variant='standard'
+                  variant='outlined'
                 />
-                <FormControl sx={{ mt: 1, width: '50ch' }} variant='standard'>
+                <FormControl sx={{ mt: 1, width: '50ch' }} variant='outlined'>
                   <InputLabel htmlFor='password'>Contraseña</InputLabel>
                   <OutlinedInput
                     name='password'
@@ -153,17 +151,15 @@ export default function Registro () {
               </Box>
               <Box
                 component='form'
-                sx={{ '& > :not(style)': { mt: 1, width: '50ch' } }}
+                sx={{ '& > :not(style)': { m: 1, width: '62ch' } }}
                 noValidate
                 autoComplete='off'
               >
-                <TextField
-                  name='nombre'
-                  onChange={handleChange}
-                  label='Nombre'
-                  variant='standard'
-                  type='text'
-                />
+                <TextField 
+                id='nombre' 
+                label='Nombre' 
+                onChange={handleChange}
+                variant='outlined' />
               </Box>
               <Box
                 component='form'
@@ -175,7 +171,7 @@ export default function Registro () {
                   name='rut'
                   onChange={handleChange}
                   label='Rut'
-                  variant='standard'
+                  variant='outlined'
                 />
               </Box>
 
@@ -189,7 +185,7 @@ export default function Registro () {
                   name='direccion'
                   label='Dirección'
                   onChange={handleChange}
-                  variant='standard'
+                  variant='outlined'
                 />
               </Box>
               <Box
@@ -202,7 +198,7 @@ export default function Registro () {
                   name='comuna'
                   onChange={handleChange}
                   label='Comuna'
-                  variant='standard'
+                  variant='outlined'
                 />
               </Box>
               <Box
@@ -215,7 +211,7 @@ export default function Registro () {
                   name='telefono'
                   onChange={handleChange}
                   label='Teléfono'
-                  variant='standard'
+                  variant='outlined'
                   type='number'
                 />
               </Box>

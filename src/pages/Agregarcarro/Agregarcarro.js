@@ -12,13 +12,12 @@ import { useContext } from 'react'
 import { GlobalContext } from '../../context/global/globalContext'
 import { CarritoContext } from '../../context/carrito/carritoContext'
 import { useNavigate } from 'react-router-dom'
-import CloseIcon from '@mui/icons-material/Close'
 export default function Agregarcarro () {
   const { imagen, glosa, cantidad, precio } = useContext(GlobalContext)
   const options = { style: 'currency', currency: 'CLP' }
   const [open, setOpen] = React.useState(false)
 
-  const { dispatch } = useContext(CarritoContext)
+  const { dispatchCarrito } = useContext(CarritoContext)
 
   const handleClickOpen = () => {
     setOpen(true)
@@ -28,7 +27,7 @@ export default function Agregarcarro () {
       cantidad,
       precio,
     }
-    dispatch({ type: 'AGREGAR_ITEM', item })
+    dispatchCarrito({ type: 'AGREGAR_ITEM', item })
   }
   const navigate = useNavigate()
   const handleClose = () => {
@@ -82,9 +81,7 @@ export default function Agregarcarro () {
           </Container>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>
-            <CloseIcon color='primary' />
-          </Button>
+          <Button onClick={handleClose}>Volver</Button>
         </DialogActions>
       </Dialog>
     </div>

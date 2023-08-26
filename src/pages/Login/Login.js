@@ -55,7 +55,7 @@ export default function Login () {
     setOpen(false)
   }
 
-  const [state, dispatch] = useContext(UserContext)
+  const [state, dispatchUser] = useContext(UserContext)
 
   const initialUser = {
     name: 'ACCEDER',
@@ -87,15 +87,15 @@ export default function Login () {
       })
       tokenDecodificado = jwtDecode(data.token)
       console.log(tokenDecodificado)
-      dispatch({
+      dispatchUser({
         type: types.setUserState,
         payload: tokenDecodificado
       })
-      despliegaMensaje( 'Bienvenido ' + state.user.nombre)
+      despliegaMensaje( 'Bienvenido ' + tokenDecodificado.nombre)
     } catch (error) {
       console.log(error)
       despliegaMensaje('Error de conexion')
-      dispatch({
+      dispatchUser({
         type: types.setError,
         payload: error
       })

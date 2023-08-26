@@ -80,6 +80,7 @@ function Papeles () {
 
   const handleTextura = () => {
     recuperaTexturas(producto.familia)
+    setImagen(producto.url[0])
     setShow(true)
     setGlosa('')
   }
@@ -154,7 +155,6 @@ function Papeles () {
                       alt={p.descripcion}
                       src={v}
                     />
-                    {setImagen(v)}
                     <Carousel.Caption>
                       <h5>{p.descripcion}</h5>
                     </Carousel.Caption>

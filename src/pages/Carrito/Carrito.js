@@ -1,3 +1,4 @@
+import * as React from "react";
 import { useState, useContext } from 'react'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import Button from '@mui/material/Button'
@@ -14,10 +15,12 @@ import TextField from '@mui/material/TextField'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import { List, Media, BImg, BH6 } from 'bootstrap-4-react'
 import Avatar from '@mui/material/Avatar'
+import Pago from '../../pages/Pago/Pago'
+
 export default function Carrito () {
   const options = { style: 'currency', currency: 'CLP' }
 
-  const { carritoCompra, dispatch } = useContext(CarritoContext)
+  const { carritoCompra, dispatchCarrito } = useContext(CarritoContext)
 
   let [open, setOpen] = useState(false)
   const handleClickOpen = () => {
@@ -61,14 +64,9 @@ export default function Carrito () {
                   carritoCompra.precioTotal.toFixed(0)
                 ).toLocaleString('es-CL', options)}
               </h4>
-              <Button
-                type='submit'
-                fullWidth
-                variant='contained'
-                sx={{ mt: 3, mb: 2 }}
-              >
-                Ir a Pagar
-              </Button>
+              <React.Fragment className='mt-4 mb-4'>
+                  <Pago />
+                </React.Fragment>
             </Box>
           </Container>
 
@@ -105,7 +103,7 @@ export default function Carrito () {
                         name='cantidad'
                         value={item.cantidad}
                         onChange={e =>
-                          dispatch({
+                          dispatchCarrito({
                             type: 'MODIFICAR_CANTIDAD',
                             indice: index,
                             nuevaCantidad: e.target.value
@@ -115,7 +113,7 @@ export default function Carrito () {
                       />
                       <Button
                         onClick={() =>
-                          dispatch({ type: 'ELIMINAR_ITEM', indice: index })
+                          dispatchCarrito({ type: 'ELIMINAR_ITEM', indice: index })
                         }
                       >
                         <DeleteForeverIcon color='primary' />
