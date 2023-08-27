@@ -23,6 +23,7 @@ import { useContext } from 'react'
 import { UserContext } from '../../context/user/userContext'
 import { types } from '../../context/user/userReducer'
 import axios from 'axios'
+import CancelPresentationIcon from '@mui/icons-material/CancelPresentation'
 export default function Registro () {
   const [showPassword, setShowPassword] = React.useState(false)
 
@@ -89,11 +90,16 @@ export default function Registro () {
   return (
     <div>
       <Button onClick={handleClickOpen}>
-        <AccountCircle />
+        <AccountCircle fontSize='large' />
         Registro
       </Button>
 
       <Dialog open={open} onClose={handleClose}>
+      <DialogActions>
+          <Button onClick={handleClose}>
+            <CancelPresentationIcon color='primary' />
+          </Button>
+        </DialogActions>
         <DialogContent>
           <Container component='main' maxWidth='xs' className='text-center'>
             <CssBaseline />
@@ -236,12 +242,7 @@ export default function Registro () {
             </Box>
           </Container>
         </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} href='/login'>
-            Regresar
-          </Button>
-        </DialogActions>
-      </Dialog>
+        </Dialog>
     </div>
   )
 }

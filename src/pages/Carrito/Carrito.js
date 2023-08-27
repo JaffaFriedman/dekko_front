@@ -16,6 +16,7 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import { List, Media, BImg, BH6 } from 'bootstrap-4-react'
 import Avatar from '@mui/material/Avatar'
 import Pago from '../../pages/Pago/Pago'
+import CancelPresentationIcon from '@mui/icons-material/CancelPresentation'
 
 export default function Carrito () {
   const options = { style: 'currency', currency: 'CLP' }
@@ -33,11 +34,16 @@ export default function Carrito () {
   return (
     <div>
       <Badge color='secondary' badgeContent={carritoCompra.totalProductos}>
-        <Button onClick={handleClickOpen} color='secondary'>
-          <ShoppingCartIcon color='primary' />
+        <Button onClick={handleClickOpen} color='secondary' >
+          <ShoppingCartIcon color='primary' fontSize='large' />
         </Button>
       </Badge>
       <Dialog open={open} onClose={handleClose}>
+      <DialogActions>
+          <Button onClick={handleClose}>
+            <CancelPresentationIcon color='primary' />
+          </Button>
+        </DialogActions>
         <DialogContent>
           <Container component='main' maxWidth='xs' className='text-center'>
             <CssBaseline />
@@ -54,8 +60,8 @@ export default function Carrito () {
                 direction='row'
                 sx={{ color: 'action.active' }}
               ></Stack>
-              <Avatar sx={{ m: 1, bgcolor: 'primary.light' }}>
-                <ShoppingCartIcon />
+              <Avatar sx={{ m: 1, bgcolor: 'primary.light' }} >
+                <ShoppingCartIcon fontSize='large'/>
               </Avatar>
               <h4>Productos: {carritoCompra.totalProductos}</h4>
               <h4>
@@ -119,7 +125,7 @@ export default function Carrito () {
                           })
                         }
                       >
-                        <DeleteForeverIcon color='primary' />
+                        <DeleteForeverIcon color='primary' fontSize='large' />
                       </Button>
                     </Stack>
                   </Media.Body>
@@ -128,9 +134,6 @@ export default function Carrito () {
             ))}
           </List>
         </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Cancelar</Button>
-        </DialogActions>
       </Dialog>
     </div>
   )

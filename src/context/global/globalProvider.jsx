@@ -7,7 +7,6 @@ export function GlobalProvider ({ children }) {
   const [familia, setFamilia] = React.useState({})
   const [categoria, setCategoria] = React.useState({})
   const [producto, setProducto] = React.useState({})
-
   const [mensaje, setMensaje] = React.useState('')
   const [alto, setAlto] = React.useState('100')
   const [ancho, setAncho] = React.useState('100')
@@ -18,11 +17,17 @@ export function GlobalProvider ({ children }) {
   const [cantidad, setCantidad] = React.useState(0)
   const [visible, setVisible] = React.useState(false)
   const [imagen, setImagen] = React.useState('')
+  const [userName, setUserName] = React.useState('Inicia Sesión')
+  const [idUser, setIdUser] = React.useState('')
+  const [token, setToken] = React.useState('')
 
-
-  return (    
+  return (
     <GlobalContext.Provider
       value={{
+        idUser,
+        setIdUser,
+        token,
+        setToken,
         familia,
         categoria,
         producto,
@@ -36,6 +41,8 @@ export function GlobalProvider ({ children }) {
         precio,
         glosa,
         imagen,
+        userName,
+        setUserName,
         setImagen,
         setFamilia,
         setCategoria,

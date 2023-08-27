@@ -96,7 +96,7 @@ export default function Calculorollo () {
   return (
     <div>
       <Button onClick={handleClickOpen} color='primary'>
-        <CalculateIcon color='primary' />
+        <CalculateIcon color='primary' fontSize='large' />
         Calculadora de Rollos
       </Button>
 
@@ -188,11 +188,11 @@ export default function Calculorollo () {
         </DialogContent>
         <DialogActions>
           <Button onClick={Calcular}>
-            <CalculateIcon color='primary' />
+            <CalculateIcon color='primary' fontSize='large'/>
             Calcular
           </Button>
           <Button onClick={handleClose}>
-            <CancelIcon color='primary' />
+            <CancelIcon color='primary' fontSize='large' />
             Cancelar
           </Button>
         </DialogActions>

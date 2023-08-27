@@ -12,6 +12,8 @@ import { useContext } from 'react'
 import { GlobalContext } from '../../context/global/globalContext'
 import { CarritoContext } from '../../context/carrito/carritoContext'
 import { useNavigate } from 'react-router-dom'
+import CancelPresentationIcon from '@mui/icons-material/CancelPresentation'
+
 export default function Agregarcarro () {
   const { imagen, glosa, cantidad, precio } = useContext(GlobalContext)
   const options = { style: 'currency', currency: 'CLP' }
@@ -37,10 +39,15 @@ export default function Agregarcarro () {
   return (
     <div>
       <Button onClick={handleClickOpen} color='primary'>
-        <ShoppingCartIcon color='primary' />
+        <ShoppingCartIcon color='primary' fontSize='large' />
         Agregar al Carro
       </Button>
       <Dialog open={open} onClose={handleClose}>
+      <DialogActions>
+          <Button onClick={handleClose}>
+            <CancelPresentationIcon color='primary' />
+          </Button>
+        </DialogActions>
         <DialogContent>
           <Container component='main' maxWidth='xs' className='text-center'>
             <CssBaseline />
@@ -54,7 +61,7 @@ export default function Agregarcarro () {
               }}
             >
               <Avatar sx={{ m: 1, bgcolor: 'primary.light' }}>
-                <ShoppingCartIcon />
+                <ShoppingCartIcon fontSize='large'/>
               </Avatar>
               <h5>Producto agregado al carro</h5>
               <p>Cantidad: {cantidad} </p>
@@ -80,9 +87,7 @@ export default function Agregarcarro () {
             </Box>
           </Container>
         </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Volver</Button>
-        </DialogActions>
+
       </Dialog>
     </div>
   )

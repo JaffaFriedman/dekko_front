@@ -11,6 +11,7 @@ import Container from '@mui/material/Container'
 import { TextField, Button } from '@mui/material'
 import Avatar from '@mui/material/Avatar'
 import Typography from '@mui/material/Typography'
+import CancelPresentationIcon from '@mui/icons-material/CancelPresentation'
 //import validarContacto from "../Validar/ValidarContacto";
 
 function Contacto() {
@@ -37,10 +38,15 @@ function Contacto() {
   return (
     <div>
       <Button onClick={handleClickOpen} color='primary'>
-        <EmailIcon color='primary' />
+        <EmailIcon color='primary' fontSize='large'/>
         Contáctanos
       </Button>
       <Dialog open={open} onClose={handleClose}>
+      <DialogActions>
+          <Button onClick={handleClose}>
+            <CancelPresentationIcon color='primary' />
+          </Button>
+        </DialogActions>
         <DialogContent>
           <Container component='main' maxWidth='xs' className='text-center'>
             <CssBaseline />
@@ -161,9 +167,7 @@ function Contacto() {
           </Container>
         </DialogContent>
 
-        <DialogActions>
-          <Button onClick={handleClose}>Cancelar</Button>
-        </DialogActions>
+ 
       </Dialog>
     </div>
   )

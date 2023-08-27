@@ -15,8 +15,6 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 import AccountCircle from '@mui/icons-material/AccountCircle'
-import Olvido from '../../pages/Olvido/Olvido'
-import Registro from '../../pages/Registro/Registro'
 import FormControl from '@mui/material/FormControl'
 import OutlinedInput from '@mui/material/OutlinedInput'
 import IconButton from '@mui/material/IconButton'
@@ -26,10 +24,19 @@ import Visibility from '@mui/icons-material/Visibility'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
 import jwtDecode from 'jwt-decode'
 import Mensaje from '../../pages/Mensaje/Mensaje'
+import LoginIcon from '@mui/icons-material/Login'
+import CancelPresentationIcon from '@mui/icons-material/CancelPresentation'
 import { GlobalContext } from '../../context/global/globalContext'
 
 export default function Login () {
-  const { setVisible, setMensaje } = useContext(GlobalContext)
+  const {
+    setVisible,
+    setMensaje,
+    userName,
+    setUserName,
+    setToken, 
+    setIdUser
+  } = useContext(GlobalContext)
   const [showPassword, setShowPassword] = React.useState(false)
 
   const handleClickShowPassword = () => setShowPassword(show => !show)
@@ -60,6 +67,8 @@ export default function Login () {
     email: '',
     password: ''
   }
+
+  
   const [formUser, setFormUser] = useState(initialUser)
 
   const handleChange = e => {
@@ -83,20 +92,22 @@ export default function Login () {
           'Content-Type': 'application/json'
         }
       })
-
+  
       tokenDecodificado = jwtDecode(data.token)
-      localStorage.setItem('token', JSON.stringify(data.token))
+      setToken(data.token)
+      setIdUser(data.idUser)
+      setUserName(tokenDecodificado.nombre)
 
       dispatchUser({
         type: types.setUserState,
         payload: tokenDecodificado
       })
-      localStorage.setItem('email', JSON.stringify(tokenDecodificado.email))
-      localStorage.setItem('idUser', JSON.stringify(tokenDecodificado._id))
-      despliegaMensaje('Bienvenido ' + tokenDecodificado.nombre)
     } catch (error) {
       console.log(error)
       despliegaMensaje('Error de conexion')
+      setToken('')
+      setIdUser('')
+      setUserName('Inicio Sesión')
       dispatchUser({
         type: types.setError,
         payload: error
@@ -107,10 +118,15 @@ export default function Login () {
   return (
     <div>
       <Button onClick={handleClickOpen} color='primary'>
-        <AccountCircle color='primary' />
-        {state?.user ? <p> {state.user.nombre}</p> : <p>Inicia sesión</p>}
+        <AccountCircle color='primary' fontSize='large' />
+        {userName}
       </Button>
       <Dialog open={open} onClose={handleClose}>
+        <DialogActions>
+          <Button onClick={handleClose}>
+            <CancelPresentationIcon color='primary' />
+          </Button>
+        </DialogActions>
         <DialogContent>
           <Container component='main' maxWidth='xs' className='text-center'>
             <CssBaseline />
@@ -126,14 +142,27 @@ export default function Login () {
               <Avatar sx={{ m: 1, bgcolor: 'primary.light' }}>
                 <AccountCircle />
               </Avatar>
+
               <Typography component='h1' variant='h5'>
-                Ingresa a tu cuenta
+                {state?.user ? (
+                  <p> {state.user.nombre}</p>
+                ) : (
+                  <p>Inicia sesión</p>
+                )}
               </Typography>
+              <Typography component='h1' variant='h5'>
+                {state?.user ? (
+                  <p> ¡Qué bueno tenerte de vuelta! </p>
+                ) : (
+                  <p>Si no tienes cuenta registrate</p>
+                )}
+              </Typography>
+
               <Box
                 component='form'
                 onSubmit={handleSubmit}
                 noValidate
-                sx={{ mt: 1 }}
+                sx={{ marginTop: 4, marginBottom: 4 }}
               >
                 <TextField
                   margin='normal'
@@ -170,34 +199,19 @@ export default function Login () {
                     label='Contraseña'
                   />
                 </FormControl>
-
-                <Button
-                  type='submit'
-                  fullWidth
-                  onClick={handleSubmit}
-                  variant='contained'
-                  sx={{ mt: 3, mb: 2 }}
-                >
-                  Ingresa a tu cuenta
-                </Button>
-                <Mensaje />
-
-                <Grid container>
+                <Grid container sx={{ marginTop: 4 }}>
                   <Grid item xs>
-                    <Olvido />
-                  </Grid>
-                  <Grid item>
-                    <Registro />
+                    <Button onClick={handleSubmit} color='primary'>
+                      <LoginIcon color='primary' fontSize='large' />
+                      Ingresa a tu cuenta
+                    </Button>
                   </Grid>
                 </Grid>
+                <Mensaje />
               </Box>
             </Box>
           </Container>
         </DialogContent>
-
-        <DialogActions>
-          <Button onClick={handleClose}>Cancelar</Button>
-        </DialogActions>
       </Dialog>
     </div>
   )

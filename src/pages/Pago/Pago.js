@@ -7,46 +7,115 @@ import DialogContent from '@mui/material/DialogContent'
 import CssBaseline from '@mui/material/CssBaseline'
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
+import CancelPresentationIcon from '@mui/icons-material/CancelPresentation'
 import Typography from '@mui/material/Typography'
 import PaymentIcon from '@mui/icons-material/Payment'
 import Avatar from '@mui/material/Avatar'
-
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { UserContext } from '../../context/user/userContext'
-import { CarritoContext } from '../../context/carrito/carritoContext'
+import { types } from '../../context/user/userReducer'
+import axios from 'axios'
+import { GlobalContext } from '../../context/global/globalContext'
 
 export default function Pago () {
   const [open, setOpen] = React.useState(false)
-  const { carritoCompra } = useContext(CarritoContext)
-  const options = { style: 'currency', currency: 'CLP' }
+  const { token, idUser } = useContext(GlobalContext)
 
   const handleClickOpen = () => {
     setOpen(true)
+    if (token !== '') {
+      recuperaUsuario()
+    }
   }
 
   const handleClose = () => {
     setOpen(false)
   }
-  const handleSubmit = () => {
-    setOpen(false)
-  }
-  const [state, dispatchUser] = useContext(UserContext)
+
+  const [, dispatchUser] = useContext(UserContext)
+  //const [carrito] = useContext(CarritoContext)
+
+  const [formUser, setFormUser] = useState({
+    email: '',
+    password: '',
+    nombre: '',
+    rut: '',
+    direccion: '',
+    comuna: '',
+    telefono: '',
+    rol: '',
+    premium: false,
+    dob: ''
+  })
 
   const handleChange = e => {
-    dispatchUser({
-      ...state,
+    setFormUser({
+      ...formUser,
       [e.target.name]: e.target.value
     })
   }
+  const api = axios.create({
+    //baseURL: "https://uddjaffa.onrender.com:4000"
+    baseURL: 'http://localhost:4000'
+  })
 
+  const handlePago = async e => {
+    e.preventDefault()
+    const formOrder = 0 /*{
+      email: formUser.email,
+      nombre: formUser.nombre,
+      direccion: formUser.direccion,
+      comuna: formUser.comuna,
+      telefono: formUser.telefono,
+      totalProductos: carrito.totalProductos,
+      precioTotal: carrito.precioTotal,
+      items: [...carrito.items]
+    }*/
+    try {
+      const { data } = await api.post('/orders', JSON.stringify(formOrder), {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      dispatchUser({
+        type: types.setUserState,
+        payload: data
+      })
+    } catch (error) {
+      window.alert('Error al actualizar usuario')
+      console.log(error)
+    }
+  }
   
+  const recuperaUsuario = async i => {
+    i = idUser
+    try {
+      const { data } = await api.get(`/users/${i}`, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        }
+      })
+      setFormUser(data.detail)
+    } catch (error) {
+      window.alert('Error al recuperar usuario')
+      console.log(error)
+    }
+  }
+
   return (
     <div>
       <Button onClick={handleClickOpen}>
-        <PaymentIcon />
-        Pago
+        <PaymentIcon fontSize='large' />
+        Continuar con el Pago
       </Button>
+
       <Dialog open={open} onClose={handleClose}>
+        <DialogActions>
+          <Button onClick={handleClose}>
+            <CancelPresentationIcon color='primary' />
+          </Button>
+        </DialogActions>
         <DialogContent>
           <Container component='main' maxWidth='xs' className='text-center'>
             <CssBaseline />
@@ -59,104 +128,114 @@ export default function Pago () {
                 alignItems: 'center'
               }}
             >
-              <h4>Productos: {carritoCompra.totalProductos}</h4>
-              <h4>
-                Total:{' '}
-                {parseFloat(
-                  carritoCompra.precioTotal.toFixed(0)
-                ).toLocaleString('es-CL', options)}
-              </h4>
               <Avatar sx={{ bgcolor: 'primary.main' }}>
                 <PaymentIcon />
               </Avatar>
-              <Typography component='h1' variant='h5' margin={3}>
-                Dirección de Envío
+              <Typography component='h1' variant='h5'>
+                Ingresa los Datos para el Despacho
               </Typography>
+
               <Box
                 component='form'
                 sx={{
                   '& > :not(style)': { mt: 1, width: '50ch' },
-                  marginTop: 2
+                  marginTop: 8
                 }}
                 noValidate
+                autoComplete='off'
               >
                 <TextField
-                  id='email'
+                  name='email'
+                  value={formUser.email}
                   onChange={handleChange}
                   label='Correo electrónico'
                   variant='outlined'
-                  
                 />
               </Box>
               <Box
                 component='form'
                 sx={{ '& > :not(style)': { mt: 1, width: '50ch' } }}
                 noValidate
-              ></Box>
-              <Box
-                component='form'
-                sx={{ '& > :not(style)': { mt: 1, width: '50ch' } }}
-                noValidate
+                autoComplete='off'
               >
                 <TextField
-                  id='nombre'
+                  name='nombre'
+                  value={formUser.nombre}
                   label='Nombre'
                   onChange={handleChange}
                   variant='outlined'
-                  value={state.nombre}
                 />
               </Box>
               <Box
                 component='form'
                 sx={{ '& > :not(style)': { mt: 1, width: '50ch' } }}
                 noValidate
+                autoComplete='off'
+              >
+                <TextField
+                  name='rut'
+                  value={formUser.rut}
+                  onChange={handleChange}
+                  label='Rut'
+                  variant='outlined'
+                />
+              </Box>
+
+              <Box
+                component='form'
+                sx={{ '& > :not(style)': { mt: 1, width: '50ch' } }}
+                noValidate
+                autoComplete='off'
               >
                 <TextField
                   name='direccion'
                   label='Dirección'
+                  value={formUser.direccion}
                   onChange={handleChange}
                   variant='outlined'
-                  value={state.direccion}
                 />
               </Box>
               <Box
                 component='form'
                 sx={{ '& > :not(style)': { mt: 1, width: '50ch' } }}
                 noValidate
+                autoComplete='off'
               >
                 <TextField
                   name='comuna'
                   onChange={handleChange}
+                  value={formUser.comuna}
                   label='Comuna'
                   variant='outlined'
-                  value={state.Avatarcomuna}
                 />
               </Box>
               <Box
                 component='form'
                 sx={{ '& > :not(style)': { mt: 1, width: '50ch' } }}
                 noValidate
+                autoComplete='off'
               >
                 <TextField
                   name='telefono'
                   onChange={handleChange}
                   label='Teléfono'
+                  value={formUser.telefono}
                   variant='outlined'
                   type='number'
-                  value={state.telefono}
                 />
               </Box>
               <Box
                 component='form'
                 sx={{ '& > :not(style)': { mt: 1, width: '31ch' } }}
                 noValidate
+                autoComplete='off'
               >
                 <Button
                   variant='contained'
                   size='large'
                   startIcon={<PaymentIcon />}
                   type='submit'
-                  onClick={handleSubmit}
+                  onClick={handlePago}
                   sx={{ mt: 3, mb: 2 }}
                 >
                   {' '}
@@ -166,11 +245,6 @@ export default function Pago () {
             </Box>
           </Container>
         </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} href='/login'>
-            Regresar
-          </Button>
-        </DialogActions>
       </Dialog>
     </div>
   )

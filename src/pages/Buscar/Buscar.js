@@ -8,8 +8,9 @@ import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
 import SearchIcon from '@mui/icons-material/Search'
 import Form from 'react-bootstrap/Form'
-import { teal } from '@mui/material/colors'
 import IconButton from '@mui/material/IconButton'
+import CancelPresentationIcon from '@mui/icons-material/CancelPresentation'
+
 const Buscar = () => {
   const handleSubmit = event => {
     event.preventDefault()
@@ -32,10 +33,15 @@ const Buscar = () => {
   return (
     <div>
       <Button onClick={handleClickOpen} color='primary'>
-        <SearchIcon color='primary' />
+        <SearchIcon color='primary' fontSize='large' />
         BUSCAR
       </Button>
       <Dialog open={open} onClose={handleClose}>
+      <DialogActions>
+          <Button onClick={handleClose}>
+            <CancelPresentationIcon color='primary' />
+          </Button>
+        </DialogActions>
         <DialogContent>
           <Container component='main' maxWidth='xs' className='text-center'>
             <CssBaseline />
@@ -57,20 +63,17 @@ const Buscar = () => {
                 />
                 <IconButton
                   aria-label='close'
-                  color='inherit'
+                  color='primary'
                   size='large'
-                  sx={{ color: teal[50] }}
                 >
-                  <SearchIcon fontSize='inherit' />
+                  <SearchIcon fontSize='large' />
                 </IconButton>
               </Form>
             </Box>
           </Container>
         </DialogContent>
 
-        <DialogActions>
-          <Button onClick={handleClose}>Cancelar</Button>
-        </DialogActions>
+ 
       </Dialog>
     </div>
   )

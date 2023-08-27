@@ -33,7 +33,7 @@ export default function Actualizar () {
                 setOpen(false)
               }}
             >
-              <CloseIcon fontSize='inherit' />
+              <CloseIcon fontSize='large' />
             </IconButton>
           }
           sx={{ mb: 2 }}

@@ -72,7 +72,7 @@ export default function Calculo () {
   return (
     <div>
       <Button onClick={handleClickOpen} color='primary'>
-        <CalculateIcon color='primary' />
+        <CalculateIcon color='primary' fontSize='large'/>
         Calculadora de mt lineales
       </Button>
 
@@ -166,7 +166,7 @@ export default function Calculo () {
         </DialogContent>
         <DialogActions>
           <Button onClick={Calcular}>
-            <CalculateIcon color='primary' />
+            <CalculateIcon color='primary' fontSize='large'/>
             Calcular
           </Button>
           <Button onClick={handleClose}>
