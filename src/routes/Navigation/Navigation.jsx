@@ -7,8 +7,12 @@ import Login from '../../pages/Login/Login'
 import Buscar from '../../pages/Buscar/Buscar'
 import Contacto from '../../pages/Contacto/Contacto'
 import MiPerfil from '../../pages/MiPerfil/MiPerfil'
+import { useContext } from 'react'
+import { GlobalContext } from '../../context/global/globalContext'
+
 
 const Navigation = () => {
+  const { token } = useContext(GlobalContext)
   return (
     <div className='ps-5'>
       <Navbar expand='lg'>
@@ -41,15 +45,10 @@ const Navigation = () => {
             </Nav.Link>
             <Nav.Link>
               <React.Fragment>
-                <MiPerfil />
+                {token === '' ? <Login /> : <MiPerfil />}
               </React.Fragment>
             </Nav.Link>
 
-            <Nav.Link>
-              <React.Fragment>
-                <Login />
-              </React.Fragment>
-            </Nav.Link>
             <Nav.Link>
               <React.Fragment>
                 <Carrito />

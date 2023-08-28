@@ -23,20 +23,17 @@ import InputAdornment from '@mui/material/InputAdornment'
 import Visibility from '@mui/icons-material/Visibility'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
 import jwtDecode from 'jwt-decode'
-import Mensaje from '../../pages/Mensaje/Mensaje'
 import LoginIcon from '@mui/icons-material/Login'
 import CancelPresentationIcon from '@mui/icons-material/CancelPresentation'
 import { GlobalContext } from '../../context/global/globalContext'
+import { ToastContainer, toast } from 'react-toastify'
+import Registro from '../../pages/Registro/Registro'
+
+import 'react-toastify/dist/ReactToastify.css'
 
 export default function Login () {
-  const {
-    setVisible,
-    setMensaje,
-    userName,
-    setUserName,
-    setToken, 
-    setIdUser
-  } = useContext(GlobalContext)
+  const { userName, setUserName, setToken, setIdUser } =
+    useContext(GlobalContext)
   const [showPassword, setShowPassword] = React.useState(false)
 
   const handleClickShowPassword = () => setShowPassword(show => !show)
@@ -51,11 +48,6 @@ export default function Login () {
     setOpen(true)
   }
 
-  const despliegaMensaje = m => {
-    setMensaje(m)
-    setVisible(true)
-  }
-
   const handleClose = () => {
     setOpen(false)
   }
@@ -68,7 +60,6 @@ export default function Login () {
     password: ''
   }
 
-  
   const [formUser, setFormUser] = useState(initialUser)
 
   const handleChange = e => {
@@ -92,7 +83,7 @@ export default function Login () {
           'Content-Type': 'application/json'
         }
       })
-  
+
       tokenDecodificado = jwtDecode(data.token)
       setToken(data.token)
       setIdUser(data.idUser)
@@ -102,9 +93,9 @@ export default function Login () {
         type: types.setUserState,
         payload: tokenDecodificado
       })
+      notifySuccess('Usuario Conectado')
     } catch (error) {
-      console.log(error)
-      despliegaMensaje('Error de conexion')
+      notifyError('Error de conexion')
       setToken('')
       setIdUser('')
       setUserName('Inicio Sesión')
@@ -112,8 +103,11 @@ export default function Login () {
         type: types.setError,
         payload: error
       })
+      console.log(error)
     }
   }
+  const notifyError = msg => toast.error(msg)
+  const notifySuccess = msg => toast.success(msg)
 
   return (
     <div>
@@ -122,6 +116,7 @@ export default function Login () {
         {userName}
       </Button>
       <Dialog open={open} onClose={handleClose}>
+        <ToastContainer position='top-center' />
         <DialogActions>
           <Button onClick={handleClose}>
             <CancelPresentationIcon color='primary' />
@@ -154,7 +149,10 @@ export default function Login () {
                 {state?.user ? (
                   <p> ¡Qué bueno tenerte de vuelta! </p>
                 ) : (
-                  <p>Si no tienes cuenta registrate</p>
+                  
+                  <React.Fragment>
+                    <Registro />
+                  </React.Fragment>
                 )}
               </Typography>
 
@@ -207,7 +205,6 @@ export default function Login () {
                     </Button>
                   </Grid>
                 </Grid>
-                <Mensaje />
               </Box>
             </Box>
           </Container>

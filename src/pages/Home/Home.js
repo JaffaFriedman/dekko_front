@@ -1,7 +1,7 @@
 import Carousel from 'react-bootstrap/Carousel'
 import { Container } from 'react-bootstrap'
 import Box from '@mui/material/Box'
-import tablaCarrusel from '../../pages/Tablas/Tablacarrusel'
+import tablaCarrusel from './Tablacarrusel'
 
 const Home = () => {
   return (

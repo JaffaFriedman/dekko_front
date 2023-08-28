@@ -17,6 +17,7 @@ import { UserContext } from '../../context/user/userContext'
 import { types } from '../../context/user/userReducer'
 import axios from 'axios'
 import { GlobalContext } from '../../context/global/globalContext'
+import { ToastContainer, toast } from 'react-toastify'
 
 export default function MiPerfil () {
   const [open, setOpen] = React.useState(false)
@@ -58,21 +59,25 @@ export default function MiPerfil () {
     baseURL: 'http://localhost:4000'
   })
 
-  const handleSubmit = async e => {
-    e.preventDefault()
+  const actualizaUsuario = async () => {
     try {
-      const { data } = await api.post('/users', JSON.stringify(formUser), {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`
+      const { data } = await api.post(
+        `/users/${idUser}`,
+        JSON.stringify(formUser),
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`
+          }
         }
-      })
+      )
       dispatchUser({
         type: types.setUserState,
         payload: data
       })
+      notifySuccess('Usuario actualizado')
     } catch (error) {
-      window.alert('Error al actualizar usuario')
+      notifyError('Error al actualizar el usuario')
       console.log(error)
     }
   }
@@ -88,10 +93,11 @@ export default function MiPerfil () {
       })
       setFormUser(data.detail)
     } catch (error) {
-      window.alert('Error al recuperar usuario')
       console.log(error)
     }
   }
+  const notifyError = msg => toast.error(msg)
+  const notifySuccess = msg => toast.success(msg)
 
   return (
     <div>
@@ -101,6 +107,7 @@ export default function MiPerfil () {
       </Button>
 
       <Dialog open={open} onClose={handleClose}>
+        <ToastContainer position='top-center' />
         <DialogActions>
           <Button onClick={handleClose}>
             <CancelPresentationIcon color='primary' />
@@ -219,15 +226,8 @@ export default function MiPerfil () {
                 noValidate
                 autoComplete='off'
               >
-                <Button
-                  variant='contained'
-                  size='large'
-                  startIcon={<SaveIcon />}
-                  type='submit'
-                  onClick={handleSubmit}
-                  sx={{ mt: 3, mb: 2 }}
-                >
-                  {' '}
+                <Button onClick={actualizaUsuario ()} color='primary'>
+                  <SaveIcon color='primary' fontSize='large' />
                   Actualizar
                 </Button>
               </Box>

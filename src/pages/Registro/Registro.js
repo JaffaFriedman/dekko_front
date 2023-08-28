@@ -24,6 +24,8 @@ import { UserContext } from '../../context/user/userContext'
 import { types } from '../../context/user/userReducer'
 import axios from 'axios'
 import CancelPresentationIcon from '@mui/icons-material/CancelPresentation'
+import { ToastContainer, toast } from 'react-toastify'
+
 export default function Registro () {
   const [showPassword, setShowPassword] = React.useState(false)
 
@@ -80,22 +82,25 @@ export default function Registro () {
         type: types.setUserState,
         payload: data
       })
-      window.alert('Usuario registrado')
+      notifySuccess('Usuario registrado')
     } catch (error) {
-      window.alert('Error al registrar usuario')
+      notifyError('Error al registrar usuario')
       console.log(error)
     }
   }
+  const notifyError = msg => toast.error(msg)
+  const notifySuccess = msg => toast.success(msg)
 
   return (
     <div>
       <Button onClick={handleClickOpen}>
         <AccountCircle fontSize='large' />
-        Registro
+        Si no tienes cuenta registrate aqui
       </Button>
 
       <Dialog open={open} onClose={handleClose}>
-      <DialogActions>
+        <ToastContainer position='top-center' />
+        <DialogActions>
           <Button onClick={handleClose}>
             <CancelPresentationIcon color='primary' />
           </Button>
@@ -161,11 +166,12 @@ export default function Registro () {
                 noValidate
                 autoComplete='off'
               >
-                <TextField 
-                id='nombre' 
-                label='Nombre' 
-                onChange={handleChange}
-                variant='outlined' />
+                <TextField
+                  id='nombre'
+                  label='Nombre'
+                  onChange={handleChange}
+                  variant='outlined'
+                />
               </Box>
               <Box
                 component='form'
@@ -227,22 +233,15 @@ export default function Registro () {
                 noValidate
                 autoComplete='off'
               >
-                <Button
-                  variant='contained'
-                  size='large'
-                  startIcon={<SaveIcon />}
-                  type='submit'
-                  onClick={handleSubmit}
-                  sx={{ mt: 3, mb: 2 }}
-                >
-                  {' '}
-                  Enviar
+                <Button onClick={handleSubmit} color='primary'>
+                  <SaveIcon color='primary' fontSize='large' />
+                  Registrar
                 </Button>
               </Box>
             </Box>
           </Container>
         </DialogContent>
-        </Dialog>
+      </Dialog>
     </div>
   )
 }

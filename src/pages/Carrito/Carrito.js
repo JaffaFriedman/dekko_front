@@ -34,12 +34,12 @@ export default function Carrito () {
   return (
     <div>
       <Badge color='secondary' badgeContent={carritoCompra.totalProductos}>
-        <Button onClick={handleClickOpen} color='secondary' >
+        <Button onClick={handleClickOpen} color='secondary'>
           <ShoppingCartIcon color='primary' fontSize='large' />
         </Button>
       </Badge>
       <Dialog open={open} onClose={handleClose}>
-      <DialogActions>
+        <DialogActions>
           <Button onClick={handleClose}>
             <CancelPresentationIcon color='primary' />
           </Button>
@@ -60,8 +60,8 @@ export default function Carrito () {
                 direction='row'
                 sx={{ color: 'action.active' }}
               ></Stack>
-              <Avatar sx={{ m: 1, bgcolor: 'primary.light' }} >
-                <ShoppingCartIcon fontSize='large'/>
+              <Avatar sx={{ m: 1, bgcolor: 'primary.light' }}>
+                <ShoppingCartIcon fontSize='large' />
               </Avatar>
               <h4>Productos: {carritoCompra.totalProductos}</h4>
               <h4>

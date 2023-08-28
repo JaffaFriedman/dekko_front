@@ -16,6 +16,7 @@ import { UserContext } from '../../context/user/userContext'
 import { types } from '../../context/user/userReducer'
 import axios from 'axios'
 import { GlobalContext } from '../../context/global/globalContext'
+import { ToastContainer, toast } from 'react-toastify'
 
 export default function Pago () {
   const [open, setOpen] = React.useState(false)
@@ -23,8 +24,8 @@ export default function Pago () {
 
   const handleClickOpen = () => {
     setOpen(true)
-    if (token !== '') {
-      recuperaUsuario()
+    if (idUser !== '') {
+      recuperaUsuario(idUser)
     }
   }
 
@@ -81,14 +82,14 @@ export default function Pago () {
         type: types.setUserState,
         payload: data
       })
+      notifySuccess('Pago efectuado')
     } catch (error) {
-      window.alert('Error al actualizar usuario')
+      notifyError('Error al efectuar el pago')
       console.log(error)
     }
   }
-  
+
   const recuperaUsuario = async i => {
-    i = idUser
     try {
       const { data } = await api.get(`/users/${i}`, {
         headers: {
@@ -98,19 +99,22 @@ export default function Pago () {
       })
       setFormUser(data.detail)
     } catch (error) {
-      window.alert('Error al recuperar usuario')
+      notifyError('Error al recuperar datos del usuario')
       console.log(error)
     }
   }
+  const notifyError = msg => toast.error(msg)
+  const notifySuccess = msg => toast.success(msg)
 
   return (
     <div>
       <Button onClick={handleClickOpen}>
         <PaymentIcon fontSize='large' />
-        Continuar con el Pago
+        Ingresar Datos de Despacho
       </Button>
 
       <Dialog open={open} onClose={handleClose}>
+        <ToastContainer position='top-center' />
         <DialogActions>
           <Button onClick={handleClose}>
             <CancelPresentationIcon color='primary' />
@@ -230,16 +234,9 @@ export default function Pago () {
                 noValidate
                 autoComplete='off'
               >
-                <Button
-                  variant='contained'
-                  size='large'
-                  startIcon={<PaymentIcon />}
-                  type='submit'
-                  onClick={handlePago}
-                  sx={{ mt: 3, mb: 2 }}
-                >
-                  {' '}
-                  Pagar
+                <Button onClick={handlePago} color='primary'>
+                  <PaymentIcon color='primary' fontSize='large' />
+                  Efectuar el pago
                 </Button>
               </Box>
             </Box>

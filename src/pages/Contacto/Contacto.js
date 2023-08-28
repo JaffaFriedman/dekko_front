@@ -12,6 +12,8 @@ import { TextField, Button } from '@mui/material'
 import Avatar from '@mui/material/Avatar'
 import Typography from '@mui/material/Typography'
 import CancelPresentationIcon from '@mui/icons-material/CancelPresentation'
+import { ToastContainer, toast } from 'react-toastify'
+
 //import validarContacto from "../Validar/ValidarContacto";
 
 function Contacto() {
@@ -25,6 +27,8 @@ function Contacto() {
     setOpen(false)
   }
 
+
+
   const [contacto, setContacto] = useState('')
   const handleInputChange = e => {
     const name = e.target.name
@@ -34,7 +38,12 @@ function Contacto() {
       [name]: value
     })
   }
-
+  //const notifyError = msg => toast.error(msg)
+  const notifySuccess = msg => toast.success(msg)
+  const handleSubmit = () => {
+    notifySuccess('Mensaje enviado')
+   // notifyError('Error al enviar el mensaje')
+  }
   return (
     <div>
       <Button onClick={handleClickOpen} color='primary'>
@@ -42,6 +51,7 @@ function Contacto() {
         Contáctanos
       </Button>
       <Dialog open={open} onClose={handleClose}>
+      <ToastContainer position='top-center' />
       <DialogActions>
           <Button onClick={handleClose}>
             <CancelPresentationIcon color='primary' />
@@ -153,16 +163,10 @@ function Contacto() {
               noValidate
               autoComplete='off'
             >
-              <Button
-                variant='contained'
-                className='mt-3'
-                color='primary'
-                startIcon={<SendIcon />}
-              // onClick={registrarContacto}
-              >
-                {' '}
-                Enviar
-              </Button>
+              <Button onClick={handleSubmit} color='primary'>
+                  <SendIcon color='primary' fontSize='large' />
+                  Enviar
+                </Button>
             </Box>
           </Container>
         </DialogContent>

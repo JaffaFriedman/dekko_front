@@ -14,62 +14,71 @@ function srcset (image, size, rows = 1, cols = 1) {
 }
 const itemData = [
   {
-    img: 'AFR01_I_M02.JPG',
-    title: 'Catalogo Africa I',
+    img: 'https://static.innovaweb.cl/wordpress/dekko_tienda_wp/2019/11/AFR01_W_M09.jpg',
+    title: 'Catálogo Africa I',
     rows: 2,
     cols: 2
   },
   {
-    img: 'AFR01_W_M15.JPG',
-    title: 'Catalogo Africa I'
+    img: 'https://static.innovaweb.cl/wordpress/dekko_tienda_wp/2019/11/AFR01_W_M01.jpg',
+    title: 'Catálogo Africa I'
+  },
+
+  {
+    img: 'https://static.innovaweb.cl/wordpress/dekko_tienda_wp/2021/01/SHI02_W_M01.png',
+    title: 'Catálogo Botanica V'
   },
   {
-    img: 'AFR02_I_M04.JPG',
-    title: 'Catalogo Africa II'
+    img: 'https://static.innovaweb.cl/wordpress/dekko_tienda_wp/2019/07/BOT05_W_M5.jpg',
+    title: 'Catálogo Sea I'
+  },
+
+  {
+    img: 'https://static.innovaweb.cl/wordpress/dekko_tienda_wp/2021/03/con03_I_M04.jpg',
+    title: 'Catálogo Concreto III',
+    rows: 2
   },
   {
-    img: 'BOT05_W_M14.JPG',
-    title: 'Catalogo Botanica V',
-    cols: 2
-  },
-  {
-    img: 'con03_I_M04.JPG',
-    title: 'Catalogo Concreto III',
-    cols: 2
-  },
-  {
-    img: 'JUN03_W_M23-1.JPG',
-    title: 'JUN0323',
-    author: 'Catalogo Junglas III',
+    img: 'https://static.innovaweb.cl/wordpress/dekko_tienda_wp/2021/10/JUN03_W_M23-1.jpg',
+    title: 'Catálogo Junglas III',
     rows: 2,
     cols: 2
   },
   {
-    img: 'KIG06_I_M27.JPG',
-    title: 'KIG0623'
+    img: 'https://static.innovaweb.cl/wordpress/dekko_tienda_wp/2018/08/KIT02_W_M04-2.jpg',
+    title: 'Catálogo Kitchen IV'
+  },
+
+  {
+    img: 'https://static.innovaweb.cl/wordpress/dekko_tienda_wp/2019/09/ANT01_W_M04.jpg',
+    title: 'Catálogo Baby I'
   },
   {
-    img: 'LIN02_I_M207.JPG',
-    title: 'Clientes comiendo pasta'
+    img: 'https://static.innovaweb.cl/wordpress/dekko_tienda_wp/2019/09/ANT01_W_M27.jpg',
+
+    title: 'Catálogo Boys & Girls'
   },
   {
-    img: 'TEB02_W_M18.JPG',
-    title: 'Chef cocinado',
+    img: 'https://static.innovaweb.cl/wordpress/dekko_tienda_wp/2021/06/BAB01_I_M03.jpg',
+    title: 'Catálogo Baby I'
+  },
+  {
+    img: 'https://static.innovaweb.cl/wordpress/dekko_tienda_wp/2021/10/BG05_I_M16.jpg',
+    title: 'Catálogo Boys & Girls'
+  },
+  {
+    img: 'https://static.innovaweb.cl/wordpress/dekko_tienda_wp/2019/07/MAP03_W_M03.jpg',
+    title: 'Catálogo Mapas III',
     rows: 2,
     cols: 2
   },
   {
-    img: 'SHI02_W_M04.PNG',
-    title: 'Chef preparando carne'
+    img: 'https://static.innovaweb.cl/wordpress/dekko_tienda_wp/2021/10/BG05_I_M13.jpg',
+    title: 'Catálogo Mapas III'
   },
   {
-    img: 'lin04_i_m04.JPG',
-    title: 'Chef cocinado'
-  },
-  {
-    img: 'KIB03_I_M21.jpg',
-    title: 'Surtido de pastas',
-    cols: 2
+    img: 'https://static.innovaweb.cl/wordpress/dekko_tienda_wp/2023/02/BAB06_I_M020.jpg',
+    title: 'Catálogo Mapas III'
   }
 ]
 
@@ -92,8 +101,8 @@ const Nosotros = () => {
               xs={{ width: 480, height: 600 }}
               sx={{ width: 640, height: 800 }}
               md={{ width: 1000, height: 800 }}
-              lg={{ width: 1300, height: 1000 }}
-              xl={{ width: 1500, height: 1000 }}
+              lg={{ width: 1300, height: 1100 }}
+              xl={{ width: 1500, height: 1200 }}
               variant='quilted'
               cols={4}
               rowHeight={121}
