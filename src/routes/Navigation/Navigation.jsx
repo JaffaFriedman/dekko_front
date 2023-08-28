@@ -1,6 +1,5 @@
 import * as React from 'react'
 import { Nav, Navbar } from 'react-bootstrap'
-import { NavLink } from 'react-router-dom'
 import logo from '../../images/logo.JPG'
 import Carrito from '../../pages/Carrito/Carrito'
 import Login from '../../pages/Login/Login'
@@ -9,8 +8,7 @@ import Contacto from '../../pages/Contacto/Contacto'
 import MiPerfil from '../../pages/MiPerfil/MiPerfil'
 import { useContext } from 'react'
 import { GlobalContext } from '../../context/global/globalContext'
-
-
+import { NavLink } from 'react-router-dom'
 const Navigation = () => {
   const { token } = useContext(GlobalContext)
   return (
@@ -28,7 +26,7 @@ const Navigation = () => {
         <Navbar.Collapse id='responsive-navbar-nav'>
           <Nav className='me-auto'>
             <Nav.Link as={NavLink} to='/Familias'>
-              CATALOGO
+              CATALOGO DE PRODUCTOS
             </Nav.Link>
           </Nav>
           <Nav className='me-auto'>
@@ -48,7 +46,6 @@ const Navigation = () => {
                 {token === '' ? <Login /> : <MiPerfil />}
               </React.Fragment>
             </Nav.Link>
-
             <Nav.Link>
               <React.Fragment>
                 <Carrito />
