@@ -23,19 +23,10 @@ const Navigation = () => {
             alt='Logo'
           />
         </Navbar.Brand>
-        <Navbar.Collapse id='responsive-navbar-nav'>
           <Nav className='me-auto'>
             <Nav.Link as={NavLink} to='/Familias'>
               CATALOGO DE PRODUCTOS
             </Nav.Link>
-          </Nav>
-          <Nav className='me-auto'>
-            <Nav.Link as={NavLink} to='/Nosotros'>
-              QUIENES SOMOS
-            </Nav.Link>
-          </Nav>
-          <Navbar.Toggle aria-controls='responsive-navbar-nav' />
-          <Nav className='me-auto'>
             <Nav.Link>
               <React.Fragment>
                 <Buscar />
@@ -57,7 +48,7 @@ const Navigation = () => {
               </React.Fragment>
             </Nav.Link>
           </Nav>
-        </Navbar.Collapse>
+      
       </Navbar>
     </div>
   )
