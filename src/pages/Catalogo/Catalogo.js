@@ -61,7 +61,7 @@ export default function Catalogo () {
         sx={{ display: 'flex', flexWrap: 'wrap', minWidth: 400, width: '100%' }}
       >
         <Container>
-          <Row xs={1} md={2} lg={4} className='g-10 text-center'>
+          <Row xs={1} md={2} lg={3} className='g-10 text-center'>
             {tablaCategorias.map((p, idx) => (
               <Col image={p} key={idx}>
                 <ImageButton

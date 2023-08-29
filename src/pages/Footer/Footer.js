@@ -37,7 +37,7 @@ const Footer = () => {
         >
           <Grid item md={2}>
             <Typography level='body' sx={{ color: grey[50] }}>
-              <LocationOnIcon fontSize='medium' /> Manquehue Sur 897 local 3, Las
+              <LocationOnIcon fontSize='medium' /> Isabel la Catolica 7350, Las
               Condes
             </Typography>
             <Link

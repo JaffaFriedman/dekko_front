@@ -56,7 +56,7 @@ function Productos () {
         </h3>
       </div>
       <Container>
-        <Row xs={1} md={2} lg={3} className='g-10 text-center'>
+        <Row xs={1} md={1} lg={2} className='g-10 text-center'>
           {tablaProductos.map((p, idx) => (
             <Col p={p} key={idx}>
               <Card style={{ width: '25rem', height: '25rem' }} className='m-3'>
