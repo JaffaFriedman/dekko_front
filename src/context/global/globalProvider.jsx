@@ -15,6 +15,12 @@ export function GlobalProvider ({ children }) {
   const [idUser, setIdUser] = useState('')
   const [token, setToken] = useState('')
 
+  const redondear = (num) => {
+    let roundedString = num.toFixed(2);
+    let roundedNumber = parseFloat(roundedString);
+    return roundedNumber;
+}
+
   const ImageButton = styled(ButtonBase)(({ theme }) => ({
     position: 'relative',
     height: 200,
@@ -103,7 +109,8 @@ export function GlobalProvider ({ children }) {
         setFamilia,
         setCategoria,
         setProducto,
-        setCantidad
+        setCantidad,
+        redondear
       }}
     >
       {children}

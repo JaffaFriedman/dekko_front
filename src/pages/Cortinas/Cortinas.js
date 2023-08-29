@@ -98,8 +98,8 @@ function Cortinas () {
     glosa: '',
     imagen: p.url[0],
     tela: 0,
-    precio: p.recio,
-    precioMt2: p.recio,
+    precio: p.precio,
+    precioMt2: p.precio,
     textura: 0,
     papel: 0
   }

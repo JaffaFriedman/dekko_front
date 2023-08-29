@@ -54,7 +54,7 @@ function Rollos () {
   }
   const options = { style: 'currency', currency: 'CLP' }
   const p = producto
-
+  setCantidad(1)
   return (
     <>
       <div className='bg-dark text-bg-dark pb-2 ps-5  mb-1 text-center'>

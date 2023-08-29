@@ -21,11 +21,11 @@ const carritoReducer= ( state, action = {}) => {
   }
 
   const totalProductos = carritoActualizado.reduce(
-    (total, item) => total + item.cantidad,
+    (total, item) => parseInt(total) + parseInt(item.cantidad),
     0
   )
   const precioTotal = carritoActualizado.reduce(
-    (total, item) => total + item.cantidad * item.precio,
+    (total, item) => parseInt(total) + parseInt(item.cantidad * item.precio),
     0
   )
 

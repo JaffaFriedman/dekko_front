@@ -94,7 +94,7 @@ export default function Carrito () {
                       <p>
                         Total:
                         {parseFloat(
-                          (item.precio * item.cantidad).toFixed(0)
+                          (item.precio * item.cantidad)
                         ).toLocaleString('es-CL', options)}{' '}
                       </p>
                     </Stack>
@@ -104,7 +104,6 @@ export default function Carrito () {
                         required
                         variant='standard'
                         type='number'
-                        id='cantidad'
                         label='Cantidad'
                         name='cantidad'
                         value={item.cantidad}

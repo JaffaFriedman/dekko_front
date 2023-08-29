@@ -79,8 +79,8 @@ function Bobina () {
     gramaje: 0,
     color: color,
     tela: 0,
-    precio: p.recio,
-    precioMt2: p.recio,
+    precio: p.precio,
+    precioMt2: p.precio,
     textura: 0,
     papel: 0
   }
@@ -204,16 +204,12 @@ function Bobina () {
                     <TextField
                       margin='normal'
                       required
-                      fullWidth
                       variant='standard'
                       type='number'
-                      id='cantidad'
                       label='Cantidad de Bobinas'
                       name='cantidad'
-                      autoComplete='cantidad'
                       value={datos.cantidad}
                       onChange={handleChange}
-                      autoFocus
                     />
                   </Item>
                   <React.Fragment>
