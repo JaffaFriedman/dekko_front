@@ -6,17 +6,23 @@ import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import CssBaseline from '@mui/material/CssBaseline'
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import Container from '@mui/material/Container'
 import { TextField, Button } from '@mui/material'
 import Avatar from '@mui/material/Avatar'
 import Typography from '@mui/material/Typography'
 import CancelPresentationIcon from '@mui/icons-material/CancelPresentation'
 import { ToastContainer, toast } from 'react-toastify'
-
+import { GlobalContext } from '../../context/global/globalContext'
+import axios from 'axios'
 //import validarContacto from "../Validar/ValidarContacto";
 
 function Contacto() {
+  const {
+    BACKEND_URL
+  } = useContext(GlobalContext)
+
+
   const [open, setOpen] = React.useState(false)
 
   const handleClickOpen = () => {
@@ -27,9 +33,16 @@ function Contacto() {
     setOpen(false)
   }
 
+  const initialContact = {
+    email: '',
+    nombre: '',
+    telefono: '' ,
+    asunto: '',
+    mensaje: ''
+  }
 
+  const [contacto, setContacto] = useState(initialContact)
 
-  const [contacto, setContacto] = useState('')
   const handleInputChange = e => {
     const name = e.target.name
     const value = e.target.value
@@ -38,12 +51,30 @@ function Contacto() {
       [name]: value
     })
   }
+
+  const api = axios.create({
+    baseURL: BACKEND_URL,
+    timeout: 5000,
+    headers: {
+      'Content-Type': 'application/json', 
+    }
+  })
   //const notifyError = msg => toast.error(msg)
   const notifySuccess = msg => toast.success(msg)
-  const handleSubmit = () => {
-    notifySuccess('Mensaje enviado')
-   // notifyError('Error al enviar el mensaje')
+  const notifyError = msg => toast.error(msg)
+ 
+  const handleSubmit = async e => {
+    e.preventDefault()
+    try {
+      console.log(contacto)
+      const { data } = await api.patch('/contact', JSON.stringify(contacto))
+      notifySuccess(data.message)
+    } catch (error) {
+      notifyError('Error al enviar el mensaje')
+      console.log(error)
+    }
   }
+  
   return (
     <div>
       <Button onClick={handleClickOpen} color='primary'>

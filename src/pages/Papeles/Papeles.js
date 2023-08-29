@@ -168,28 +168,12 @@ function Papeles () {
                 {' '}
                 {p.catalogo} - {p.nombre}
               </h4>
-              <p className='mt: 3'> </p>
-
               <h6>
-                {' '}
-                {datos.glosa === '' ? '' : 'Producto: '} {datos.glosa}{' '}
+              {'Producto:  '} {p.descripcion}
               </h6>
-              <h6>
-                {' '}
-                {datos.glosa === ''
-                  ? 'Precio mt2 desde ' +
-                    parseFloat(datos.precio.toFixed(0)).toLocaleString(
-                      'es-CL',
-                      options
-                    )
-                  : 'Precio Mural ' +
-                    parseFloat(datos.precio.toFixed(0)).toLocaleString(
-                      'es-CL',
-                      options
-                    )}{' '}
-              </h6>
-
-              <Box component='form' onSubmit={handleSubmit} sx={{ mt: 1 }}>
+              <h5> {p.precio.toLocaleString('es-CL', options)} por rollo </h5>
+            
+               <Box component='form' onSubmit={handleSubmit} sx={{ mt: 1 }}>
                 <Stack direction='row' spacing={2}>
                   <TextField
                         margin='normal'

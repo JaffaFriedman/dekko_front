@@ -32,9 +32,10 @@ import Registro from '../../pages/Registro/Registro'
 import 'react-toastify/dist/ReactToastify.css'
 
 export default function Login () {
-  const { userName, setUserName, setToken, setIdUser , BACKEND_URL} =
+  const { setToken, setIdUser , BACKEND_URL} =
     useContext(GlobalContext)
   const [showPassword, setShowPassword] = React.useState(false)
+  const [userName, setUserName] = React.useState('')
 
   const handleClickShowPassword = () => setShowPassword(show => !show)
 
@@ -84,7 +85,7 @@ export default function Login () {
       tokenDecodificado = jwtDecode(data.token)
       setToken(data.token)
       setIdUser(data.idUser)
-      setUserName(tokenDecodificado.nombre)
+      setUserName(data.nombre)
       notifySuccess('Hola '+userName)
       dispatchUser({
         type: types.setUserState,
@@ -94,7 +95,7 @@ export default function Login () {
       notifyError('Error de conexión')
       setToken('')
       setIdUser('')
-      setUserName('Inicio Sesión')
+      setUserName('')
       dispatchUser({
         type: types.setError,
         payload: error

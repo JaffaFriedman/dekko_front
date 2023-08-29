@@ -43,7 +43,7 @@ export default function Pago () {
     rut: '',
     direccion: '',
     comuna: '',
-    telefono: '',
+    telefono: 0,
     rol: '',
     premium: false,
     dob: ''
@@ -90,12 +90,13 @@ export default function Pago () {
     }
   }
 
-  const recuperaUsuario = async i => {
+  const recuperaUsuario = async () => {
     try {
-      const { data } = await api.get(`/users/auth/${i}`)
+      // i = idUser
+      const { data } = await api.get(`/users/auth/${idUser}`)
+      console.log(data)
       setFormUser(data.detail)
     } catch (error) {
-      notifyError('Error al recuperar datos del usuario')
       console.log(error)
     }
   }

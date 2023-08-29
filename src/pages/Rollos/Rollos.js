@@ -14,6 +14,7 @@ import { styled } from '@mui/material/styles'
 import Calculorollo from '../../pages/Calculo/Calculorollo'
 import { CarritoContext } from '../../context/carrito/carritoContext'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
+import { useEffect } from 'react'
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -31,7 +32,6 @@ function Rollos () {
   const navigate = useNavigate()
   const handleSubmit = event => {
     event.preventDefault()
-    //const data = new FormData(event.currentTarget);
   }
 
   const handleCategoria = () => {
@@ -41,7 +41,9 @@ function Rollos () {
   const handleChange = () => {
     setCantidad(cantidad)
   }
-
+  useEffect(() => {
+    setCantidad(1)
+  })
   const agregarCarro = () => {
     
     const item = {
@@ -54,7 +56,6 @@ function Rollos () {
   }
   const options = { style: 'currency', currency: 'CLP' }
   const p = producto
-  setCantidad(1)
   return (
     <>
       <div className='bg-dark text-bg-dark pb-2 ps-5  mb-1 text-center'>
@@ -107,6 +108,7 @@ function Rollos () {
                       type='number'
                       label='Cantidad'
                       name='cantidad'
+                      defaultValue={1}
                       value={cantidad}
                       onChange={handleChange}
                     />

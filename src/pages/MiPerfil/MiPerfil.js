@@ -54,12 +54,14 @@ export default function MiPerfil () {
       [e.target.name]: e.target.value
     })
   }
-  const api = axios.create({
+  const wtoken=token
+  const api = axios.create(
+    {
     baseURL: BACKEND_URL,
     timeout: 5000,
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`
+      Authorization: `Bearer ${wtoken}`
     }
   })
 

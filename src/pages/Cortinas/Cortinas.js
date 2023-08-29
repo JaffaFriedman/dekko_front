@@ -71,8 +71,8 @@ function Cortinas () {
   }
 
   const handleGlosa = () => {
-    datos.alto = parseInt(datos.alto) + 5
-    datos.ancho = parseInt(datos.ancho) + 5
+    datos.alto = parseInt(datos.alto) 
+    datos.ancho = parseInt(datos.ancho)  
     datos.mt2 = (datos.ancho * datos.alto) / (100 * 100)
     datos.precio = parseInt(datos.mt2 * datos.precioMt2)
     datos.glosa =
