@@ -20,7 +20,7 @@ import { ToastContainer, toast } from 'react-toastify'
 
 export default function Pago () {
   const [open, setOpen] = React.useState(false)
-  const { token, idUser } = useContext(GlobalContext)
+  const { token, idUser,BACKEND_URL } = useContext(GlobalContext)
 
   const handleClickOpen = () => {
     setOpen(true)
@@ -56,9 +56,14 @@ export default function Pago () {
     })
   }
   const api = axios.create({
-    //baseURL: "https://uddjaffa.onrender.com:4000"
-    baseURL: 'http://localhost:4000'
+    baseURL: BACKEND_URL,
+    timeout: 5000,
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    }
   })
+
 
   const handlePago = async e => {
     e.preventDefault()
@@ -73,11 +78,7 @@ export default function Pago () {
       items: [...carrito.items]
     }*/
     try {
-      const { data } = await api.post('/orders', JSON.stringify(formOrder), {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
+      const { data } = await api.post('/orders', JSON.stringify(formOrder))
       dispatchUser({
         type: types.setUserState,
         payload: data
@@ -91,12 +92,7 @@ export default function Pago () {
 
   const recuperaUsuario = async i => {
     try {
-      const { data } = await api.get(`/users/${i}`, {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`
-        }
-      })
+      const { data } = await api.get(`/users/auth/${i}`)
       setFormUser(data.detail)
     } catch (error) {
       notifyError('Error al recuperar datos del usuario')

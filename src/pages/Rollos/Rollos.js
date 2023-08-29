@@ -8,12 +8,13 @@ import TextField from '@mui/material/TextField'
 import { useNavigate } from 'react-router-dom'
 import { useContext } from 'react'
 import { GlobalContext } from '../../context/global/globalContext'
-
 import Stack from '@mui/material/Stack'
 import Paper from '@mui/material/Paper'
 import { styled } from '@mui/material/styles'
-import Agregarcarro from '../../pages/Agregarcarro/Agregarcarro'
 import Calculorollo from '../../pages/Calculo/Calculorollo'
+import { CarritoContext } from '../../context/carrito/carritoContext'
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
+
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
   ...theme.typography.body2,
@@ -23,24 +24,36 @@ const Item = styled(Paper)(({ theme }) => ({
 }))
 
 function Rollos () {
-  const { categoria, producto, cantidad,  setImagen,setCantidad, setGlosa } =
+  const { categoria, producto,cantidad,setCantidad  } =
     useContext(GlobalContext)
+    const { dispatchCarrito } = useContext(CarritoContext)
+
   const navigate = useNavigate()
   const handleSubmit = event => {
     event.preventDefault()
     //const data = new FormData(event.currentTarget);
   }
 
-  setGlosa('')
   const handleCategoria = () => {
-    //setShow(true);
     navigate('/Productos')
   }
-  const handleChangeCantidad = event => {
-    setCantidad(event.target.value)
+
+  const handleChange = () => {
+    setCantidad(cantidad)
+  }
+
+  const agregarCarro = () => {
+    
+    const item = {
+      imagen: p.url[0],
+      glosa: (p.catalogo + ' - ' + p.nombre),
+      cantidad: cantidad,
+      precio: p.precio
+    }
+    dispatchCarrito({ type: 'AGREGAR_ITEM', item })
   }
   const options = { style: 'currency', currency: 'CLP' }
-  const p = producto;
+  const p = producto
 
   return (
     <>
@@ -63,7 +76,7 @@ function Rollos () {
                       alt={p.descripcion}
                       src={v}
                     />
-                    {setImagen(v)}
+                     
                     <Carousel.Caption>
                       <h5>{p.descripcion}</h5>
                     </Carousel.Caption>
@@ -76,13 +89,13 @@ function Rollos () {
                 {' '}
                 {p.catalogo} - {p.nombre}
               </h4>
-              {setGlosa(p.catalogo + ' - '+ p.nombre)}
+              
               <h5> {p.precio.toLocaleString('es-CL', options)} por rollo </h5>
               <p>Las medidas son en centimetros.</p>
               <Box
                 component='form'
                 onSubmit={handleSubmit}
-                Validate
+                validate
                 sx={{ mt: 1 }}
               >
                 <Stack direction='row' spacing={2}>
@@ -90,18 +103,15 @@ function Rollos () {
                     <TextField
                       margin='normal'
                       required
-                      fullWidth
                       variant='standard'
                       type='number'
-                      id='cantidad'
-                      label='cantidad'
-                      name='Cantidad de Rollos'
+                      label='Cantidad'
+                      name='cantidad'
                       value={cantidad}
-                      onChange={handleChangeCantidad}
-                      autoFocus
+                      onChange={handleChange}
                     />
                   </Item>
-                  <React.Fragment className='mt-4 mb-4'>
+                  <React.Fragment>
                     <Calculorollo />
                   </React.Fragment>
                 </Stack>
@@ -113,10 +123,10 @@ function Rollos () {
                 Precio Total{' '}
                 {(p.precio * cantidad).toLocaleString('es-CL', options)}
               </h5>
-              <React.Fragment className='mt-4 mb-4'>
-                <Agregarcarro />
-              </React.Fragment>
-
+              <Button onClick={agregarCarro} color='primary'>
+                <ShoppingCartIcon color='primary' fontSize='large' />
+                Agregar al Carro
+              </Button>
               <Button
                 variant='text'
                 sx={{ mt: 3, mb: 2 }}

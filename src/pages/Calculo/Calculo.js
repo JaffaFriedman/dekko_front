@@ -25,19 +25,12 @@ const Item = styled(Paper)(({ theme }) => ({
 }))
 
 export default function Calculo () {
-  const {
-    
-    producto,
-    cantidad,
-    alto,
-    setAlto,
-    ancho,
-    setAncho,
-    setCantidad
-  } = useContext(GlobalContext)
+  const { producto, cantidad, setCantidad } = useContext(GlobalContext)
+  let [ancho, setAncho] = useState(100)
+  let [alto, setAlto] = useState(100)
   let [open, setOpen] = useState(false)
   let [resto, setResto] = useState('')
-  const p=producto;
+  const p = producto
 
   const handleClickOpen = () => {
     Calcular()
@@ -72,7 +65,7 @@ export default function Calculo () {
   return (
     <div>
       <Button onClick={handleClickOpen} color='primary'>
-        <CalculateIcon color='primary' fontSize='large'/>
+        <CalculateIcon color='primary' fontSize='large' />
         Calculadora de mt lineales
       </Button>
 
@@ -166,7 +159,7 @@ export default function Calculo () {
         </DialogContent>
         <DialogActions>
           <Button onClick={Calcular}>
-            <CalculateIcon color='primary' fontSize='large'/>
+            <CalculateIcon color='primary' fontSize='large' />
             Calcular
           </Button>
           <Button onClick={handleClose}>

@@ -1,4 +1,3 @@
-import { useContext } from 'react'
 import { GlobalContext } from '../../context/global/globalContext'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
@@ -6,30 +5,46 @@ import { Container } from 'react-bootstrap'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import { useNavigate } from 'react-router-dom'
-import { useState } from 'react'
+import { useState,useEffect,useContext  } from 'react'
+ 
 import axios from 'axios'
 
-
 export default function Catalogo () {
-  const { ImageButton, ImageSrc,Image,ImageBackdrop,ImageMarked,familia, setCategoria } = useContext(GlobalContext)
+  const {
+    ImageButton,
+    ImageSrc,
+    Image,
+    ImageBackdrop,
+    ImageMarked,
+    familia,
+    setCategoria,
+    BACKEND_URL
+  } = useContext(GlobalContext)
 
   const [tablaCategorias, setTablaCategorias] = useState([])
 
+  const api = axios.create({
+    baseURL: BACKEND_URL,
+    timeout: 5000,
+    headers: {
+      'Content-Type': 'application/json', 
+    }
+  })
+
   const recuperaCatalogos = async p => {
-    const url = `http://localhost:4000/categorias/familia/${p}`
     try {
-      const { data } = await axios.get(url, {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
+      const { data } = await api.get(`/categorias/familia/${p}`)
       setTablaCategorias(data.info)
     } catch (error) {
       console.log(error)
     }
   }
 
-  recuperaCatalogos(familia.familia)
+  
+  useEffect(() => {
+    recuperaCatalogos(familia.familia)
+  })
+
 
   const navigate = useNavigate()
   const handleCategoria = c => {

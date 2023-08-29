@@ -1,4 +1,3 @@
-import React from 'react'
 import Container from 'react-bootstrap/Container'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
@@ -10,12 +9,13 @@ import Modal from 'react-bootstrap/Modal'
 import Stack from '@mui/material/Stack'
 import Paper from '@mui/material/Paper'
 import { styled } from '@mui/material/styles'
-import Agregarcarro from '../../pages/Agregarcarro/Agregarcarro'
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import axios from 'axios'
-import { useState } from 'react'
 import Form from 'react-bootstrap/Form'
-import { useContext } from 'react'
+import { useState, useContext } from 'react'
+
 import { GlobalContext } from '../../context/global/globalContext'
+import { CarritoContext } from '../../context/carrito/carritoContext'
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -27,47 +27,54 @@ const Item = styled(Paper)(({ theme }) => ({
 }))
 
 function Papeles () {
-  const {
-    familia,
-    categoria,
-    producto,
-    alto,
-    setAlto,
-    ancho,
-    setAncho,
-    precio,
-    setPrecio,
-    setMt2,
-    precioMt2,
-    setPrecioMt2,
-    glosa,
-    setGlosa,
-    cantidad,
-    setCantidad,
-    setImagen,
-    setTextura
-  } = useContext(GlobalContext)
+  const { familia, categoria, producto, BACKEND_URL } =
+    useContext(GlobalContext)
+  const { dispatchCarrito } = useContext(CarritoContext)
 
+  const p = producto
   const [tablaTexturas, setTablaTexturas] = useState([])
-  const recuperaTexturas = async (f) => {
-    const url = `http://localhost:4000/texturas/familia/${f}`
+
+  const api = axios.create({
+    baseURL: BACKEND_URL,
+    timeout: 5000,
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+  const recuperaTexturas = async f => {
     try {
-      const { data } = await axios.get(url, {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
+      const { data } = await api.get(`/texturas/familia/${f}`)
       setTablaTexturas(data.info)
     } catch (error) {
       console.log(error)
     }
   }
 
+  const formDatos = {
+    cantidad: 1,
+    alto: 100,
+    ancho: 100,
+    mt2: 1,
+    glosa: '',
+    imagen: p.url[0],
+    tela: 0,
+    precio: p.recio,
+    precioMt2: p.recio,
+    textura: 0,
+    papel: 0
+  }
 
+  const [datos, setDatos] = useState(formDatos)
+
+  const handleChange = e => {
+    setDatos({
+      ...datos,
+      [e.target.name]: e.target.value
+    })
+  }
 
   const [show, setShow] = useState(false)
 
-  let [papel, setPapel] = useState(0)
   const navigate = useNavigate()
 
   const handleSubmit = event => {
@@ -78,61 +85,55 @@ function Papeles () {
     navigate('/Productos')
   }
 
+  const agregarCarro = () => {
+    const item = {
+      imagen: datos.imagen,
+      glosa: datos.glosa,
+      cantidad: datos.cantidad,
+      precio: datos.precio
+    }
+    dispatchCarrito({ type: 'AGREGAR_ITEM', item })
+  }
+
   const handleTextura = () => {
     recuperaTexturas(producto.familia)
-    setImagen(producto.url[0])
+    datos.textura = producto.url[0]
+    datos.glosa = ''
+    setDatos(datos)
     setShow(true)
-    setGlosa('')
   }
 
   const handleSalir = () => {
     setShow(false)
   }
 
-  const handleGlosa = p => {
-    const nuevoAncho = parseInt(ancho) + 5
-    const nuevoAlto = parseInt(alto) + 5
-    const nuevoMt2=(nuevoAncho * nuevoAlto) / (100 * 100);
-    const nuevoPrecio=nuevoMt2*precioMt2
-    handleSubmit;
-    setGlosa(
+  const handleGlosa = () => {
+    datos.alto = parseInt(datos.alto) + 5
+    datos.ancho = parseInt(datos.ancho) + 5
+    datos.mt2 = (datos.ancho * datos.alto) / (100 * 100)
+    datos.precio = parseInt(datos.mt2 * datos.precioMt2)
+    datos.glosa =
       'Catálogo: ' +
-        p.catalogo +
-        ' Diseño: ' +
-        p.nombre +
-        '\n  Textura: ' +
-        papel +
-        '\n Medidas Ancho: ' +
-        nuevoAncho +
-        ' cm. Alto: ' +
-        nuevoAlto +
-        ' cm. Mt2: ' +
-        nuevoMt2.toFixed(2)
-    )
-    setMt2(nuevoMt2)
-    setAlto(nuevoAncho)
-    setAncho(nuevoAlto)
-    setPrecio(nuevoPrecio)
+      p.catalogo +
+      ' Diseño: ' +
+      p.nombre +
+      '\n  Textura: ' +
+      datos.papel +
+      '\n Medidas Ancho: ' +
+      datos.ancho +
+      ' cm. Alto: ' +
+      datos.alto +
+      ' cm. Mt2: ' +
+      datos.mt2.toFixed(2)
+    setDatos(datos)
     setShow(false)
   }
   const options = { style: 'currency', currency: 'CLP' }
 
-  const p = producto;
-
- 
   const handlePapel = v => {
-    setPrecioMt2(v.precio)
-    setPapel(v.nombre)
-    setTextura(v.url)
-  }
-  const handleChangeAncho = event => {
-    setAncho(event.target.value)
-  }
-  const handleChangeAlto = event => {
-    setAlto(event.target.value)
-  }
-  const handleChangeCantidad = event => {
-    setCantidad(event.target.value)
+    datos.precio = v.precio
+    datos.nombre = v.nombre
+    setDatos(datos)
   }
 
   return (
@@ -171,56 +172,46 @@ function Papeles () {
 
               <h6>
                 {' '}
-                {glosa === '' ? '' : 'Producto: '} {glosa}{' '}
+                {datos.glosa === '' ? '' : 'Producto: '} {datos.glosa}{' '}
               </h6>
               <h6>
                 {' '}
-                {glosa === ''
+                {datos.glosa === ''
                   ? 'Precio mt2 desde ' +
-                  parseFloat(precio.toFixed(0)).toLocaleString(
-                    'es-CL',
-                    options)
-                  
+                    parseFloat(datos.precio.toFixed(0)).toLocaleString(
+                      'es-CL',
+                      options
+                    )
                   : 'Precio Mural ' +
-                    parseFloat(precio.toFixed(0)).toLocaleString(
+                    parseFloat(datos.precio.toFixed(0)).toLocaleString(
                       'es-CL',
                       options
                     )}{' '}
               </h6>
 
-              <Box
-                component='form'
-                onSubmit={handleSubmit}
-                Validate
-                sx={{ mt: 1 }}
-              >
+              <Box component='form' onSubmit={handleSubmit} sx={{ mt: 1 }}>
                 <Stack direction='row' spacing={2}>
                   <TextField
                     margin='normal'
                     required
                     variant='standard'
                     type='number'
-                    id='cantidad'
-                    placeholder='Cantidad de productos'
                     label='Cantidad'
                     name='cantidad'
-                    autoComplete='cantidad'
-                    value={cantidad}
-                    onChange={handleChangeCantidad}
-                    autoFocus
+                    value={datos.cantidad}
+                    onChange={handleChange}
                   />
                 </Stack>
               </Box>
 
               <h5 className='mt-4 mb-4'>
                 {' '}
-                {glosa === ''
+                {datos.glosa === ''
                   ? ''
                   : 'Precio Total ' +
-                    parseFloat((precio * cantidad).toFixed(0)).toLocaleString(
-                      'es-CL',
-                      options
-                    )}{' '}
+                    parseFloat(
+                      (datos.precio * datos.cantidad).toFixed(0)
+                    ).toLocaleString('es-CL', options)}{' '}
               </h5>
               <Button
                 variant='text'
@@ -228,15 +219,18 @@ function Papeles () {
                 color='primary'
                 onClick={() => handleTextura()}
               >
-                Configura tu producto
+                Configura tu producto para agregar al carro
               </Button>
-              {glosa === '' ? (
-                <p>{familia.mensaje}</p>
-              ) : (
-                <React.Fragment className='mt-4 mb-4'>
-                  <Agregarcarro />
-                </React.Fragment>
-              )}
+              <Box>
+                {datos.glosa === '' ? (
+                  <p>{familia.mensaje}</p>
+                ) : (
+                  <Button onClick={agregarCarro} color='primary'>
+                    <ShoppingCartIcon color='primary' fontSize='large' />
+                    Agregar al Carro
+                  </Button>
+                )}
+              </Box>
               <Form>
                 <Modal
                   show={show}
@@ -252,54 +246,54 @@ function Papeles () {
                     </Modal.Title>
                   </Modal.Header>
                   <Modal.Body>
-                  <Box
+                    <Box
                       component='form'
                       onSubmit={handleSubmit}
-                      Validate
                       sx={{ mt: 1 }}
                     >
-                    <Stack
-                      direction='row'
-                      useFlexGap
-                      flexWrap='wrap'
-                      spacing={2}
-                    >
-                      {tablaTexturas
-                        .filter(t => t.familia === categoria.familia)
-                        .map((v, i) => (
-                          <Item key={i}>
-                            <img
-                              className='d-block w-30 image-responsive justify-content-center '
-                              style={{ maxHeight: '10rem' }}
-                              alt={v.nombre}
-                              src={v.url}
-                            />
-                            <Form.Check
-                              inline
-                              label={v.nombre}
-                              value={v}
-                              name='textura'
-                              type='radio'
-                              id={i}
-                              onClick={() => handlePapel(v)}
-                            />
-                            <p>
-                              Precio {v.precio.toLocaleString('es-CL', options)}
-                            </p>
-                            <p>{v.descripcion}</p>
-                          </Item>
-                        ))}
-                    </Stack>
-                    <Modal.Title
-                      id='example-custom-modal-styling-title'
-                      className='mt-4'
-                    >
-                      Ingresa las medidas en centimetros
-                    </Modal.Title>
-                    <p>
-                      Agregaremos automáticamente 5cm de excedente al ancho y
-                      alto para margen de error
-                    </p>
+                      <Stack
+                        direction='row'
+                        useFlexGap
+                        flexWrap='wrap'
+                        spacing={2}
+                      >
+                        {tablaTexturas
+                          .filter(t => t.familia === categoria.familia)
+                          .map((v, i) => (
+                            <Item key={i}>
+                              <img
+                                className='d-block w-30 image-responsive justify-content-center '
+                                style={{ maxHeight: '10rem' }}
+                                alt={v.nombre}
+                                src={v.url}
+                              />
+                              <Form.Check
+                                inline
+                                label={v.nombre}
+                                value={v}
+                                name='textura'
+                                type='radio'
+                                id={i}
+                                onClick={() => handlePapel(v)}
+                              />
+                              <p>
+                                Precio{' '}
+                                {v.precio.toLocaleString('es-CL', options)}
+                              </p>
+                              <p>{v.descripcion}</p>
+                            </Item>
+                          ))}
+                      </Stack>
+                      <Modal.Title
+                        id='example-custom-modal-styling-title'
+                        className='mt-4'
+                      >
+                        Ingresa las medidas en centimetros
+                      </Modal.Title>
+                      <p>
+                        Agregaremos automáticamente 5cm de excedente al ancho y
+                        alto para margen de error
+                      </p>
 
                       <Stack direction='row' spacing={2}>
                         <Item>
@@ -309,14 +303,10 @@ function Papeles () {
                             fullWidth
                             variant='standard'
                             type='number'
-                            id='ancho'
                             label='Ancho en centimetros'
-                            placeholder='Ingresa el ancho en cm'
                             name='ancho'
-                            autoComplete='ancho'
-                            value={ancho}
-                            onChange={handleChangeAncho}
-                            autoFocus
+                            value={datos.ancho}
+                            onChange={handleChange}
                           />
                         </Item>
                         <Item>
@@ -327,12 +317,9 @@ function Papeles () {
                             variant='standard'
                             type='number'
                             name='alto'
+                            value={datos.alto}
                             label='Alto en centimetros'
-                            id='alto'
-                            placeholder='Ingresa el alto en cm'
-                            autoComplete='alto'
-                            value={alto}
-                            onChange={handleChangeAlto}
+                            onChange={handleChange}
                           />
                         </Item>
                       </Stack>

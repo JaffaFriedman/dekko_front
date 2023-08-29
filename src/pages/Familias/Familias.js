@@ -7,34 +7,41 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import { useState } from 'react'
 import axios from 'axios'
-import { useNavigate  } from 'react-router-dom'
-import {  useEffect } from 'react'
- 
-
+import { useNavigate } from 'react-router-dom'
+import { useEffect } from 'react'
 
 export default function Familias () {
+  const {
+    ImageButton,
+    ImageSrc,
+    Image,
+    ImageBackdrop,
+    ImageMarked,
+    setFamilia,
+    BACKEND_URL
+  } = useContext(GlobalContext)
 
-const {ImageButton, ImageSrc,Image,ImageBackdrop,ImageMarked,setFamilia } = useContext(GlobalContext)
- const [tablaFamilias, setTablaFamilias] = useState([])
-  const recuperaFamilias = async () => {scrollTo
+  const [tablaFamilias, setTablaFamilias] = useState([])
+
+  const api = axios.create({
+    baseURL: BACKEND_URL,
+    timeout: 5000,
+    headers: {
+      'Content-Type': 'application/json', 
+    }
+  })
+  const recuperaFamilias = async () => {
     try {
-      const { data } = await axios.get('http://localhost:4000/familias', {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
+      const { data } = await api.get('/familias')
       setTablaFamilias(data.info)
     } catch (error) {
       console.log(error)
     }
   }
 
-  
   useEffect(() => {
-    recuperaFamilias();
-  }, []); 
-
-
+    recuperaFamilias()
+  })
 
   const navigate = useNavigate()
   const handleFamilia = p => {

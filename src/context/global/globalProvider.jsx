@@ -1,26 +1,19 @@
 // HOC
 /* eslint-disable react/prop-types */
-import * as React from 'react'
+ 
 import { GlobalContext } from './globalContext'
 import { initMercadoPago } from '@mercadopago/sdk-react'
 import { styled } from '@mui/material/styles'
 import ButtonBase from '@mui/material/ButtonBase'
+import { useState  } from 'react'
 
 export function GlobalProvider ({ children }) {
-  const [familia, setFamilia] = React.useState({})
-  const [categoria, setCategoria] = React.useState({})
-  const [producto, setProducto] = React.useState({})
-  const [alto, setAlto] = React.useState('100')
-  const [ancho, setAncho] = React.useState('100')
-  const [mt2, setMt2] = React.useState(1)
-  const [precio, setPrecio] = React.useState(0)
-  const [precioMt2, setPrecioMt2] = React.useState(0)
-  const [glosa, setGlosa] = React.useState('')
-  const [cantidad, setCantidad] = React.useState(0)
-  const [imagen, setImagen] = React.useState('')
-  const [userName, setUserName] = React.useState('Inicia Sesión')
-  const [idUser, setIdUser] = React.useState('')
-  const [token, setToken] = React.useState('')
+  const [familia, setFamilia] = useState({})
+  const [categoria, setCategoria] = useState({})
+  const [producto, setProducto] = useState({})
+  const [cantidad, setCantidad] = useState(0)
+  const [idUser, setIdUser] = useState('')
+  const [token, setToken] = useState('')
 
   const ImageButton = styled(ButtonBase)(({ theme }) => ({
     position: 'relative',
@@ -86,11 +79,14 @@ export function GlobalProvider ({ children }) {
     left: 'calc(50% - 9px)',
     transition: theme.transitions.create('opacity')
   }))
-  initMercadoPago('TEST-ddb11d27-73ea-4298-9db7-260bf011c799')
 
+  initMercadoPago('TEST-ddb11d27-73ea-4298-9db7-260bf011c799')
+ // const BACKEND_URL="https://uddjaffa.onrender.com"
+  const BACKEND_URL="http://localhost:4000"
   return (
     <GlobalContext.Provider
       value={{
+        BACKEND_URL,
         ImageButton,
         ImageSrc,
         Image,
@@ -104,26 +100,10 @@ export function GlobalProvider ({ children }) {
         categoria,
         producto,
         cantidad,
-        alto,
-        ancho,
-        mt2,
-        precioMt2,
-        precio,
-        glosa,
-        imagen,
-        userName,
-        setUserName,
-        setImagen,
         setFamilia,
         setCategoria,
         setProducto,
-        setCantidad,
-        setAlto,
-        setAncho,
-        setMt2,
-        setPrecioMt2,
-        setPrecio,
-        setGlosa
+        setCantidad
       }}
     >
       {children}

@@ -70,7 +70,7 @@ export default function Carrito () {
                   carritoCompra.precioTotal.toFixed(0)
                 ).toLocaleString('es-CL', options)}
               </h4>
-              <React.Fragment className='mt-4 mb-4'>
+              <React.Fragment>
                 <Pago />
               </React.Fragment>
             </Box>

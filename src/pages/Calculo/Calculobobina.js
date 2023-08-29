@@ -27,15 +27,13 @@ const Item = styled(Paper)(({ theme }) => ({
 }))
 
 export default function Calculobobina() {
-    const {   producto, setCantidad,alto,
-        setAlto,
-        ancho,
-        setAncho } = useContext(GlobalContext);
+    const {   producto, setCantidad } = useContext(GlobalContext);
     let [open, setOpen] = useState(false)
     let [texto, setTexto] = useState('')
     let [textoReq, setTextoReq] = useState('')
     let [textoResto, setTextoResto] = useState('')
-
+    let [ancho, setAncho] = useState(100)
+    let [alto, setAlto] = useState(100)
     const p = producto;
 
     const handleClickOpen = () => {

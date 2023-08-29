@@ -1,0 +1,28 @@
+import { GlobalContext } from './globalContext'
+import { useState } from 'react'
+
+export function GlobalProvider ({ children }) {
+  const [producto, setProducto] = useState({})
+  const [cantidad, setCantidad] = useState(0)
+  const [idUser, setIdUser] = useState('')
+  const [token, setToken] = useState('')
+
+  const BACKEND_URL = 'http://localhost:4000'
+  return (
+    <GlobalContext.Provider
+      value={{
+        BACKEND_URL,
+        idUser,
+        token,
+        producto,
+        cantidad,
+        setIdUser,
+        setToken,
+        setProducto,
+        setCantidad
+      }}
+    >
+      {children}
+    </GlobalContext.Provider>
+  )
+}

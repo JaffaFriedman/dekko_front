@@ -19,7 +19,8 @@ import FormLabel from '@mui/material/FormLabel'
 import Radio from '@mui/material/Radio'
 import RadioGroup from '@mui/material/RadioGroup'
 import Calculobobina from '../../pages/Calculo/Calculobobina'
-import Agregarcarro from '../../pages/Agregarcarro/Agregarcarro'
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
+import { CarritoContext } from '../../context/carrito/carritoContext'
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -30,31 +31,27 @@ const Item = styled(Paper)(({ theme }) => ({
 }))
 
 function Bobina () {
-  const { categoria, producto, cantidad, setImagen, setCantidad, setGlosa} =
+  const { categoria, producto, cantidad, setCantidad } =
     useContext(GlobalContext)
+  const { dispatchCarrito } = useContext(CarritoContext)
+
   const navigate = useNavigate()
 
-  const options = { style: 'currency', currency: 'CLP' }
-
   let [color, setColor] = useState(0)
-  let [gramaje, setGramaje] = useState(0)
   const [show, setShow] = useState(false)
 
   const handleSubmit = event => {
     event.preventDefault()
-    //const data = new FormData(event.currentTarget);
   }
-  const handleTextura = () => {
+  const otroColor = () => {
     setShow(true)
   }
-
+  let [gramaje, setGramaje] = useState(0)
   const handleColor = i => {
     setColor(i)
-    // setImagen(p.colores[color].url)
   }
 
   const handleCategoria = () => {
-    //setShow(true);
     navigate('/Productos')
   }
 
@@ -65,20 +62,57 @@ function Bobina () {
   const handleGlosa = () => {
     setShow(false)
   }
-
- 
- 
-
-  const p=producto;
-
- 
-  const handleChange = event => {
+  const handleChangeGramaje = event => {
     setGramaje(event.target.value)
+    datos.gramaje.gramaje
+    setDatos(datos)
+  }
+  const p = producto
+
+  const formDatos = {
+    cantidad: 1,
+    alto: 100,
+    ancho: 100,
+    mt2: 1,
+    glosa: '',
+    imagen: '',
+    gramaje: 0,
+    color: color,
+    tela: 0,
+    precio: p.recio,
+    precioMt2: p.recio,
+    textura: 0,
+    papel: 0
+  }
+  const [datos, setDatos] = useState(formDatos)
+
+  const handleChange = e => {
+    setDatos({
+      ...datos,
+      [e.target.name]: e.target.value
+    })
+  }
+  const agregarCarro = () => {
+    datos.glosa =
+      categoria.familia +
+      ' ' +
+      categoria.categoria +
+      ' Código Color ' +
+      p.colores[color].codigo +
+      ' Gramaje ' +
+      p.pesos[datos.gramaje].peso +
+      'gr por mt'
+    setCantidad(cantidad)
+    const item = {
+      imagen: p.colores[color].url,
+      glosa: datos.glosa,
+      color: color,
+      cantidad: datos.cantidad,
+      precio: datos.precio
+    }
+    dispatchCarrito({ type: 'AGREGAR_ITEM', item })
   }
 
-  const handleChangeCantidad = event => {
-    setCantidad(event.target.value)
-  }
   return (
     <>
       <div className='bg-dark text-bg-dark pb-2 ps-5  mb-1 text-center'>
@@ -96,21 +130,9 @@ function Bobina () {
                 alt={p.descripcion}
                 src={p.colores[color].url}
               />
-              {setImagen(p.colores[color].url)}
               <h6 className='mt-1 text-center'>
-                {'Código Color: ' + p.colores[color].codigo}
+                {categoria.familia} - {categoria.categoria}{' '}
               </h6>
-              {categoria.familia} - {categoria.categoria} {categoria.familia} -{' '}
-              {categoria.categoria}{' '}
-              {setGlosa(
-                categoria.familia +
-                  ' ' +
-                  categoria.categoria +
-                  ' Código Color ' +
-                  p.colores[color].codigo +
-                  ' Gramaje ' +
-                  p.pesos[gramaje].peso +'gr por mt'
-              )}
             </Grid>
             <Grid item xs={4} className='mt-4'>
               <h4>
@@ -127,7 +149,7 @@ function Bobina () {
                   aria-labelledby='demo-row-radio-buttons-group-label'
                   name='row-radio-buttons-group'
                   value={gramaje}
-                  onChange={handleChange}
+                  onChange={handleChangeGramaje}
                 >
                   {p.pesos.map((v, i) => (
                     <FormControlLabel
@@ -145,24 +167,31 @@ function Bobina () {
                   className='mt-1 mb-4 text-center'
                   sx={{ mb: 3 }}
                   color='primary'
-                  onClick={() => handleTextura()}
+                  onClick={() => otroColor()}
                 >
                   Selecciona otro color
                 </Button>
               </div>
-              <h6>{'Gramaje por mt2: ' + p.pesos[gramaje].peso + ' gramos'}</h6>
+              <h6>
+                {'Gramaje por mt2: ' + p.pesos[datos.gramaje].peso + ' gramos'}
+              </h6>
               <h6>
                 {' Precio mt2: ' +
-                  parseFloat(p.pesos[gramaje].precio.toFixed(0)).toLocaleString(
-                    'es-CL',
-                    options
-                  )}
+                  parseFloat(
+                    p.pesos[datos.gramaje].precio.toFixed(0)
+                  ).toLocaleString('es-CL', {
+                    style: 'currency',
+                    currency: 'CLP'
+                  })}
               </h6>
               <h6 className='mb-4 '>
                 {'Precio Bobina: ' +
                   parseFloat(
-                    (p.pesos[gramaje].precio * 33).toFixed(0)
-                  ).toLocaleString('es-CL', options)}
+                    (p.pesos[datos.gramaje].precio * 33).toFixed(0)
+                  ).toLocaleString('es-CL', {
+                    style: 'currency',
+                    currency: 'CLP'
+                  })}
               </h6>
               <Box
                 component='form'
@@ -182,30 +211,29 @@ function Bobina () {
                       label='Cantidad de Bobinas'
                       name='cantidad'
                       autoComplete='cantidad'
-                      value={cantidad}
-                      onChange={handleChangeCantidad}
+                      value={datos.cantidad}
+                      onChange={handleChange}
                       autoFocus
                     />
                   </Item>
-                  <React.Fragment className='mt-4 mb-4'>
-                    <Calculobobina
-                      categoria={categoria}
-                      producto={producto}
-                      cantidad={cantidad}
-                      setCantidad={setCantidad}
-                    />
+                  <React.Fragment>
+                    <Calculobobina />
                   </React.Fragment>
                 </Stack>
               </Box>
               <h5 className='mt-4 mb-4'>
                 {'Precio: ' +
                   parseFloat(
-                    (p.pesos[gramaje].precio * 33 * cantidad).toFixed(0)
-                  ).toLocaleString('es-CL', options)}
+                    (p.pesos[datos.gramaje].precio * 33 * cantidad).toFixed(0)
+                  ).toLocaleString('es-CL', {
+                    style: 'currency',
+                    currency: 'CLP'
+                  })}
               </h5>
-              <React.Fragment className='mt-4 mb-4'>
-                <Agregarcarro />
-              </React.Fragment>
+              <Button onClick={agregarCarro} color='primary'>
+                <ShoppingCartIcon color='primary' fontSize='large' />
+                Agregar al Carro
+              </Button>
               <Form>
                 <Modal
                   show={show}
@@ -268,6 +296,7 @@ function Bobina () {
                   </Modal.Body>
                 </Modal>
               </Form>
+
               <Button
                 variant='text'
                 sx={{ mt: 3, mb: 2 }}

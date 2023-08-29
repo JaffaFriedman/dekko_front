@@ -25,8 +25,14 @@ import { types } from '../../context/user/userReducer'
 import axios from 'axios'
 import CancelPresentationIcon from '@mui/icons-material/CancelPresentation'
 import { ToastContainer, toast } from 'react-toastify'
+import { GlobalContext } from '../../context/global/globalContext'
 
 export default function Registro () {
+  const {
+    BACKEND_URL
+  } = useContext(GlobalContext)
+
+
   const [showPassword, setShowPassword] = React.useState(false)
 
   const handleClickShowPassword = () => setShowPassword(show => !show)
@@ -65,19 +71,18 @@ export default function Registro () {
     })
   }
   const api = axios.create({
-    //baseURL: "https://uddjaffa.onrender.com:4000"
-    baseURL: 'http://localhost:4000'
+    baseURL: BACKEND_URL,
+    timeout: 5000,
+    headers: {
+      'Content-Type': 'application/json', 
+    }
   })
 
   const handleSubmit = async e => {
     e.preventDefault()
     try {
       console.log(formUser)
-      const { data } = await api.post('/users', JSON.stringify(formUser), {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
+      const { data } = await api.post('/users', JSON.stringify(formUser))
       dispatchUser({
         type: types.setUserState,
         payload: data
@@ -167,9 +172,9 @@ export default function Registro () {
                 autoComplete='off'
               >
                 <TextField
-                  id='nombre'
-                  label='Nombre'
+                  name='nombre'
                   onChange={handleChange}
+                  label='Nombre'
                   variant='outlined'
                 />
               </Box>

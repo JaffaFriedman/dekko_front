@@ -21,7 +21,7 @@ import { ToastContainer, toast } from 'react-toastify'
 
 export default function MiPerfil () {
   const [open, setOpen] = React.useState(false)
-  const { token, idUser } = useContext(GlobalContext)
+  const { token, idUser, BACKEND_URL } = useContext(GlobalContext)
   const handleClickOpen = () => {
     setOpen(true)
     if (token !== '') {
@@ -55,22 +55,22 @@ export default function MiPerfil () {
     })
   }
   const api = axios.create({
-    //baseURL: "https://uddjaffa.onrender.com:4000"
-    baseURL: 'http://localhost:4000'
+    baseURL: BACKEND_URL,
+    timeout: 5000,
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    }
   })
 
-  const actualizaUsuario = async () => {
+  const actualizaUsuario = async e => {
+    e.preventDefault()
     try {
-      const { data } = await api.post(
-        `/users/${idUser}`,
-        JSON.stringify(formUser),
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`
-          }
-        }
+      const { data } = await api.put(
+        `/users/auth/${idUser}`,
+        formUser
       )
+      console.log('Miperfil', data)
       dispatchUser({
         type: types.setUserState,
         payload: data
@@ -82,15 +82,11 @@ export default function MiPerfil () {
     }
   }
 
-  const recuperaUsuario = async i => {
-    i = idUser
+  const recuperaUsuario = async () => {
     try {
-      const { data } = await api.get(`/users/${i}`, {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`
-        }
-      })
+      // i = idUser
+      const { data } = await api.get(`/users/auth/${idUser}`)
+      console.log(data)
       setFormUser(data.detail)
     } catch (error) {
       console.log(error)
@@ -98,7 +94,7 @@ export default function MiPerfil () {
   }
   const notifyError = msg => toast.error(msg)
   const notifySuccess = msg => toast.success(msg)
-
+  console.log(idUser)
   return (
     <div>
       <Button onClick={handleClickOpen}>
@@ -150,15 +146,18 @@ export default function MiPerfil () {
               </Box>
               <Box
                 component='form'
-                sx={{ '& > :not(style)': { mt: 1, width: '50ch' } }}
+                sx={{
+                  '& > :not(style)': { mt: 1, width: '50ch' }
+                }}
                 noValidate
                 autoComplete='off'
               >
                 <TextField
                   name='nombre'
                   value={formUser.nombre}
-                  label='Nombre'
                   onChange={handleChange}
+                  label='Nombre'
+                  type='text'
                   variant='outlined'
                 />
               </Box>
@@ -226,7 +225,7 @@ export default function MiPerfil () {
                 noValidate
                 autoComplete='off'
               >
-                <Button onClick={actualizaUsuario ()} color='primary'>
+                <Button onClick={actualizaUsuario} color='primary'>
                   <SaveIcon color='primary' fontSize='large' />
                   Actualizar
                 </Button>

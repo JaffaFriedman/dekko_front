@@ -1,6 +1,5 @@
-import   { useState, useContext } from 'react'
+import { useState, useContext } from 'react'
 import { GlobalContext } from '../../context/global/globalContext'
-
 import Button from '@mui/material/Button'
 import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
@@ -15,6 +14,7 @@ import CancelIcon from '@mui/icons-material/Cancel'
 import Paper from '@mui/material/Paper'
 import Stack from '@mui/material/Stack'
 import TextField from '@mui/material/TextField'
+
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
   ...theme.typography.body2,
@@ -25,18 +25,15 @@ const Item = styled(Paper)(({ theme }) => ({
 }))
 
 export default function Calculorollo () {
-  const {   producto, alto,
-    setAlto,
-    ancho,
-    setAncho,  setCantidad } =
-    useContext(GlobalContext)
+  const { producto, setCantidad } = useContext(GlobalContext)
   let [open, setOpen] = useState(false)
   let [texto, setTexto] = useState('')
   let [textoReq, setTextoReq] = useState('')
   let [textoResto, setTextoResto] = useState('')
-  const p = producto;
+  const p = producto
 
-
+  let [ancho, setAncho] = useState(100)
+  let [alto, setAlto] = useState(100)
   const handleClickOpen = () => {
     Calcular()
     setOpen(true)
@@ -86,10 +83,10 @@ export default function Calculorollo () {
     setOpen(false)
   }
 
-  const handleChangeAncho = (event) => {
+  const handleChangeAncho = event => {
     setAncho(event.target.value)
   }
-  const handleChangeAlto = (event) => {
+  const handleChangeAlto = event => {
     setAlto(event.target.value)
   }
 
@@ -188,7 +185,7 @@ export default function Calculorollo () {
         </DialogContent>
         <DialogActions>
           <Button onClick={Calcular}>
-            <CalculateIcon color='primary' fontSize='large'/>
+            <CalculateIcon color='primary' fontSize='large' />
             Calcular
           </Button>
           <Button onClick={handleClose}>

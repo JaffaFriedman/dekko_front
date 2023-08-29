@@ -1,7 +1,4 @@
-import React from 'react'
 import { useContext } from 'react'
-import { GlobalContext } from '../../context/global/globalContext'
-
 import Container from 'react-bootstrap/Container'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
@@ -13,12 +10,12 @@ import Modal from 'react-bootstrap/Modal'
 import Stack from '@mui/material/Stack'
 import Paper from '@mui/material/Paper'
 import { styled } from '@mui/material/styles'
-
-import Agregarcarro from '../../pages/Agregarcarro/Agregarcarro'
 import { useState } from 'react'
 import axios from 'axios'
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import Form from 'react-bootstrap/Form'
-
+import { GlobalContext } from '../../context/global/globalContext'
+import { CarritoContext } from '../../context/carrito/carritoContext'
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
   ...theme.typography.body2,
@@ -30,38 +27,22 @@ const Item = styled(Paper)(({ theme }) => ({
 const options = { style: 'currency', currency: 'CLP' }
 
 function Cortinas () {
-  const {
-    familia,
-    categoria,
-    producto,
-    cantidad,
-    alto,
-    ancho,
-    mt2,
-    precio,
-    precioMt2,
-    setCantidad,
-    setAlto,
-    setAncho,
-    setMt2,
-    setPrecio,
-    setImagen,
-    setGlosa,
-    glosa,
+  const { familia, categoria, producto, BACKEND_URL } =
+    useContext(GlobalContext)
+  const { dispatchCarrito } = useContext(CarritoContext)
+  const p = producto
 
-
-    
-    setPrecioMt2
-  } = useContext(GlobalContext)
   const [tablaTelas, setTablaTelas] = useState([])
-  const recuperaTelas = async (f,c) => {
-    const url = `http://localhost:4000/telas/familia/${f}/categoria/${c}`
+  const api = axios.create({
+    baseURL: BACKEND_URL,
+    timeout: 5000,
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+  const recuperaTelas = async (f, c) => {
     try {
-      const { data } = await axios.get(url, {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
+      const { data } = await api.get(`/telas/familia/${f}/categoria/${c}`)
       setTablaTelas(data.info)
     } catch (error) {
       console.log(error)
@@ -69,8 +50,7 @@ function Cortinas () {
   }
 
   const [show, setShow] = useState(false)
-  let [cortina, setCortina] = useState('')
- 
+
   const navigate = useNavigate()
 
   const handleSubmit = event => {
@@ -81,8 +61,8 @@ function Cortinas () {
     navigate('/Productos')
   }
 
-  const handleTela= (f,c) => {
-    recuperaTelas(f,c);
+  const handleTela = (f, c) => {
+    recuperaTelas(f, c)
     setShow(true)
   }
 
@@ -90,47 +70,58 @@ function Cortinas () {
     setShow(false)
   }
 
-  const recalcula  = () => {
-    setMt2((ancho * alto) / (100 * 100))
-    setPrecio(mt2 * precioMt2)
-  }
-
-  const handleChangeCantidad = event => {
-    setCantidad(event.target.value)
-    recalcula()
-  }
-  const handleChangeAncho = event => {
-    setAncho(event.target.value)
-    recalcula()
-  }
-  const handleChangeAlto = event => {
-    setAlto(event.target.value)
-    recalcula()
-  }
-
-  const handleGlosa = p => {
-    recalcula()
-    setGlosa(
+  const handleGlosa = () => {
+    datos.alto = parseInt(datos.alto) + 5
+    datos.ancho = parseInt(datos.ancho) + 5
+    datos.mt2 = (datos.ancho * datos.alto) / (100 * 100)
+    datos.precio = parseInt(datos.mt2 * datos.precioMt2)
+    datos.glosa =
       p.nombre +
-        '  - ' +
-        cortina +
-        '  ' +
-        '. Medidas ancho: ' +
-        ancho +
-        ' cm. alto: ' +
-        alto +
-        ' cm. mt2: ' +
-        mt2.toFixed(2)
-    )
+      '  - ' +
+      datos.cortina +
+      '  ' +
+      '. Medidas ancho: ' +
+      datos.ancho +
+      ' cm. alto: ' +
+      datos.alto +
+      ' cm. mt2: ' +
+      datos.mt2
+
     setShow(false)
   }
 
-  const handleCortina = (p, v) => {
-    setPrecioMt2(p.precio)
-    setCortina(v.descripcion)
-    recalcula()
+  const formDatos = {
+    cantidad: 1,
+    alto: 100,
+    ancho: 100,
+    mt2: 1,
+    glosa: '',
+    imagen: p.url[0],
+    tela: 0,
+    precio: p.recio,
+    precioMt2: p.recio,
+    textura: 0,
+    papel: 0
   }
-  const p = producto;
+
+  const [datos, setDatos] = useState(formDatos)
+
+  const handleChange = e => {
+    setDatos({
+      ...datos,
+      [e.target.name]: e.target.value
+    })
+  }
+
+  const agregarCarro = () => {
+    const item = {
+      imagen: datos.imagen,
+      glosa: datos.glosa,
+      cantidad: datos.cantidad,
+      precio: datos.precio
+    }
+    dispatchCarrito({ type: 'AGREGAR_ITEM', item })
+  }
 
   return (
     <>
@@ -144,7 +135,6 @@ function Cortinas () {
         <Box sx={{ flexGrow: 1 }}>
           <Grid container spacing={2}>
             <Grid item xs={8}>
-          
               <Carousel className='pt-4 pb-4 ps-3 centered '>
                 {p.url.map((v, i) => (
                   <Carousel.Item key={i}>
@@ -153,7 +143,6 @@ function Cortinas () {
                       alt={p.descripcion}
                       src={v}
                     />
-                      {setImagen(v)}
                     <Carousel.Caption>
                       <h5>{p.descripcion}</h5>
                     </Carousel.Caption>
@@ -171,34 +160,26 @@ function Cortinas () {
                 variant='text'
                 sx={{ mb: 2 }}
                 color='primary'
-                onClick={() => handleTela(p.familia,p.categoria)}
+                onClick={() => handleTela(p.familia, p.categoria)}
               >
                 Configura tu producto
               </Button>
               <h6>
                 {' '}
-                {glosa === '' ? '' : 'Producto: '} {glosa}{' '}
+                {datos.glosa === '' ? '' : 'Producto: '} {datos.glosa}{' '}
               </h6>
               <h6>
                 {' '}
-                {glosa === ''
+                {datos.glosa === ''
                   ? 'Precio mt2 desde ' +
-                  parseFloat(precio.toFixed(0)).toLocaleString(
-                    'es-CL',
-                    options)
-                  
+                    parseFloat(datos.precio).toLocaleString('es-CL', options)
                   : 'Precio ' +
-                    parseFloat(precio.toFixed(0)).toLocaleString(
+                    parseFloat(datos.precio).toLocaleString(
                       'es-CL',
                       options
                     )}{' '}
               </h6>
-              <Box
-                component='form'
-                onSubmit={handleSubmit}
-                Validate
-                sx={{ mt: 1 }}
-              >
+              <Box component='form' onSubmit={handleSubmit} sx={{ mt: 1 }}>
                 <Stack direction='row' spacing={2}>
                   <TextField
                     margin='normal'
@@ -210,28 +191,29 @@ function Cortinas () {
                     label='Cantidad'
                     name='cantidad'
                     autoComplete='cantidad'
-                    value={cantidad}
-                    onChange={handleChangeCantidad}
+                    value={datos.cantidad}
+                    onChange={handleChange}
                     autoFocus
                   />
                 </Stack>
               </Box>
               <h5 className='mt-4 mb-4'>
                 {' '}
-                {precio === 0
+                {datos.precio === 0
                   ? ''
                   : 'Precio Total ' +
-                    parseFloat((precio * cantidad).toFixed(0)).toLocaleString(
+                    parseFloat(datos.precio * datos.cantidad).toLocaleString(
                       'es-CL',
                       options
                     )}{' '}
               </h5>
-              {glosa === '' ? (
+              {datos.glosa === '' ? (
                 <p>{familia.mensaje}</p>
               ) : (
-                <React.Fragment className='mt-4 mb-4'>
-                  <Agregarcarro />
-                </React.Fragment>
+                <Button onClick={agregarCarro} color='primary'>
+                  <ShoppingCartIcon color='primary' fontSize='large' />
+                  Agregar al Carro
+                </Button>
               )}
               <Form>
                 <Modal
@@ -254,29 +236,28 @@ function Cortinas () {
                       flexWrap='wrap'
                       spacing={2}
                     >
-                      {tablaTelas
-                        .map((v, i) => (
-                          <Item key={i}>
-                            <img
-                              className='d-block w-40 image-responsive justify-content-center '
-                              style={{
-                                maxHeight: '10rem',
-                                maxWidth: '11rem'
-                              }}
-                              alt={v.descripcion}
-                              src={v.url}
-                            />
-                            <Form.Check
-                              inline
-                              label={v.descripcion}
-                              value={v}
-                              name='tela'
-                              type='radio'
-                              id={i}
-                              onClick={() => handleCortina(p, v)}
-                            />
-                          </Item>
-                        ))}
+                      {tablaTelas.map((v, i) => (
+                        <Item key={i}>
+                          <img
+                            className='d-block w-40 image-responsive justify-content-center '
+                            style={{
+                              maxHeight: '10rem',
+                              maxWidth: '11rem'
+                            }}
+                            alt={v.descripcion}
+                            src={v.url}
+                          />
+                          <Form.Check
+                            inline
+                            label={v.descripcion}
+                            value={v}
+                            name='datos.tela'
+                            type='radio'
+                            id={i}
+                            onClick={handleChange}
+                          />
+                        </Item>
+                      ))}
                     </Stack>
                     <Modal.Title
                       id='example-custom-modal-styling-title'
@@ -287,7 +268,6 @@ function Cortinas () {
                     <Box
                       component='form'
                       onSubmit={handleSubmit}
-                      Validate
                       sx={{ mt: 1 }}
                     >
                       <Stack direction='row' spacing={2}>
@@ -303,8 +283,8 @@ function Cortinas () {
                             placeholder='Ingresa el ancho en cm'
                             name='ancho'
                             autoComplete='ancho'
-                            value={ancho}
-                            onChange={handleChangeAncho}
+                            value={datos.ancho}
+                            onChange={handleChange}
                             autoFocus
                           />
                         </Item>
@@ -320,8 +300,8 @@ function Cortinas () {
                             id='alto'
                             placeholder='Ingresa el alto en cm'
                             autoComplete='alto'
-                            value={alto}
-                            onChange={handleChangeAlto}
+                            value={datos.alto}
+                            onChange={handleChange}
                           />
                         </Item>
                       </Stack>

@@ -13,13 +13,14 @@ import Stack from '@mui/material/Stack'
 import Form from 'react-bootstrap/Form'
 import { styled } from '@mui/material/styles'
 import { useState } from 'react'
-import Agregarcarro from '../../pages/Agregarcarro/Agregarcarro'
 import Calculo from '../../pages/Calculo/Calculo'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import FormControl from '@mui/material/FormControl'
 import FormLabel from '@mui/material/FormLabel'
 import Radio from '@mui/material/Radio'
 import RadioGroup from '@mui/material/RadioGroup'
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
+import { CarritoContext } from '../../context/carrito/carritoContext'
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -29,26 +30,28 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary
 }))
 
-const options = { style: 'currency', currency: 'CLP' }
-
 function Metro () {
-  const { categoria, producto, cantidad, setCantidad,setImagen, setGlosa } =
+  const { categoria, producto, cantidad, setCantidad } =
     useContext(GlobalContext)
+  const { dispatchCarrito } = useContext(CarritoContext)
+
   const navigate = useNavigate()
 
   let [color, setColor] = useState(0)
-  let [gramaje, setGramaje] = useState(0)
   const [show, setShow] = useState(false)
 
   const handleSubmit = event => {
     event.preventDefault()
-    //const data = new FormData(event.currentTarget);
   }
-  const handleTextura = () => {
+  const otroColor = () => {
     setShow(true)
   }
+  let [gramaje, setGramaje] = useState(0)
+  const handleColor = i => {
+    setColor(i)
+  }
+
   const handleCategoria = () => {
-    //setShow(true);
     navigate('/Productos')
   }
 
@@ -59,16 +62,58 @@ function Metro () {
   const handleGlosa = () => {
     setShow(false)
   }
-
-  const p = producto;
-
-
   const handleChangeGramaje = event => {
     setGramaje(event.target.value)
+    datos.gramaje.gramaje
+    setDatos(datos)
   }
-  const handleChangeCantidad = event => {
-    setCantidad(event.target.value)
+  const p = producto
+
+  const formDatos = {
+    cantidad: 1,
+    alto: 100,
+    ancho: 100,
+    mt2: 1,
+    glosa: '',
+    imagen: '',
+    gramaje: 0,
+    color: color,
+    tela: 0,
+    precio: p.recio,
+    precioMt2: p.recio,
+    textura: 0,
+    papel: 0
   }
+  const [datos, setDatos] = useState(formDatos)
+
+  const handleChange = e => {
+    setDatos({
+      ...datos,
+      [e.target.name]: e.target.value
+    })
+  }
+  const agregarCarro = () => {
+    datos.glosa =
+      categoria.familia +
+      ' ' +
+      categoria.categoria +
+      ' Código Color ' +
+      p.colores[color].codigo +
+      ' Gramaje ' +
+      p.pesos[datos.gramaje].peso +
+      'gr por mt'
+    setCantidad(cantidad)
+
+    const item = {
+      imagen: p.colores[color].url,
+      glosa: datos.glosa,
+      color: color,
+      cantidad: datos.cantidad,
+      precio: datos.precio
+    }
+    dispatchCarrito({ type: 'AGREGAR_ITEM', item })
+  }
+
   return (
     <>
       <div className='bg-dark text-bg-dark pb-2 ps-5  mb-1 text-center'>
@@ -88,17 +133,6 @@ function Metro () {
                   src={p.colores[color].url}
                   title={'Código Color: ' + p.colores[color].codigo}
                 />
-                <h6>{'Código Color: ' + p.colores[color].codigo}</h6>
-                {setImagen(p.colores[color].url)}
-                {setGlosa(
-                categoria.familia +
-                  ' ' +
-                  categoria.categoria +
-                  ' Código Color ' +
-                  p.colores[color].codigo +
-                  ' Gramaje ' +
-                  p.pesos[gramaje].peso +'gr por mt'
-              )}
               </Container>
             </Grid>
             <Grid item xs={4} className='mt-4'>
@@ -134,7 +168,7 @@ function Metro () {
                   className='mt-1 mb-4 text-center'
                   sx={{ mb: 3 }}
                   color='primary'
-                  onClick={() => handleTextura()}
+                  onClick={() => otroColor()}
                 >
                   Selecciona otro color
                 </Button>
@@ -142,21 +176,24 @@ function Metro () {
               <h6>{'Gramaje por mt2: ' + p.pesos[gramaje].peso + ' gramos'}</h6>
               <h6>
                 {' Precio mt2: ' +
-                  parseFloat(p.pesos[gramaje].precio.toFixed(0)).toLocaleString(
+                  parseFloat(p.pesos[gramaje]).toLocaleString(
                     'es-CL',
-                    options
+                    { style: 'currency', currency: 'CLP' }
                   )}
               </h6>
               <h6 className='mb-4 '>
                 {'Precio Metro Lineal: ' +
                   parseFloat(
-                    (p.pesos[gramaje].precio * 1.4).toFixed(0)
-                  ).toLocaleString('es-CL', options)}
+                    (p.pesos[gramaje].precio * 1.4)
+                  ).toLocaleString('es-CL', {
+                    style: 'currency',
+                    currency: 'CLP'
+                  })}
               </h6>
               <Box
                 component='form'
                 onSubmit={handleSubmit}
-                Validate
+                validate
                 sx={{ mt: 1 }}
               >
                 <Stack direction='row' spacing={2}>
@@ -171,12 +208,12 @@ function Metro () {
                       label='Cantidad de Metros Lineales'
                       name='cantidad'
                       autoComplete='cantidad'
-                      value={cantidad}
-                      onChange={handleChangeCantidad}
+                      value={datos.cantidad}
+                      onChange={handleChange}
                       autoFocus
                     />
                   </Item>
-                  <React.Fragment className='mt-4 mb-4'>
+                  <React.Fragment>
                     <Calculo />
                   </React.Fragment>
                 </Stack>
@@ -185,12 +222,16 @@ function Metro () {
                 {'Precio: ' +
                   parseFloat(
                     (p.pesos[gramaje].precio * 1.4 * cantidad).toFixed(0)
-                  ).toLocaleString('es-CL', options)}
+                  ).toLocaleString('es-CL', {
+                    style: 'currency',
+                    currency: 'CLP'
+                  })}
               </h5>
 
-              <React.Fragment className='mt-4 mb-4'>
-                <Agregarcarro />
-              </React.Fragment>
+              <Button onClick={agregarCarro} color='primary'>
+                <ShoppingCartIcon color='primary' fontSize='large' />
+                Agregar al Carro
+              </Button>
               <Form>
                 <Modal
                   show={show}
@@ -230,7 +271,7 @@ function Metro () {
                             name='textura'
                             type='radio'
                             id={i}
-                            onClick={() => setColor(i)}
+                            onClick={() => handleColor(i)}
                           />
                         </Item>
                       ))}

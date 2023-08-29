@@ -32,7 +32,7 @@ import Registro from '../../pages/Registro/Registro'
 import 'react-toastify/dist/ReactToastify.css'
 
 export default function Login () {
-  const { userName, setUserName, setToken, setIdUser } =
+  const { userName, setUserName, setToken, setIdUser , BACKEND_URL} =
     useContext(GlobalContext)
   const [showPassword, setShowPassword] = React.useState(false)
 
@@ -71,31 +71,27 @@ export default function Login () {
 
   let tokenDecodificado = {}
   const api = axios.create({
-    //baseURL: 'https://uddjaffa.onrender.com'
-    baseURL: 'http://localhost:4000'
+    baseURL: BACKEND_URL,
+    timeout: 5000,
+    headers: {
+      'Content-Type': 'application/json', 
+    }
   })
-
   const handleSubmit = async e => {
     e.preventDefault()
     try {
-      const { data } = await api.post('/users/login', formUser, {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-
+      const { data } = await api.post('/users/login', formUser)
       tokenDecodificado = jwtDecode(data.token)
       setToken(data.token)
       setIdUser(data.idUser)
       setUserName(tokenDecodificado.nombre)
-
+      notifySuccess('Hola '+userName)
       dispatchUser({
         type: types.setUserState,
         payload: tokenDecodificado
       })
-      notifySuccess('Usuario Conectado')
     } catch (error) {
-      notifyError('Error de conexion')
+      notifyError('Error de conexión')
       setToken('')
       setIdUser('')
       setUserName('Inicio Sesión')
