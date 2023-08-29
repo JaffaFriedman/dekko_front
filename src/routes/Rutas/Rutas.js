@@ -1,5 +1,4 @@
 import { Routes, Route } from 'react-router-dom'
-import Agregarcarro from '../../pages/Agregarcarro/Agregarcarro'
 import Bobina from '../../pages/Bobina/Bobina'
 import Metro from '../../pages/Metro/Metro'
 import Buscar from '../../pages/Buscar/Buscar'
@@ -59,7 +58,6 @@ function Rutas () {
           <Route path='/rollos' element={<Rollos />} />
           <Route path='/bobina' element={<Bobina />} />
           <Route path='/metro' element={<Metro />} />
-          <Route path='/agregarcarro' element={<Agregarcarro />} />
           <Route path='/calculo' element={<Calculo />} />
           <Route path='/calculobobina' element={<Calculobobina />} />
           <Route path='/calculorollo' element={<Calculorollo />} />

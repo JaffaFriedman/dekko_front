@@ -1,4 +1,3 @@
-
 const carritoReducer= ( state, action = {}) => {
   let carritoActualizado;
   switch (action.type) {

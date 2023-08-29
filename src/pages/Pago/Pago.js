@@ -12,15 +12,14 @@ import Typography from '@mui/material/Typography'
 import PaymentIcon from '@mui/icons-material/Payment'
 import Avatar from '@mui/material/Avatar'
 import { useContext, useState } from 'react'
-import { UserContext } from '../../context/user/userContext'
-import { types } from '../../context/user/userReducer'
 import axios from 'axios'
 import { GlobalContext } from '../../context/global/globalContext'
 import { ToastContainer, toast } from 'react-toastify'
-
+import { CarritoContext } from '../../context/carrito/carritoContext'
 export default function Pago () {
   const [open, setOpen] = React.useState(false)
-  const { token, idUser,BACKEND_URL } = useContext(GlobalContext)
+  const { token, idUser, BACKEND_URL } = useContext(GlobalContext)
+  const { carritoCompra } = useContext(CarritoContext)
 
   const handleClickOpen = () => {
     setOpen(true)
@@ -32,9 +31,6 @@ export default function Pago () {
   const handleClose = () => {
     setOpen(false)
   }
-
-  const [, dispatchUser] = useContext(UserContext)
-  //const [carrito] = useContext(CarritoContext)
 
   const [formUser, setFormUser] = useState({
     email: '',
@@ -63,27 +59,28 @@ export default function Pago () {
       Authorization: `Bearer ${token}`
     }
   })
-
+  const api2 = axios.create({
+    baseURL: BACKEND_URL,
+    timeout: 5000,
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
 
   const handlePago = async e => {
     e.preventDefault()
-    const formOrder = 0 /*{
-      email: formUser.email,
-      nombre: formUser.nombre,
-      direccion: formUser.direccion,
-      comuna: formUser.comuna,
-      telefono: formUser.telefono,
-      totalProductos: carrito.totalProductos,
-      precioTotal: carrito.precioTotal,
-      items: [...carrito.items]
-    }*/
+
+    const items = carritoCompra.items.map(item => ({
+      quantity: item.cantidad,
+      description: item.imagen,
+      //unit_price: item.price,
+      unit_price: 1000,
+      title: item.glosa
+    }))
+
     try {
-      const { data } = await api.post('/orders', JSON.stringify(formOrder))
-      dispatchUser({
-        type: types.setUserState,
-        payload: data
-      })
-      notifySuccess('Pago efectuado')
+      const { data } = await api2.post('/payment/create-payment', items)
+      window.location.href = data.detail.response.init_point;
     } catch (error) {
       notifyError('Error al efectuar el pago')
       console.log(error)
@@ -92,7 +89,6 @@ export default function Pago () {
 
   const recuperaUsuario = async () => {
     try {
-      // i = idUser
       const { data } = await api.get(`/users/auth/${idUser}`)
       console.log(data)
       setFormUser(data.detail)
@@ -101,7 +97,7 @@ export default function Pago () {
     }
   }
   const notifyError = msg => toast.error(msg)
-  const notifySuccess = msg => toast.success(msg)
+ // const notifySuccess = msg => toast.success(msg)
 
   return (
     <div>
