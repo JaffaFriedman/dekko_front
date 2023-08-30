@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { useState } from 'react'
 import Box from '@mui/material/Box'
 import Alert from '@mui/material/Alert'
 import IconButton from '@mui/material/IconButton'
@@ -7,7 +7,7 @@ import Button from '@mui/material/Button'
 import CloseIcon from '@mui/icons-material/Close'
 
 export default function Recuperar () {
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = useState(false)
 
   return (
     <Box sx={{ width: '100%' }}>

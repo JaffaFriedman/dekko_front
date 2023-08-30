@@ -1,5 +1,4 @@
-import React from 'react'
-import { useContext } from 'react'
+import { useContext, Fragment, useState } from 'react'
 import { GlobalContext } from '../../context/global/globalContext'
 import Container from 'react-bootstrap/Container'
 import Box from '@mui/material/Box'
@@ -12,7 +11,6 @@ import Paper from '@mui/material/Paper'
 import Stack from '@mui/material/Stack'
 import Form from 'react-bootstrap/Form'
 import { styled } from '@mui/material/styles'
-import { useState } from 'react'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import FormControl from '@mui/material/FormControl'
 import FormLabel from '@mui/material/FormLabel'
@@ -64,25 +62,25 @@ function Bobina () {
   }
   const handleChangeGramaje = event => {
     setGramaje(event.target.value)
-    datos.gramaje.gramaje
+    datos.gramaje=gramaje
+    datos.precioMt2=parseFloat(p.pesos[datos.gramaje].precio)
+    datos.precio=datos.precioMt2*33
     setDatos(datos)
   }
   const p = producto
 
   const formDatos = {
     cantidad: 1,
-    alto: 100,
-    ancho: 100,
+    alto: 300,
+    ancho: 110,
     mt2: 1,
     glosa: '',
     imagen: '',
     gramaje: 0,
     color: color,
-    tela: 0,
-    precio: p.precio,
-    precioMt2: p.precio,
-    textura: 0,
-    papel: 0
+    precioMt2: p.pesos[0].precio,
+    precio: p.pesos[0].precio*33,
+    textura: 0
   }
   const [datos, setDatos] = useState(formDatos)
 
@@ -103,6 +101,7 @@ function Bobina () {
       p.pesos[datos.gramaje].peso +
       'gr por mt'
     setCantidad(cantidad)
+    
     const item = {
       imagen: p.colores[color].url,
       glosa: datos.glosa,
@@ -172,17 +171,13 @@ function Bobina () {
                   Selecciona otro color
                 </Button>
               </div>
-              <h6>
-                {'Gramaje por mt2: ' + p.pesos[datos.gramaje].peso + ' gramos'}
-              </h6>
+              <h6>{'Gramaje por mt2: ' + p.pesos[gramaje].peso + ' gramos'}</h6>
               <h6>
                 {' Precio mt2: ' +
-                  parseFloat(
-                    p.pesos[datos.gramaje].precio.toFixed(0)
-                  ).toLocaleString('es-CL', {
-                    style: 'currency',
-                    currency: 'CLP'
-                  })}
+                  parseFloat(p.pesos[datos.gramaje].precio).toLocaleString(
+                    'es-CL',
+                    { style: 'currency', currency: 'CLP' }
+                  )}
               </h6>
               <h6 className='mb-4 '>
                 {'Precio Bobina: ' +
@@ -212,15 +207,15 @@ function Bobina () {
                       onChange={handleChange}
                     />
                   </Item>
-                  <React.Fragment>
+                  <Fragment>
                     <Calculobobina />
-                  </React.Fragment>
+                  </Fragment>
                 </Stack>
               </Box>
               <h5 className='mt-4 mb-4'>
                 {'Precio: ' +
                   parseFloat(
-                    (p.pesos[datos.gramaje].precio * 33 * cantidad).toFixed(0)
+                    (datos.precio* datos.cantidad).toFixed(0)
                   ).toLocaleString('es-CL', {
                     style: 'currency',
                     currency: 'CLP'

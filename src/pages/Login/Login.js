@@ -1,5 +1,4 @@
-import * as React from 'react'
-import { useState, useContext } from 'react'
+import { Fragment, useState, useContext } from 'react'
 import { UserContext } from '../../context/user/userContext'
 import { types } from '../../context/user/userReducer'
 import axios from 'axios'
@@ -34,8 +33,8 @@ import 'react-toastify/dist/ReactToastify.css'
 export default function Login () {
   const { setToken, setIdUser , BACKEND_URL} =
     useContext(GlobalContext)
-  const [showPassword, setShowPassword] = React.useState(false)
-  const [userName, setUserName] = React.useState('')
+  const [showPassword, setShowPassword] = useState(false)
+  const [userName, setUserName] = useState('')
 
   const handleClickShowPassword = () => setShowPassword(show => !show)
 
@@ -43,7 +42,7 @@ export default function Login () {
     event.preventDefault()
   }
 
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = useState(false)
 
   const handleClickOpen = () => {
     setOpen(true)
@@ -136,9 +135,9 @@ export default function Login () {
               <Typography component='h1' variant='h5'>
                   <p>Inicia sesión o registrate si aun no tienes cuenta</p>
               </Typography>
-                  <React.Fragment>
+                  <Fragment>
                     <Registro />
-                  </React.Fragment>
+                  </Fragment>
               <Box
                 component='form'
                 onSubmit={handleSubmit}

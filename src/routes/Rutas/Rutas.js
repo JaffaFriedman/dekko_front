@@ -20,12 +20,9 @@ import Login from '../../pages/Login/Login'
 import Logout from '../../pages/Login/Logout'
 import Navigation from '../Navigation/Navigation'
 import Nosotros from '../../pages/Nosotros/Nosotros'
-import Olvido from '../../pages/Olvido/Olvido'
 import Pago from '../../pages/Pago/Pago'
 import Papeles from '../../pages/Papeles/Papeles'
 import Productos from '../../pages/Productos/Productos'
-
-import Recuperar from '../../pages/Recuperar/Recuperar'
 import Registro from '../../pages/Registro/Registro'
 import Rollos from '../../pages/Rollos/Rollos'
 import Separador from '../../pages/Separador/Separador'
@@ -47,9 +44,7 @@ function Rutas () {
           <Route path='/logout' element={<Logout />} />
           <Route path='/navigation' element={<Navigation />} />
           <Route path='/nosotros' element={<Nosotros />} />
-          <Route path='/olvido' element={<Olvido />} />
           <Route path='/pago' element={<Pago />} />
-          <Route path='/recuperar' element={<Recuperar />} />
           <Route path='/registro' element={<Registro />} />
           <Route path='/separador' element={<Separador />} />
           <Route path='/familias' element={<Familias />} />

@@ -1,5 +1,4 @@
-import React from 'react'
-import { useContext } from 'react'
+import { Fragment, useContext, useState } from 'react'
 import { GlobalContext } from '../../context/global/globalContext'
 import Container from 'react-bootstrap/Container'
 import Box from '@mui/material/Box'
@@ -12,7 +11,6 @@ import Paper from '@mui/material/Paper'
 import Stack from '@mui/material/Stack'
 import Form from 'react-bootstrap/Form'
 import { styled } from '@mui/material/styles'
-import { useState } from 'react'
 import Calculo from '../../pages/Calculo/Calculo'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import FormControl from '@mui/material/FormControl'
@@ -64,25 +62,27 @@ function Metro () {
   }
   const handleChangeGramaje = event => {
     setGramaje(event.target.value)
-    datos.gramaje.gramaje
+    datos.gramaje = gramaje
+    datos.precioMt2 = parseFloat(p.pesos[datos.gramaje].precio)
+    datos.precioMtLineal = datos.precioMt2 * 1.4
+    datos.precio = datos.precioMt2 * 1.4
     setDatos(datos)
   }
   const p = producto
 
   const formDatos = {
-    cantidad: 1,
-    alto: 100,
+    cantidad: 10,
+    alto: 1000,
     ancho: 100,
-    mt2: 1,
+    mt2: 14,
     glosa: '',
     imagen: '',
     gramaje: 0,
     color: color,
-    tela: 0,
-    precio: p.precio,
-    precioMt2: p.precio,
-    textura: 0,
-    papel: 0
+    precioMt2: p.pesos[0].precio,
+    precioMtLineal: parseInt(p.pesos[0].precio * 1.4),
+    precio: p.pesos[0].precio * 14,
+    textura: 0
   }
   const [datos, setDatos] = useState(formDatos)
 
@@ -173,19 +173,16 @@ function Metro () {
                   Selecciona otro color
                 </Button>
               </div>
-              <h6>{'Gramaje por mt2: ' + p.pesos[gramaje].peso + ' gramos'}</h6>
               <h6>
                 {' Precio mt2: ' +
-                  parseFloat(p.pesos[gramaje]).toLocaleString(
-                    'es-CL',
-                    { style: 'currency', currency: 'CLP' }
-                  )}
+                  datos.precioMt2.toLocaleString('es-CL', {
+                    style: 'currency',
+                    currency: 'CLP'
+                  })}
               </h6>
               <h6 className='mb-4 '>
                 {'Precio Metro Lineal: ' +
-                  parseFloat(
-                    (p.pesos[gramaje].precio * 1.4)
-                  ).toLocaleString('es-CL', {
+                  datos.precioMtLineal.toLocaleString('es-CL', {
                     style: 'currency',
                     currency: 'CLP'
                   })}
@@ -209,16 +206,14 @@ function Metro () {
                       onChange={handleChange}
                     />
                   </Item>
-                  <React.Fragment>
+                  <Fragment>
                     <Calculo />
-                  </React.Fragment>
+                  </Fragment>
                 </Stack>
               </Box>
               <h5 className='mt-4 mb-4'>
                 {'Precio: ' +
-                  parseFloat(
-                    (p.pesos[gramaje].precio * 1.4 * cantidad).toFixed(0)
-                  ).toLocaleString('es-CL', {
+                  (datos.precio * datos.cantidad).toLocaleString('es-CL', {
                     style: 'currency',
                     currency: 'CLP'
                   })}

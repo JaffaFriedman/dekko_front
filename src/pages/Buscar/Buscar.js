@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { useState } from 'react'
 import Button from '@mui/material/Button'
 import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
@@ -10,17 +10,15 @@ import SearchIcon from '@mui/icons-material/Search'
 import Form from 'react-bootstrap/Form'
 import IconButton from '@mui/material/IconButton'
 import CancelPresentationIcon from '@mui/icons-material/CancelPresentation'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+const notifyWarinng = msg => toast.warning(msg)
 
 const Buscar = () => {
-  const handleSubmit = event => {
-    event.preventDefault()
-    const data = new FormData(event.currentTarget)
-    console.log({
-      email: data.get('email'),
-      password: data.get('password')
-    })
+  const handleSubmit = () => {
+    notifyWarinng('No encontrado, funcionalidad aún en desarrollo')
   }
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = useState(false)
 
   const handleClickOpen = () => {
     setOpen(true)
@@ -32,6 +30,7 @@ const Buscar = () => {
 
   return (
     <div>
+      <ToastContainer position='bottom-center' />
       <Button onClick={handleClickOpen} color='primary'>
         <SearchIcon color='primary' fontSize='large' />
         BUSCAR
@@ -65,6 +64,7 @@ const Buscar = () => {
                   aria-label='close'
                   color='primary'
                   size='large'
+                  onClick={handleSubmit}
                 >
                   <SearchIcon fontSize='large' />
                 </IconButton>

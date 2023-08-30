@@ -1,5 +1,4 @@
-import * as React from 'react'
-import { useState, useContext } from 'react'
+import { Fragment, useState, useContext } from 'react'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import Button from '@mui/material/Button'
 import Dialog from '@mui/material/Dialog'
@@ -70,9 +69,9 @@ export default function Carrito () {
                   carritoCompra.precioTotal.toFixed(0)
                 ).toLocaleString('es-CL', options)}
               </h4>
-              <React.Fragment>
+              <Fragment>
                 <Pago />
-              </React.Fragment>
+              </Fragment>
             </Box>
           </Container>
 

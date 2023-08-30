@@ -1,14 +1,12 @@
-import { useContext } from 'react'
+import { useContext , useState ,useEffect} from 'react'
 import { GlobalContext } from '../../context/global/globalContext'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import { Container } from 'react-bootstrap'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-import { useState } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
-import { useEffect } from 'react'
 
 export default function Familias () {
   const {

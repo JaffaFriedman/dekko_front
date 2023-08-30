@@ -1,3 +1,4 @@
+import { useContext,Fragment,useState } from 'react'
 import Container from 'react-bootstrap/Container'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
@@ -5,15 +6,13 @@ import Button from '@mui/material/Button'
 import Carousel from 'react-bootstrap/Carousel'
 import TextField from '@mui/material/TextField'
 import { useNavigate } from 'react-router-dom'
-import { useContext,Fragment } from 'react'
-import { GlobalContext } from '../../context/global/globalContext'
 import Stack from '@mui/material/Stack'
 import Paper from '@mui/material/Paper'
 import { styled } from '@mui/material/styles'
 import Calculorollo from '../../pages/Calculo/Calculorollo'
 import { CarritoContext } from '../../context/carrito/carritoContext'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
-import {useState} from 'react'
+import { GlobalContext } from '../../context/global/globalContext'
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
   ...theme.typography.body2,

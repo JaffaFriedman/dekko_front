@@ -1,4 +1,3 @@
-import * as React from 'react'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 import Dialog from '@mui/material/Dialog'
@@ -17,7 +16,7 @@ import { GlobalContext } from '../../context/global/globalContext'
 import { ToastContainer, toast } from 'react-toastify'
 import { CarritoContext } from '../../context/carrito/carritoContext'
 export default function Pago () {
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = useState(false)
   const { token, idUser, BACKEND_URL } = useContext(GlobalContext)
   const { carritoCompra } = useContext(CarritoContext)
 
