@@ -87,8 +87,10 @@ export function GlobalProvider ({ children }) {
   }))
 
   initMercadoPago('TEST-ddb11d27-73ea-4298-9db7-260bf011c799')
-const BACKEND_URL="https://uddjaffa.onrender.com"
-//  const BACKEND_URL="http://localhost:4000"
+//const BACKEND_URL="https://uddjaffa.onrender.com"
+//  const BACKEND_URL="http://localhost:8080"
+const BACKEND_URL="https://dekkoback-k4hg-dev.fl0.io"
+
   return (
     <GlobalContext.Provider
       value={{
