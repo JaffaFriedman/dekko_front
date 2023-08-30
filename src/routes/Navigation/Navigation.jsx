@@ -3,8 +3,9 @@ import { Nav, Navbar } from 'react-bootstrap'
 import logo from '../../images/logo.JPG'
 import Carrito from '../../pages/Carrito/Carrito'
 import Login from '../../pages/Login/Login'
+import Logout from '../../pages/Login/Logout'
 import Buscar from '../../pages/Buscar/Buscar'
-import Contacto from '../../pages/Contacto/Contacto'
+import Registro from '../../pages/Registro/Registro'
 import MiPerfil from '../../pages/MiPerfil/MiPerfil'
 import { useContext } from 'react'
 import { GlobalContext } from '../../context/global/globalContext'
@@ -34,17 +35,18 @@ const Navigation = () => {
             </Nav.Link>
             <Nav.Link>
               <React.Fragment>
-                {token === '' ? <Login /> : <MiPerfil />}
-              </React.Fragment>
-            </Nav.Link>
-            <Nav.Link>
-              <React.Fragment>
                 <Carrito />
               </React.Fragment>
             </Nav.Link>
             <Nav.Link>
               <React.Fragment>
-                <Contacto />
+                {token === '' ? <Registro />: <MiPerfil />}
+              </React.Fragment>
+            </Nav.Link>
+
+            <Nav.Link>
+              <React.Fragment>
+                {token === '' ? <Login /> : <Logout />}
               </React.Fragment>
             </Nav.Link>
           </Nav>

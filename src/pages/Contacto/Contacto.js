@@ -14,6 +14,7 @@ import Typography from '@mui/material/Typography'
 import CancelPresentationIcon from '@mui/icons-material/CancelPresentation'
 import { ToastContainer, toast } from 'react-toastify'
 import { GlobalContext } from '../../context/global/globalContext'
+import { grey } from '@mui/material/colors'
 import axios from 'axios'
 //import validarContacto from "../Validar/ValidarContacto";
 
@@ -77,9 +78,9 @@ function Contacto() {
   
   return (
     <div>
-      <Button onClick={handleClickOpen} color='primary'>
-        <EmailIcon color='primary' fontSize='large'/>
-        Contáctanos
+      <Button onClick={handleClickOpen}  sx={{ color: grey[50] }}>
+        <EmailIcon sx={{ color: grey[50] }} fontSize='medium' />
+         Envianos un mensaje 
       </Button>
       <Dialog open={open} onClose={handleClose}>
       <ToastContainer position='top-center' />
@@ -112,7 +113,7 @@ function Contacto() {
             <Box
               component='form'
               sx={{ '& > :not(style)': { m: 1, width: '40ch' } }}
-              Validate
+              validate
               autoComplete='off'
             >
               <TextField
@@ -139,7 +140,7 @@ function Contacto() {
             <Box
               component='form'
               sx={{ '& > :not(style)': { m: 1, width: '40ch' } }}
-              Validate
+              validate
               autoComplete='off'
             >
               <TextField
@@ -156,7 +157,7 @@ function Contacto() {
             <Box
               component='form'
               sx={{ '& > :not(style)': { m: 1, width: '40ch' } }}
-              noValidate
+              validate
               autoComplete='off'
             >
               <TextField
@@ -180,6 +181,7 @@ function Contacto() {
                 name='mensaje'
                 label='Mensaje'
                 type='text'
+                required
                 placeholder='Mensaje'
                 onChange={e => handleInputChange(e)}
                 value={contacto.mensaje}

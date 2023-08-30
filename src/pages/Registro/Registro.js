@@ -100,7 +100,7 @@ export default function Registro () {
     <div>
       <Button onClick={handleClickOpen}>
         <AccountCircle fontSize='large' />
-        Si no tienes cuenta registrate aqui
+        Registro
       </Button>
 
       <Dialog open={open} onClose={handleClose}>

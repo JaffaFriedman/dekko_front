@@ -17,6 +17,7 @@ import Home from '../../pages/Home/Home'
 import Instructivo from '../../pages/Instructivo/Instructivo'
 import Layout from '../../components/Layout/Layout'
 import Login from '../../pages/Login/Login'
+import Logout from '../../pages/Login/Logout'
 import Navigation from '../Navigation/Navigation'
 import Nosotros from '../../pages/Nosotros/Nosotros'
 import Olvido from '../../pages/Olvido/Olvido'
@@ -43,6 +44,7 @@ function Rutas () {
           <Route path='/garantias' element={<Garantias />} />
           <Route path='/instructivo' element={<Instructivo />} />
           <Route path='/login' element={<Login />} />
+          <Route path='/logout' element={<Logout />} />
           <Route path='/navigation' element={<Navigation />} />
           <Route path='/nosotros' element={<Nosotros />} />
           <Route path='/olvido' element={<Olvido />} />

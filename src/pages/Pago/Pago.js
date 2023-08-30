@@ -72,9 +72,8 @@ export default function Pago () {
 
     const items = carritoCompra.items.map(item => ({
       quantity: item.cantidad,
-      description: item.imagen,
-      //unit_price: item.price,
-      unit_price: 1000,
+      description: item.glosa,
+      unit_price: item.precio,
       title: item.glosa
     }))
 

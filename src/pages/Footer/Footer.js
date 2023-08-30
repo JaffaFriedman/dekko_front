@@ -1,7 +1,6 @@
 
 import FacebookIcon from '@mui/icons-material/Facebook'
 import InstagramIcon from '@mui/icons-material/Instagram'
-import EmailIcon from '@mui/icons-material/Email'
 import CallIcon from '@mui/icons-material/Call'
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
 import Typography from '@mui/joy/Typography'
@@ -16,7 +15,8 @@ import { grey } from '@mui/material/colors'
 import WhatsAppIcon from '@mui/icons-material/WhatsApp'
 import LocationOnIcon from '@mui/icons-material/LocationOn'
 import NotListedLocationIcon from '@mui/icons-material/NotListedLocation'
-
+import Contacto from '../../pages/Contacto/Contacto'
+import { Fragment } from 'react'
 const Footer = () => {
   let urlFacebook = 'https://www.facebook.com/search/top?q=katzmania'
   let urlInstagram = 'https://www.instagram.com/explore/tags/katzmaniaaa/'
@@ -36,6 +36,11 @@ const Footer = () => {
           justifyContent='center'
         >
           <Grid item md={2}>
+          <Typography level='body' className='bg-dark text-bg-dark'>
+              <Fragment>
+                <Contacto />
+              </Fragment>
+            </Typography>
             <Typography level='body' sx={{ color: grey[50] }}>
               <LocationOnIcon fontSize='medium' /> Isabel la Catolica 7350, Las
               Condes
@@ -48,9 +53,7 @@ const Footer = () => {
             >
               <NotListedLocationIcon fontSize='medium' /> Como llegar
             </Link>
-            <Typography level='body' className='bg-dark text-bg-dark'>
-              <EmailIcon fontSize='medium' /> contacto@dekkoww.cl{' '}
-            </Typography>
+
             <Typography level='body' sx={{ color: grey[50] }}>
               <CallIcon fontSize='medium' /> Telefonos: +569 1111 2222 +569 3333
               4444{' '}
@@ -61,6 +64,12 @@ const Footer = () => {
             </Typography>
           </Grid>
           <Grid item md={2}>
+          <Typography level='h6'>
+              {' '}
+              <Link sx={{ color: grey[50] }} underline='none' href='/nosotros'>
+                Sobre Nosotros
+              </Link>{' '}
+            </Typography>
             <Typography level='h6'>
               {' '}
               <Link sx={{ color: grey[50] }} underline='none' href='/garantias'>

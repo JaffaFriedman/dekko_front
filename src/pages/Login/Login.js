@@ -53,7 +53,7 @@ export default function Login () {
     setOpen(false)
   }
 
-  const [state, dispatchUser] = useContext(UserContext)
+  const [ , dispatchUser] = useContext(UserContext)
 
   const initialUser = {
     name: 'ACCEDER',
@@ -86,7 +86,7 @@ export default function Login () {
       setToken(data.token)
       setIdUser(data.idUser)
       setUserName(data.nombre)
-      notifySuccess('Hola '+userName)
+      notifySuccess('Hola '+ userName)
       dispatchUser({
         type: types.setUserState,
         payload: tokenDecodificado
@@ -105,12 +105,11 @@ export default function Login () {
   }
   const notifyError = msg => toast.error(msg)
   const notifySuccess = msg => toast.success(msg)
-
   return (
     <div>
       <Button onClick={handleClickOpen} color='primary'>
-        <AccountCircle color='primary' fontSize='large' />
-        {userName}
+        <LoginIcon color='primary' fontSize='large' />
+        Inicia sesion
       </Button>
       <Dialog open={open} onClose={handleClose}>
         <ToastContainer position='top-center' />
@@ -134,25 +133,12 @@ export default function Login () {
               <Avatar sx={{ m: 1, bgcolor: 'primary.light' }}>
                 <AccountCircle />
               </Avatar>
-
               <Typography component='h1' variant='h5'>
-                {state?.user ? (
-                  <p> {state.user.nombre}</p>
-                ) : (
-                  <p>Inicia sesión</p>
-                )}
+                  <p>Inicia sesión o registrate si aun no tienes cuenta</p>
               </Typography>
-              <Typography component='h1' variant='h5'>
-                {state?.user ? (
-                  <p> ¡Qué bueno tenerte de vuelta! </p>
-                ) : (
-                  
                   <React.Fragment>
                     <Registro />
                   </React.Fragment>
-                )}
-              </Typography>
-
               <Box
                 component='form'
                 onSubmit={handleSubmit}

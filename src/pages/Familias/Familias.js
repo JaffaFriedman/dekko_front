@@ -27,7 +27,7 @@ export default function Familias () {
     baseURL: BACKEND_URL,
     timeout: 5000,
     headers: {
-      'Content-Type': 'application/json', 
+      'Content-Type': 'application/json'
     }
   })
   const recuperaFamilias = async () => {
@@ -54,6 +54,7 @@ export default function Familias () {
       <div className='bg-dark text-bg-dark pb-2   text-center'>
         <h3> FAMILIAS DE PRODUCTOS </h3>
       </div>
+
       <Box
         sx={{ display: 'flex', flexWrap: 'wrap', minWidth: 400, width: '100%' }}
       >

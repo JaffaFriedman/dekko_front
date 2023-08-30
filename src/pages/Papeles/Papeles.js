@@ -56,6 +56,7 @@ function Papeles () {
     ancho: 100,
     mt2: 1,
     glosa: '',
+    title: p.descripcion,
     imagen: p.url[0],
     tela: 0,
     precio: p.precio,
@@ -169,21 +170,22 @@ function Papeles () {
                 {p.catalogo} - {p.nombre}
               </h4>
               <h6>
-              {'Producto:  '} {p.descripcion}
+                {'Producto:  '} {p.descripcion}
               </h6>
-              <h5> {p.precio.toLocaleString('es-CL', options)} por rollo </h5>
-            
-               <Box component='form' onSubmit={handleSubmit} sx={{ mt: 1 }}>
+              <h6>{datos.glosa}</h6>
+              <h5> {p.precio.toLocaleString('es-CL', options)} por Mt2 </h5>
+
+              <Box component='form' onSubmit={handleSubmit} sx={{ mt: 1 }}>
                 <Stack direction='row' spacing={2}>
                   <TextField
-                        margin='normal'
-                        required
-                        variant='standard'
-                        type='number'
-                        label='Cantidad'
-                        name='cantidad'
-                        value={datos.cantidad}
-                        onChange={handleChange}
+                    margin='normal'
+                    required
+                    variant='standard'
+                    type='number'
+                    label='Cantidad'
+                    name='cantidad'
+                    value={datos.cantidad}
+                    onChange={handleChange}
                   />
                 </Stack>
               </Box>
