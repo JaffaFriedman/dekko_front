@@ -39,7 +39,7 @@ const Buscar = () => {
       <Dialog open={open} onClose={handleClose}>
       <DialogActions>
           <Button onClick={handleClose}>
-            <CancelPresentationIcon color='primary' />
+            <CancelPresentationIcon color='primary'/>
           </Button>
         </DialogActions>
         <DialogContent>

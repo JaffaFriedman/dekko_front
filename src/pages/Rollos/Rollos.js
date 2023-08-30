@@ -1,4 +1,3 @@
-import React from 'react'
 import Container from 'react-bootstrap/Container'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
@@ -6,7 +5,7 @@ import Button from '@mui/material/Button'
 import Carousel from 'react-bootstrap/Carousel'
 import TextField from '@mui/material/TextField'
 import { useNavigate } from 'react-router-dom'
-import { useContext } from 'react'
+import { useContext,Fragment } from 'react'
 import { GlobalContext } from '../../context/global/globalContext'
 import Stack from '@mui/material/Stack'
 import Paper from '@mui/material/Paper'
@@ -14,8 +13,7 @@ import { styled } from '@mui/material/styles'
 import Calculorollo from '../../pages/Calculo/Calculorollo'
 import { CarritoContext } from '../../context/carrito/carritoContext'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
-import { useEffect } from 'react'
-
+import {useState} from 'react'
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
   ...theme.typography.body2,
@@ -25,37 +23,50 @@ const Item = styled(Paper)(({ theme }) => ({
 }))
 
 function Rollos () {
-  const { categoria, producto,cantidad,setCantidad  } =
-    useContext(GlobalContext)
-    const { dispatchCarrito } = useContext(CarritoContext)
+  const { categoria, producto, setCantidad } = useContext(GlobalContext)
+  const { dispatchCarrito } = useContext(CarritoContext)
 
   const navigate = useNavigate()
-  const handleSubmit = event => {
-    event.preventDefault()
-  }
+ 
 
   const handleCategoria = () => {
     navigate('/Productos')
   }
+  const p = producto
 
-  const handleChange = () => {
-    setCantidad(cantidad)
+  const formDatos = {
+    cantidad: 1,
+    glosa: '',
+    title: p.descripcion,
+    imagen: p.url[0],
+    precio: p.precio,
+    precioMt2: p.precio
   }
-  useEffect(() => {
-    setCantidad(1)
-  })
+  const [datos, setDatos] = useState(formDatos)
+  const handleChange = e => {
+    setDatos({
+      ...datos,
+      [e.target.name]: e.target.value
+    })
+  }
+
+  const handleSubmit = event => {
+    event.preventDefault()
+    datos.glosa = 'Catálogo: ' + p.catalogo + ' Diseño: ' + p.nombre
+    setDatos(datos)
+  }
   const agregarCarro = () => {
-    
     const item = {
-      imagen: p.url[0],
-      glosa: (p.catalogo + ' - ' + p.nombre),
-      cantidad: cantidad,
-      precio: p.precio
+      imagen: datos.imagen,
+      glosa: datos.glosa,
+      cantidad: datos.cantidad,
+      precio: datos.precio
     }
+    setCantidad(datos.cantidad)
     dispatchCarrito({ type: 'AGREGAR_ITEM', item })
   }
   const options = { style: 'currency', currency: 'CLP' }
-  const p = producto
+
   return (
     <>
       <div className='bg-dark text-bg-dark pb-2 ps-5  mb-1 text-center'>
@@ -77,7 +88,7 @@ function Rollos () {
                       alt={p.descripcion}
                       src={v}
                     />
-                     
+
                     <Carousel.Caption>
                       <h5>{p.descripcion}</h5>
                     </Carousel.Caption>
@@ -90,7 +101,6 @@ function Rollos () {
                 {' '}
                 {p.catalogo} - {p.nombre}
               </h4>
-              
               <h5> {p.precio.toLocaleString('es-CL', options)} por rollo </h5>
               <p>Las medidas son en centimetros.</p>
               <Box
@@ -108,14 +118,13 @@ function Rollos () {
                       type='number'
                       label='Cantidad'
                       name='cantidad'
-                      defaultValue={1}
-                      value={cantidad}
+                      value={datos.cantidad}
                       onChange={handleChange}
                     />
                   </Item>
-                  <React.Fragment>
+                  <Fragment>
                     <Calculorollo />
-                  </React.Fragment>
+                  </Fragment>
                 </Stack>
               </Box>
 
@@ -123,7 +132,7 @@ function Rollos () {
               <h6 className='mt-4'>Alto del rollo {p.alto} metros</h6>
               <h5 className='mt-4 mb-4'>
                 Precio Total{' '}
-                {(p.precio * cantidad).toLocaleString('es-CL', options)}
+                {(datos.precio * datos.cantidad).toLocaleString('es-CL', options)}
               </h5>
               <Button onClick={agregarCarro} color='primary'>
                 <ShoppingCartIcon color='primary' fontSize='large' />

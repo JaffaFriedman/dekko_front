@@ -10,7 +10,7 @@ import Container from '@mui/material/Container'
 import Box from '@mui/material/Box'
 import { styled } from '@mui/material/styles'
 import CalculateIcon from '@mui/icons-material/Calculate'
-import CancelIcon from '@mui/icons-material/Cancel'
+import CancelPresentationIcon from '@mui/icons-material/Cancel'
 import Paper from '@mui/material/Paper'
 import Stack from '@mui/material/Stack'
 import TextField from '@mui/material/TextField'
@@ -189,7 +189,7 @@ export default function Calculorollo () {
             Calcular
           </Button>
           <Button onClick={handleClose}>
-            <CancelIcon color='primary' fontSize='large' />
+            <CancelPresentationIcon color='primary' />
             Cancelar
           </Button>
         </DialogActions>

@@ -126,7 +126,7 @@ export default function Olvido () {
           </Container>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancelar</Button>
+          <Button onClick={handleClose}></Button>
         </DialogActions>
       </Dialog>
     </div>

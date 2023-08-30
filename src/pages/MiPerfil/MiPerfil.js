@@ -108,7 +108,7 @@ export default function MiPerfil () {
         <ToastContainer position='top-center' />
         <DialogActions>
           <Button onClick={handleClose}>
-            <CancelPresentationIcon color='primary' />
+            <CancelPresentationIcon  />
           </Button>
         </DialogActions>
         <DialogContent>

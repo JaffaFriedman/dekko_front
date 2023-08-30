@@ -48,7 +48,7 @@ export default function Logout () {
         <ToastContainer position='top-center' />
         <DialogActions>
           <Button onClick={handleClose}>
-            <CancelPresentationIcon color='primary' />
+            <CancelPresentationIcon color='primary'/>
           </Button>
         </DialogActions>
         <DialogContent>

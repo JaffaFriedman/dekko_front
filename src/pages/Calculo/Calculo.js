@@ -11,7 +11,7 @@ import Container from '@mui/material/Container'
 import Box from '@mui/material/Box'
 import { styled } from '@mui/material/styles'
 import CalculateIcon from '@mui/icons-material/Calculate'
-import CancelIcon from '@mui/icons-material/Cancel'
+import CancelPresentationIcon from '@mui/icons-material/Cancel'
 import Paper from '@mui/material/Paper'
 import Stack from '@mui/material/Stack'
 import TextField from '@mui/material/TextField'
@@ -71,7 +71,7 @@ export default function Calculo () {
 
       <Dialog open={open} onClose={handleClose}>
         <DialogContent>
-          <Container component='main' className='text-center'>
+           <Container component='main' className='text-center'>
             <CssBaseline />
             <Box
               sx={{
@@ -156,17 +156,17 @@ export default function Calculo () {
               </Container>
             </Box>
           </Container>
-        </DialogContent>
-        <DialogActions>
+          <DialogActions>
           <Button onClick={Calcular}>
             <CalculateIcon color='primary' fontSize='large' />
             Calcular
           </Button>
           <Button onClick={handleClose}>
-            <CancelIcon color='primary' />
+            <CancelPresentationIcon color='primary'/>
             Salir
           </Button>
         </DialogActions>
+        </DialogContent>
       </Dialog>
     </div>
   )
