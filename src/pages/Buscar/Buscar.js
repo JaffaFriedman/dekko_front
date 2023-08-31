@@ -30,7 +30,7 @@ const Buscar = () => {
 
   return (
     <div>
-      <ToastContainer position='bottom-center' />
+      <ToastContainer position='top-center' />
       <Button onClick={handleClickOpen} color='primary'>
         <SearchIcon color='primary' fontSize='large' />
         BUSCAR

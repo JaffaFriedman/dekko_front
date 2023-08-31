@@ -11,17 +11,15 @@ import Container from '@mui/material/Container'
 import LogoutIcon from '@mui/icons-material/Logout'
 import LoginIcon from '@mui/icons-material/Login'
 import CancelPresentationIcon from '@mui/icons-material/CancelPresentation'
-import { GlobalContext } from '../../context/global/globalContext'
 import { CarritoContext } from '../../context/carrito/carritoContext'
 import 'react-toastify/dist/ReactToastify.css'
 import { ToastContainer, toast } from 'react-toastify'
+import { GlobalContext } from '../../context/global/globalContext'
 import 'react-toastify/dist/ReactToastify.css'
 
-
-
 export default function Logout () {
-  const {  setToken, setIdUser } = useContext(GlobalContext)
-  const { carritoCompra, } = useContext(CarritoContext)
+  const { userName, setUserName } = useContext(GlobalContext)
+  const { carritoCompra } = useContext(CarritoContext)
   const [open, setOpen] = useState(false)
   const handleClickOpen = () => {
     setOpen(true)
@@ -34,10 +32,14 @@ export default function Logout () {
 
   const handleSubmit = async e => {
     e.preventDefault()
-    setToken('')
-    setIdUser('')
-    notifySuccess('Hasta pronto!')
+   
+    notifySuccess('Hasta pronto')
+    localStorage.removeItem('token')
+    localStorage.removeItem('idUser')
+    localStorage.removeItem('userName')
+    setUserName('MI PERFIL')
   }
+
   return (
     <div>
       <Button onClick={handleClickOpen} color='primary'>
@@ -48,7 +50,7 @@ export default function Logout () {
         <ToastContainer position='top-center' />
         <DialogActions>
           <Button onClick={handleClose}>
-            <CancelPresentationIcon color='primary'/>
+            <CancelPresentationIcon color='primary' />
           </Button>
         </DialogActions>
         <DialogContent>
@@ -76,7 +78,7 @@ export default function Logout () {
                     {carritoCompra.totalProductos === 0 ? (
                       <Button onClick={handleSubmit} color='primary'>
                         <LoginIcon color='primary' fontSize='large' />
-                        ¿Estas seguro?
+                        ¿{userName} Estas seguro?
                       </Button>
                     ) : (
                       <Button onClick={handleSubmit} color='primary'>

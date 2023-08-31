@@ -25,7 +25,7 @@ import CancelPresentationIcon from '@mui/icons-material/CancelPresentation'
 import { ToastContainer, toast } from 'react-toastify'
 import { GlobalContext } from '../../context/global/globalContext'
 
-export default function Registro () {
+export default function Registro() {
   const {
     BACKEND_URL
   } = useContext(GlobalContext)

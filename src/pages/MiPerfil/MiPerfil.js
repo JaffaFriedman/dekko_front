@@ -20,10 +20,12 @@ import { ToastContainer, toast } from 'react-toastify'
 
 export default function MiPerfil () {
   const [open, setOpen] = useState(false)
-  const { token, idUser, BACKEND_URL } = useContext(GlobalContext)
+  const { userName, BACKEND_URL } = useContext(GlobalContext)
+  const token = localStorage.getItem('token')
+
   const handleClickOpen = () => {
     setOpen(true)
-    if (token !== '') {
+    if (token !== null) {
       recuperaUsuario()
     }
   }
@@ -53,9 +55,8 @@ export default function MiPerfil () {
       [e.target.name]: e.target.value
     })
   }
-  const wtoken=token
-  const api = axios.create(
-    {
+  const wtoken = token
+  const api = axios.create({
     baseURL: BACKEND_URL,
     timeout: 5000,
     headers: {
@@ -66,26 +67,23 @@ export default function MiPerfil () {
 
   const actualizaUsuario = async e => {
     e.preventDefault()
+    const idUser = localStorage.getItem('idUser')
     try {
-      const { data } = await api.put(
-        `/users/auth/${idUser}`,
-        formUser
-      )
-      console.log('Miperfil', data)
+      const { data } = await api.put(`/users/auth/${idUser}`, formUser)
       dispatchUser({
         type: types.setUserState,
         payload: data
       })
-      notifySuccess('Usuario actualizado')
+      notifySuccess(formUser.nombre + ' hemos actualizado tu cuenta')
     } catch (error) {
-      notifyError('Error al actualizar el usuario')
+      notifyError(formUser.nombre + ' no pudimos actualizar tu cuenta')
       console.log(error)
     }
   }
 
   const recuperaUsuario = async () => {
+    const idUser = localStorage.getItem('idUser')
     try {
-      // i = idUser
       const { data } = await api.get(`/users/auth/${idUser}`)
       console.log(data)
       setFormUser(data.detail)
@@ -95,19 +93,19 @@ export default function MiPerfil () {
   }
   const notifyError = msg => toast.error(msg)
   const notifySuccess = msg => toast.success(msg)
-  console.log(idUser)
+
   return (
     <div>
       <Button onClick={handleClickOpen}>
         <AccountCircle fontSize='large' />
-        Mi Perfil
+        {userName}
       </Button>
 
       <Dialog open={open} onClose={handleClose}>
         <ToastContainer position='top-center' />
         <DialogActions>
           <Button onClick={handleClose}>
-            <CancelPresentationIcon  />
+            <CancelPresentationIcon />
           </Button>
         </DialogActions>
         <DialogContent>

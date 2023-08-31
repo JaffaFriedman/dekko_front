@@ -31,11 +31,8 @@ import Registro from '../../pages/Registro/Registro'
 import 'react-toastify/dist/ReactToastify.css'
 
 export default function Login () {
-  const { setToken, setIdUser , BACKEND_URL} =
-    useContext(GlobalContext)
+  const { setUserName, BACKEND_URL } = useContext(GlobalContext)
   const [showPassword, setShowPassword] = useState(false)
-  const [userName, setUserName] = useState('')
-
   const handleClickShowPassword = () => setShowPassword(show => !show)
 
   const handleMouseDownPassword = event => {
@@ -52,7 +49,7 @@ export default function Login () {
     setOpen(false)
   }
 
-  const [ , dispatchUser] = useContext(UserContext)
+  const [, dispatchUser] = useContext(UserContext)
 
   const initialUser = {
     name: 'ACCEDER',
@@ -74,7 +71,7 @@ export default function Login () {
     baseURL: BACKEND_URL,
     timeout: 5000,
     headers: {
-      'Content-Type': 'application/json', 
+      'Content-Type': 'application/json'
     }
   })
   const handleSubmit = async e => {
@@ -82,19 +79,22 @@ export default function Login () {
     try {
       const { data } = await api.post('/users/login', formUser)
       tokenDecodificado = jwtDecode(data.token)
-      setToken(data.token)
-      setIdUser(data.idUser)
-      setUserName(data.nombre)
-      notifySuccess('Hola '+ userName)
+      localStorage.setItem('token', data.token)
+      localStorage.setItem('idUser', data.idUser)
+      localStorage.setItem('userName', data.userName)
+      setUserName(data.userName)
       dispatchUser({
         type: types.setUserState,
         payload: tokenDecodificado
       })
+      notifySuccess(data.userName+ ' bienvenido a Dekko')
     } catch (error) {
       notifyError('Error de conexión')
-      setToken('')
-      setIdUser('')
-      setUserName('')
+      localStorage.removeItem('token')
+      localStorage.removeItem('idUser')
+      localStorage.removeItem('userName')
+      setUserName('MI PERFIL')
+      notifyError('No pudimos conectarte')
       dispatchUser({
         type: types.setError,
         payload: error
@@ -111,13 +111,13 @@ export default function Login () {
         Inicia sesion
       </Button>
       <Dialog open={open} onClose={handleClose}>
-        <ToastContainer position='top-center' />
         <DialogActions>
           <Button onClick={handleClose}>
             <CancelPresentationIcon color='primary' />
           </Button>
         </DialogActions>
         <DialogContent>
+          <ToastContainer position='top-center' />
           <Container component='main' maxWidth='xs' className='text-center'>
             <CssBaseline />
             <Box
@@ -133,11 +133,11 @@ export default function Login () {
                 <AccountCircle />
               </Avatar>
               <Typography component='h1' variant='h5'>
-                  <p>Inicia sesión o registrate si aun no tienes cuenta</p>
+                <p>Inicia sesión o registrate si aun no tienes cuenta</p>
               </Typography>
-                  <Fragment>
-                    <Registro />
-                  </Fragment>
+              <Fragment>
+                <Registro />
+              </Fragment>
               <Box
                 component='form'
                 onSubmit={handleSubmit}

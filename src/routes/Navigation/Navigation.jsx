@@ -7,11 +7,19 @@ import Logout from '../../pages/Login/Logout'
 import Buscar from '../../pages/Buscar/Buscar'
 import Registro from '../../pages/Registro/Registro'
 import MiPerfil from '../../pages/MiPerfil/MiPerfil'
-import { GlobalContext } from '../../context/global/globalContext'
 import CategoryIcon from '@mui/icons-material/Category'
 import { NavLink } from 'react-router-dom'
+import { GlobalContext } from '../../context/global/globalContext'
+import {  useEffect } from 'react'
+
 const Navigation = () => {
-  const { token } = useContext(GlobalContext)
+  const oldUser = localStorage.getItem('userName')
+  const { userName, setUserName } = useContext(GlobalContext)
+
+  useEffect(() => {
+    setUserName(oldUser === null ? 'MI PERFIL' : oldUser)
+  })
+  const token = localStorage.getItem('token')
   return (
     <div className='ps-5'>
       <Navbar expand='lg'>
@@ -33,8 +41,20 @@ const Navigation = () => {
             <Buscar />
           </Fragment>
 
-          <Fragment>{token === '' ? <Registro /> : <MiPerfil />}</Fragment>
-          <Fragment>{token === '' ? <Login /> : <Logout />}</Fragment>
+          <Fragment>
+            {token === null || userName === 'MI PERFIL' ? (
+              <Registro />
+            ) : (
+              <MiPerfil />
+            )}
+          </Fragment>
+          <Fragment>
+            {token === null || userName === 'MI PERFIL' ? (
+              <Login />
+            ) : (
+              <Logout />
+            )}
+          </Fragment>
           <Fragment>
             <Carrito />
           </Fragment>

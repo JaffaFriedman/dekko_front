@@ -1,25 +1,26 @@
 // HOC
 /* eslint-disable react/prop-types */
- 
+
 import { GlobalContext } from './globalContext'
 import { initMercadoPago } from '@mercadopago/sdk-react'
 import { styled } from '@mui/material/styles'
 import ButtonBase from '@mui/material/ButtonBase'
-import { useState  } from 'react'
+import { useState } from 'react'
+
 
 export function GlobalProvider ({ children }) {
+
   const [familia, setFamilia] = useState({})
   const [categoria, setCategoria] = useState({})
   const [producto, setProducto] = useState({})
   const [cantidad, setCantidad] = useState(0)
-  const [idUser, setIdUser] = useState('')
-  const [token, setToken] = useState('')
+  const [userName, setUserName] = useState( 'MI PERFIL')
+  const redondear = num => {
+    let roundedString = num.toFixed(2)
+    let roundedNumber = parseFloat(roundedString)
+    return roundedNumber
+  }
 
-  const redondear = (num) => {
-    let roundedString = num.toFixed(2);
-    let roundedNumber = parseFloat(roundedString);
-    return roundedNumber;
-}
 
   const ImageButton = styled(ButtonBase)(({ theme }) => ({
     position: 'relative',
@@ -87,9 +88,9 @@ export function GlobalProvider ({ children }) {
   }))
 
   initMercadoPago('TEST-ddb11d27-73ea-4298-9db7-260bf011c799')
-//const BACKEND_URL="https://uddjaffa.onrender.com"
-//  const BACKEND_URL="http://localhost:8080"
-const BACKEND_URL="https://dekkoback-k4hg-dev.fl0.io"
+  //const BACKEND_URL="https://uddjaffa.onrender.com"
+  //const BACKEND_URL = 'http://localhost:8080'
+  const BACKEND_URL="https://dekkoback-k4hg-dev.fl0.io"
 
   return (
     <GlobalContext.Provider
@@ -100,14 +101,12 @@ const BACKEND_URL="https://dekkoback-k4hg-dev.fl0.io"
         Image,
         ImageBackdrop,
         ImageMarked,
-        idUser,
-        setIdUser,
-        token,
-        setToken,
         familia,
         categoria,
         producto,
         cantidad,
+        userName,
+        setUserName,
         setFamilia,
         setCategoria,
         setProducto,
