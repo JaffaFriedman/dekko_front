@@ -52,13 +52,13 @@ function Rutas () {
           <Route path='/registro' element={<Registro />} />
           <Route path='/separador' element={<Separador />} />
           <Route path='/familias' element={<Familias />} />
-          <Route path='/catalogo' element={<Catalogo />} />
-          <Route path='/productos' element={<Productos setIdProducto={setIdProducto} />} />
-          <Route path='/papeles' element={<Papeles idProducto={idProducto}  />} />
-          <Route path='/cortinas' element={<Cortinas idProducto={idProducto}  />} />
-          <Route path='/rollos' element={<Rollos idProducto={idProducto}  />} />
-          <Route path='/bobina' element={<Bobina idProducto={idProducto}  />} />
-          <Route path='/metro' element={<Metro idProducto={idProducto}  />} />
+          <Route path='/catalogo/familia/:familiaIdx' element={<Catalogo />} />
+          <Route path='/productos/familia/:familiaIdx/catalogo/:idCatalogo' element={<Productos/>} />
+          <Route path='/papeles/familia/:familiaIdx/catalogo/:idCatalogo/producto/:idProducto' element={<Papeles />} />
+          <Route path='/cortinas/familia/:familiaIdx/catalogo/:idCatalogo/producto/:idProducto' element={<Cortinas />} />
+          <Route path='/rollos/familia/:familiaIdx/catalogo/:idCatalogo/producto/:idProducto' element={<Rollos />} />
+          <Route path='/bobina/familia/:familiaIdx/catalogo/:idCatalogo/producto/:idProducto' element={<Bobina />} />
+          <Route path='/metro/familia/:familiaIdx/catalogo/:idCatalogo/producto/:idProducto' element={<Metro />} />
           <Route path='/calculo' element={<Calculo />} />
           <Route path='/calculobobina' element={<Calculobobina />} />
           <Route path='/calculorollo' element={<Calculorollo />} />

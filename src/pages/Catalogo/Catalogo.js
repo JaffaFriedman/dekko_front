@@ -4,8 +4,9 @@ import Typography from '@mui/material/Typography'
 import { Container } from 'react-bootstrap'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useState, useEffect, useContext } from 'react'
+import tablaFamilias from '../Familias/TablaFamilias';
 
 import axios from 'axios'
 
@@ -16,11 +17,10 @@ export default function Catalogo () {
     Image,
     ImageBackdrop,
     ImageMarked,
-    familia,
-    setCategoria,
     BACKEND_URL
   } = useContext(GlobalContext)
-
+  const { familiaIdx } = useParams();
+  const familia=tablaFamilias[familiaIdx]
   const [tablaCategorias, setTablaCategorias] = useState([])
 
   const api = axios.create({
@@ -51,7 +51,6 @@ export default function Catalogo () {
 
   const navigate = useNavigate()
   const handleCategoria = c => {
-    setCategoria(c)
     localStorage.setItem('categoria', JSON.stringify(c))
     navigate('/Productos')
   }

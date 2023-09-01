@@ -51,7 +51,6 @@ function Cortinas () {
     }
   }
   const lee_producto = async () => {
-    console.log('lee_producto')
     let idProducto = localStorage.getItem('idProducto')
     try {
       const { data } = await api.get(`/products/categoria/${idProducto}`)
