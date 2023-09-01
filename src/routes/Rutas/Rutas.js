@@ -6,7 +6,7 @@ import Calculo from '../../pages/Calculo/Calculo'
 import Calculobobina from '../../pages/Calculo/Calculobobina'
 import Calculorollo from '../../pages/Calculo/Calculorollo'
 import Carrito from '../../pages/Carrito/Carrito'
-import Catalogo from '../../pages/Catalogo/Catalogo'
+import Categorias from '../../pages/Categorias/Categorias'
 import MiPerfil from '../../pages/MiPerfil/MiPerfil'
 import Contacto from '../../pages/Contacto/Contacto'
 import Cortinas from '../../pages/Cortinas/Cortinas'
@@ -22,16 +22,14 @@ import Navigation from '../Navigation/Navigation'
 import Nosotros from '../../pages/Nosotros/Nosotros'
 import Pago from '../../pages/Pago/Pago'
 import Papeles from '../../pages/Papeles/Papeles'
-import Productos from '../../pages/Productos/Productos'
+import Products from '../../pages/Products/Products'
 import Registro from '../../pages/Registro/Registro'
 import Rollos from '../../pages/Rollos/Rollos'
 import Separador from '../../pages/Separador/Separador'
-import { useState } from 'react'
 
 
 function Rutas () {
-  const [idProducto, setIdProducto] = useState('')
-
+ 
   return (
     <div>
       <Routes>
@@ -52,13 +50,13 @@ function Rutas () {
           <Route path='/registro' element={<Registro />} />
           <Route path='/separador' element={<Separador />} />
           <Route path='/familias' element={<Familias />} />
-          <Route path='/catalogo/familia/:familiaIdx' element={<Catalogo />} />
-          <Route path='/productos/familia/:familiaIdx/catalogo/:idCatalogo' element={<Productos/>} />
-          <Route path='/papeles/familia/:familiaIdx/catalogo/:idCatalogo/producto/:idProducto' element={<Papeles />} />
-          <Route path='/cortinas/familia/:familiaIdx/catalogo/:idCatalogo/producto/:idProducto' element={<Cortinas />} />
-          <Route path='/rollos/familia/:familiaIdx/catalogo/:idCatalogo/producto/:idProducto' element={<Rollos />} />
-          <Route path='/bobina/familia/:familiaIdx/catalogo/:idCatalogo/producto/:idProducto' element={<Bobina />} />
-          <Route path='/metro/familia/:familiaIdx/catalogo/:idCatalogo/producto/:idProducto' element={<Metro />} />
+          <Route path='/categorias/familia/:idFamilia' element={<Categorias />} />
+          <Route path='/products/idFamilia/:idFamilia/idCategoria/:idCategoria' element={<Products/>} />
+          <Route path='/papeles/idProducto/:idProducto' element={<Papeles />} />
+          <Route path='/cortinas/idProducto/:idProducto' element={<Cortinas />} />
+          <Route path='/rollos/idProducto/:idProducto' element={<Rollos />} />
+          <Route path='/bobinas/idProducto/:idProducto' element={<Bobina />} />
+          <Route path='/metro/idProducto/:idProducto' element={<Metro />} />
           <Route path='/calculo' element={<Calculo />} />
           <Route path='/calculobobina' element={<Calculobobina />} />
           <Route path='/calculorollo' element={<Calculorollo />} />

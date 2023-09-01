@@ -4,7 +4,7 @@ import Grid from '@mui/material/Grid'
 import Button from '@mui/material/Button'
 import Carousel from 'react-bootstrap/Carousel'
 import TextField from '@mui/material/TextField'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import Modal from 'react-bootstrap/Modal'
 import Stack from '@mui/material/Stack'
 import Paper from '@mui/material/Paper'
@@ -12,10 +12,10 @@ import { styled } from '@mui/material/styles'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import axios from 'axios'
 import Form from 'react-bootstrap/Form'
-import { useState, useContext } from 'react'
-
+import { useContext, useState, useEffect } from 'react'
 import { GlobalContext } from '../../context/global/globalContext'
 import { CarritoContext } from '../../context/carrito/carritoContext'
+import tablaFamilias from '../Familias/TablaFamilias'
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -27,15 +27,29 @@ const Item = styled(Paper)(({ theme }) => ({
 }))
 
 function Papeles () {
-  const { BACKEND_URL } =
-    useContext(GlobalContext)
+  const { BACKEND_URL } = useContext(GlobalContext)
   const { dispatchCarrito } = useContext(CarritoContext)
+  const { idProducto } = useParams()
 
-  let producto = JSON.parse(localStorage.getItem('producto'))
-  let categoria = JSON.parse(localStorage.getItem('categoria'))
-  let familia = JSON.parse(localStorage.getItem('familia'))
+  const iniProducto = {
+    sku: '',
+    familia: '',
+    categoria: '',
+    catalogo: '',
+    nombre: '',
+    descripcion: '',
+    url: [{}],
+    ancho: 0,
+    alto: 0,
+    peso: 0,
+    precio: 0,
+    venta: ''
+  }
 
   const [tablaTexturas, setTablaTexturas] = useState([])
+  const [producto, setProducto] = useState(iniProducto)
+  const [categoria, setCategoria] = useState({})
+  const [familia, setFamilia] = useState({})
 
   const api = axios.create({
     baseURL: BACKEND_URL,
@@ -44,7 +58,7 @@ function Papeles () {
       'Content-Type': 'application/json'
     }
   })
-  const recuperaTexturas = async f => {
+  const recuperaTexturas = async (f) => {
     try {
       const { data } = await api.get(`/texturas/familia/${f}`)
       setTablaTexturas(data.info)
@@ -64,6 +78,13 @@ function Papeles () {
     tela: 0,
     precio: producto.precio,
     precioMt2: producto.precio,
+    /*
+    title: '',
+    imagen: '',
+    tela: 0,
+    precio: 0,
+    precioMt2: 0,
+   */
     textura: 0,
     papel: 0
   }
@@ -86,7 +107,9 @@ function Papeles () {
   }
 
   const handleCategoria = () => {
-    navigate('/Productos')
+    const ruta = `/Products/idFamilia/${producto.familia}/idCategoria/${producto.categoria}`
+    localStorage.setItem('ruta',ruta)
+    navigate(ruta)
   }
 
   const agregarCarro = () => {
@@ -102,6 +125,7 @@ function Papeles () {
   const handleTextura = () => {
     recuperaTexturas(producto.familia)
     datos.textura = producto.url[0]
+    datos.imagen = producto.url[0]
     datos.glosa = ''
     setDatos(datos)
     setShow(true)
@@ -140,23 +164,41 @@ function Papeles () {
     setDatos(datos)
   }
 
-  const lee_producto = async () => {
-    let idProducto = localStorage.getItem('idProducto')
+  const leeProducto = async (prod) => {
     try {
-      const { data } = await api.get(`/products/categoria/${idProducto}`)
-      producto = data.detail
+      const { data } = await api.get(`/products/categoria/${prod}`)
+
+      localStorage.setItem('producto', JSON.stringify(data.detail))
+      setProducto(data.detail)
+      setFamilia(tablaFamilias.find(f => f.familia === data.detail.familia))
+      localStorage.setItem('familia', JSON.stringify(familia))
+      leeCategoria(producto.familia, producto.categoria)
+      localStorage.setItem('categoria', JSON.stringify(categoria))
     } catch (error) {
-      idProducto = localStorage.getItem('idProducto')
+      console.log(error)
     }
   }
 
-  lee_producto()
+  useEffect(() => {
+    leeProducto(idProducto)
+  })
+
+  const leeCategoria = async (fam,cat) => {
+    console.log('Categorias leeCategoria', `/categorias/familia/${cat}`)
+    try {
+      const { data } = await api.get(`/categorias/familia/${fam}categoria/${cat}`)
+      setCategoria(data.info)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
     <>
       <div className='bg-dark text-bg-dark pb-2 mb-1 text-center'>
         <h3>
           {' '}
-          {categoria.familia} - {categoria.categoria}{' '}
+          {producto.familia} - {producto.categoria}{' '}
         </h3>
       </div>
       <Container>
@@ -187,7 +229,10 @@ function Papeles () {
                 {'Producto:  '} {producto.descripcion}
               </h6>
               <h6>{datos.glosa}</h6>
-              <h5> {producto.precio.toLocaleString('es-CL', options)} por Mt2 </h5>
+              <h5>
+                {' '}
+                {producto.precio.toLocaleString('es-CL', options)} por Mt2{' '}
+              </h5>
 
               <Box component='form' onSubmit={handleSubmit} sx={{ mt: 1 }}>
                 <Stack direction='row' spacing={2}>
@@ -258,7 +303,7 @@ function Papeles () {
                         spacing={2}
                       >
                         {tablaTexturas
-                          .filter(t => t.familia === categoria.familia)
+                          .filter(t => t.familia === producto.familia)
                           .map((v, i) => (
                             <Item key={i}>
                               <img

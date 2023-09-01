@@ -1,54 +1,73 @@
 import { Card, Container } from 'react-bootstrap'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { GlobalContext } from '../../context/global/globalContext'
 import axios from 'axios'
-import { useState,useEffect,useContext  } from 'react'
- 
-function Productos () {
-  const {
-    familia,
-    categoria,
-    BACKEND_URL
-  } = useContext(GlobalContext)
-  const navigate = useNavigate()
+import { useState, useContext, useEffect } from 'react'
+import tablaFamilias from '../Familias/TablaFamilias'
 
+function Productos () {
+  const { BACKEND_URL } = useContext(GlobalContext)
+  const navigate = useNavigate()
+  const { idFamilia, idCategoria } = useParams()
+  const familia = tablaFamilias.find(f => f.familia === idFamilia)
+
+  const [categoria, setCategoria] = useState({})
   const [tablaProductos, setTablaProductos] = useState([])
   const api = axios.create({
     baseURL: BACKEND_URL,
-    timeout: 5000,
     headers: {
-      'Content-Type': 'application/json', 
+      'Content-Type': 'application/json'
     }
   })
 
-  const recuperaProductos = async (f, c) => {
+  const leeCategoria = async (fam,cat) => {
+    setCategoria(JSON.parse(localStorage.getItem('categoria')))
+    localStorage.setItem('fam',fam)
+    localStorage.setItem('cat',cat)
+    /*
+    localStorage.setItem('ruta', `/categorias/familia/${cat}`)
+    try {
+      const { data } = await api.get(`/categorias/categoria/${cat}`)
+      setCategoria(data.info)
+    } catch (error) {
+      console.log(error)
+    }
+    */
+  }
 
+  const leeProductos = async (fam, cat) => {
+    console.log(
+      'Productos leeProductos',
+      `/products/familia/${fam}/categoria/${cat}`
+    )
     try {
       const { data } = await api.get(
-        `/products/familia/${f}/categoria/${c}`)
+        `/products/familia/${fam}/categoria/${cat}`
+      )
+      console.log(data)
       setTablaProductos(data.info)
     } catch (error) {
       console.log(error)
     }
   }
 
-  
   useEffect(() => {
-    const categoriaJSON = localStorage.getItem('categoria')
-    if (categoriaJSON !== null) {
-      const categoria = JSON.parse(categoriaJSON)
-      recuperaProductos(categoria.familia, categoria.categoria)
-    }
+    leeProductos(idFamilia, idCategoria)
+    leeCategoria(idFamilia, idCategoria)
   })
 
-
-  const handleProducto = (p) => {
-    localStorage.setItem('producto', JSON.stringify(p));
-    localStorage.setItem('idProducto', p._id);
-    if (categoria.link !== '') navigate(categoria.link)
-    else navigate(familia.link)
+  const handleProducto = p => {
+    const restoRuta = '/idProducto/' + p._id
+    let ruta = familia.link
+    if (categoria.link === null) ruta = familia.link
+    else {
+      if (categoria.link !== '') ruta = categoria.link
+    }
+    ruta = ruta + restoRuta
+    localStorage.setItem('ruta', ruta)
+    navigate(ruta)
   }
 
   const options = { style: 'currency', currency: 'CLP' }
@@ -68,7 +87,7 @@ function Productos () {
               <Card style={{ width: '25rem', height: '25rem' }} className='m-3'>
                 <Card.Body>
                   <Card.Title>
-                    {p.catalogo} - {p.nombre}{' '}
+                    {p.categoria} - {p.nombre}{' '}
                   </Card.Title>
                   <Card.Img
                     variant='top'

@@ -1,11 +1,11 @@
-import { Fragment, useContext, useState } from 'react'
+import { Fragment, useContext, useState,useEffect } from 'react'
 import { GlobalContext } from '../../context/global/globalContext'
 import Container from 'react-bootstrap/Container'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate , useParams} from 'react-router-dom'
 import Modal from 'react-bootstrap/Modal'
 import Paper from '@mui/material/Paper'
 import Stack from '@mui/material/Stack'
@@ -20,6 +20,7 @@ import axios from 'axios'
 import RadioGroup from '@mui/material/RadioGroup'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import { CarritoContext } from '../../context/carrito/carritoContext'
+import tablaFamilias from '../Familias/TablaFamilias'
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -35,9 +36,12 @@ function Metro () {
   const { dispatchCarrito } = useContext(CarritoContext)
 
   const navigate = useNavigate()
-
+  const { idProducto } = useParams()
   let [color, setColor] = useState(0)
   const [show, setShow] = useState(false)
+  const [producto, setProducto] = useState({})
+  const [categoria, setCategoria] = useState({})
+  const [familia, setFamilia] = useState({})
 
   const handleSubmit = event => {
     event.preventDefault()
@@ -51,7 +55,9 @@ function Metro () {
   }
 
   const handleCategoria = () => {
-    navigate('/Productos')
+    const ruta = `/Products/idFamilia/${producto.familia}/idCategoria/${producto.categoria}`
+    localStorage.setItem('ruta',ruta)
+    navigate(ruta)
   }
 
   const handleSalir = () => {
@@ -69,9 +75,7 @@ function Metro () {
     datos.precio = datos.precioMt2 * 1.4
     setDatos(datos)
   }
-  let producto = JSON.parse(localStorage.getItem('producto'))
-  let categoria = JSON.parse(localStorage.getItem('categoria'))
-  
+ 
 
   const formDatos = {
     cantidad: 10,
@@ -124,17 +128,38 @@ function Metro () {
     }
   })
 
-  const lee_producto = async () => {
-    let idProducto = localStorage.getItem('idProducto')
+ 
+   
+  const leeProducto = async (prod) => {
     try {
-      const { data } = await api.get(`/products/categoria/${idProducto}`)
-      producto = data.detail
+      const { data } = await api.get(`/products/categoria/${prod}`)
+
+      localStorage.setItem('producto', JSON.stringify(data.detail))
+      setProducto(data.detail)
+      setFamilia(tablaFamilias.find(f => f.familia === data.detail.familia))
+      localStorage.setItem('familia', JSON.stringify(familia))
+      leeCategoria(producto.familia, producto.categoria)
+      localStorage.setItem('categoria', JSON.stringify(categoria))
     } catch (error) {
-      idProducto = localStorage.getItem('idProducto')
+      console.log(error)
     }
   }
 
-  lee_producto()
+ 
+ 
+
+  useEffect(() => {
+    leeProducto(idProducto)
+  })
+
+    const leeCategoria = async (fam,cat) => {
+      try {
+        const { data } = await api.get(`/categorias/familia/${fam}categoria/${cat}`)
+        setCategoria(data.info)
+      } catch (error) {
+        console.log(error)
+      }
+    }
   return (
     <>
       <div className='bg-dark text-bg-dark pb-2 ps-5  mb-1 text-center'>

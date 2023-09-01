@@ -1,11 +1,11 @@
-import { useContext, Fragment, useState } from 'react'
+import { useContext, Fragment, useState,useEffect  } from 'react'
 import { GlobalContext } from '../../context/global/globalContext'
 import Container from 'react-bootstrap/Container'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import Modal from 'react-bootstrap/Modal'
 import Paper from '@mui/material/Paper'
 import Stack from '@mui/material/Stack'
@@ -20,6 +20,7 @@ import Calculobobina from '../../pages/Calculo/Calculobobina'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import axios from 'axios'
 import { CarritoContext } from '../../context/carrito/carritoContext'
+import tablaFamilias from '../Familias/TablaFamilias'
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -32,14 +33,15 @@ const Item = styled(Paper)(({ theme }) => ({
 function Bobina () {
   const { cantidad, setCantidad, BACKEND_URL } = useContext(GlobalContext)
   const { dispatchCarrito } = useContext(CarritoContext)
-
   const navigate = useNavigate()
-  let producto = JSON.parse(localStorage.getItem('producto'))
-  let categoria = JSON.parse(localStorage.getItem('categoria'))
-
+  const { idProducto } = useParams()
   let [color, setColor] = useState(0)
   const [show, setShow] = useState(false)
+  const [producto, setProducto] = useState({})
+  const [categoria, setCategoria] = useState({})
+  const [familia, setFamilia] = useState({})
 
+  
   const handleSubmit = event => {
     event.preventDefault()
   }
@@ -78,15 +80,18 @@ function Bobina () {
     }
   })
 
-  const lee_producto = async () => {
-    let idProducto = localStorage.getItem('idProducto')
+
+   
+
+  const leeCategoria = async (fam,cat) => {
     try {
-      const { data } = await api.get(`/products/categoria/${idProducto}`)
-      producto = data.detail
+      const { data } = await api.get(`/categorias/familia/${fam}categoria/${cat}`)
+      setCategoria(data.info)
     } catch (error) {
-      idProducto = localStorage.getItem('idProducto')
+      console.log(error)
     }
   }
+
 
   const formDatos = {
     cantidad: 1,
@@ -130,7 +135,24 @@ function Bobina () {
     }
     dispatchCarrito({ type: 'AGREGAR_ITEM', item })
   }
-  lee_producto()
+  const leeProducto = async (prod) => {
+    try {
+      const { data } = await api.get(`/products/categoria/${prod}`)
+
+      localStorage.setItem('producto', JSON.stringify(data.detail))
+      setProducto(data.detail)
+      setFamilia(tablaFamilias.find(f => f.familia === data.detail.familia))
+      localStorage.setItem('familia', JSON.stringify(familia))
+      leeCategoria(producto.familia, producto.categoria)
+      localStorage.setItem('categoria', JSON.stringify(categoria))
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    leeProducto(idProducto)
+  })
 
   return (
     <>
@@ -191,13 +213,17 @@ function Bobina () {
                   Selecciona otro color
                 </Button>
               </div>
-              <h6>{'Gramaje por mt2: ' + producto.pesos[gramaje].peso + ' gramos'}</h6>
+              <h6>
+                {'Gramaje por mt2: ' + producto.pesos[gramaje].peso + ' gramos'}
+              </h6>
               <h6>
                 {' Precio mt2: ' +
-                  parseFloat(producto.pesos[datos.gramaje].precio).toLocaleString(
-                    'es-CL',
-                    { style: 'currency', currency: 'CLP' }
-                  )}
+                  parseFloat(
+                    producto.pesos[datos.gramaje].precio
+                  ).toLocaleString('es-CL', {
+                    style: 'currency',
+                    currency: 'CLP'
+                  })}
               </h6>
               <h6 className='mb-4 '>
                 {'Precio Bobina: ' +

@@ -1,21 +1,24 @@
-import { useContext } from 'react'
+import {  useContext, useState ,useEffect } from 'react'
 import Container from 'react-bootstrap/Container'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import Button from '@mui/material/Button'
 import Carousel from 'react-bootstrap/Carousel'
 import TextField from '@mui/material/TextField'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams  } from 'react-router-dom'
 import Modal from 'react-bootstrap/Modal'
 import Stack from '@mui/material/Stack'
 import Paper from '@mui/material/Paper'
 import { styled } from '@mui/material/styles'
-import { useState } from 'react'
+ 
 import axios from 'axios'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import Form from 'react-bootstrap/Form'
 import { GlobalContext } from '../../context/global/globalContext'
 import { CarritoContext } from '../../context/carrito/carritoContext'
+import tablaFamilias from '../Familias/TablaFamilias'
+
+
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
   ...theme.typography.body2,
@@ -30,11 +33,13 @@ function Cortinas () {
   const { BACKEND_URL } =
     useContext(GlobalContext)
   const { dispatchCarrito } = useContext(CarritoContext)
-  let producto = JSON.parse(localStorage.getItem('producto'))
-  let categoria = JSON.parse(localStorage.getItem('categoria'))
-  let familia = JSON.parse(localStorage.getItem('familia'))
-
+  const { idProducto } = useParams()
   const [tablaTelas, setTablaTelas] = useState([])
+  const [producto, setProducto] = useState({})
+  const [categoria, setCategoria] = useState({})
+  const [familia, setFamilia] = useState({})
+   
+
   const api = axios.create({
     baseURL: BACKEND_URL,
     timeout: 5000,
@@ -42,6 +47,7 @@ function Cortinas () {
       'Content-Type': 'application/json'
     }
   })
+
   const recuperaTelas = async (f, c) => {
     try {
       const { data } = await api.get(`/telas/familia/${f}/categoria/${c}`)
@@ -50,13 +56,32 @@ function Cortinas () {
       console.log(error)
     }
   }
-  const lee_producto = async () => {
-    let idProducto = localStorage.getItem('idProducto')
+  const leeProducto = async (prod) => {
     try {
-      const { data } = await api.get(`/products/categoria/${idProducto}`)
-      producto = data.detail
+      const { data } = await api.get(`/products/categoria/${prod}`)
+
+      localStorage.setItem('producto', JSON.stringify(data.detail))
+      setProducto(data.detail)
+      setFamilia(tablaFamilias.find(f => f.familia === data.detail.familia))
+      localStorage.setItem('familia', JSON.stringify(familia))
+      leeCategoria(producto.familia, producto.categoria)
+      localStorage.setItem('categoria', JSON.stringify(categoria))
     } catch (error) {
-      idProducto = localStorage.getItem('idProducto')
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    leeProducto(idProducto)
+  })
+
+
+  const leeCategoria = async (fam,cat) => {
+    try {
+      const { data } = await api.get(`/categorias/familia/${fam}categoria/${cat}`)
+      setCategoria(data.info)
+    } catch (error) {
+      console.log(error)
     }
   }
 
@@ -69,7 +94,9 @@ function Cortinas () {
   }
 
   const handleCategoria = () => {
-    navigate('/Productos')
+    const ruta = `/Products/idFamilia/${producto.familia}/idCategoria/${producto.categoria}`
+    localStorage.setItem('ruta',ruta)
+    navigate(ruta)
   }
 
   const handleTela = (f, c) => {
@@ -133,8 +160,7 @@ function Cortinas () {
     }
     dispatchCarrito({ type: 'AGREGAR_ITEM', item })
   }
-  lee_producto()
-
+ 
   return (
     <>
       <div className='bg-dark text-bg-dark pb-2 ps-5  mb-1 text-center'>

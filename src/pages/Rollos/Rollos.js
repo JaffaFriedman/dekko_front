@@ -1,11 +1,11 @@
-import { useContext,Fragment,useState } from 'react'
+import { Fragment, useContext, useState, useEffect } from 'react'
 import Container from 'react-bootstrap/Container'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import Button from '@mui/material/Button'
 import Carousel from 'react-bootstrap/Carousel'
 import TextField from '@mui/material/TextField'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import Stack from '@mui/material/Stack'
 import Paper from '@mui/material/Paper'
 import { styled } from '@mui/material/styles'
@@ -14,6 +14,8 @@ import { CarritoContext } from '../../context/carrito/carritoContext'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import { GlobalContext } from '../../context/global/globalContext'
 import axios from 'axios'
+import tablaFamilias from '../Familias/TablaFamilias'
+
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
   ...theme.typography.body2,
@@ -25,14 +27,17 @@ const Item = styled(Paper)(({ theme }) => ({
 function Rollos () {
   const {   setCantidad, BACKEND_URL } = useContext(GlobalContext)
   const { dispatchCarrito } = useContext(CarritoContext)
-
+  const [producto, setProducto] = useState({})
+  const [categoria, setCategoria] = useState({})
+  const [familia, setFamilia] = useState({})
+  const { idProducto } = useParams()
   const navigate = useNavigate()
-  let producto = JSON.parse(localStorage.getItem('producto'))
-  let categoria = JSON.parse(localStorage.getItem('categoria'))
-
+ 
 
   const handleCategoria = () => {
-    navigate('/Productos')
+    const ruta = `/Products/idFamilia/${producto.familia}/idCategoria/${producto.categoria}`
+    localStorage.setItem('ruta',ruta)
+    navigate(ruta)
   }
  
   const formDatos = {
@@ -56,6 +61,9 @@ function Rollos () {
     datos.glosa = 'Catálogo: ' + producto.catalogo + ' Diseño: ' + producto.nombre
     setDatos(datos)
   }
+   
+ 
+
   const agregarCarro = () => {
     const item = {
       imagen: datos.imagen,
@@ -75,16 +83,34 @@ function Rollos () {
     }
   })
 
-  const lee_producto = async () => {
-    let idProducto = localStorage.getItem('idProducto')
+  const leeProducto = async (prod) => {
     try {
-      const { data } = await api.get(`/products/categoria/${idProducto}`)
-      producto = data.detail
+      const { data } = await api.get(`/products/categoria/${prod}`)
+
+      localStorage.setItem('producto', JSON.stringify(data.detail))
+      setProducto(data.detail)
+      setFamilia(tablaFamilias.find(f => f.familia === data.detail.familia))
+      localStorage.setItem('familia', JSON.stringify(familia))
+      leeCategoria(producto.familia, producto.categoria)
+      localStorage.setItem('categoria', JSON.stringify(categoria))
     } catch (error) {
-      idProducto = localStorage.getItem('idProducto')
+      console.log(error)
     }
   }
-  lee_producto()
+
+  useEffect(() => {
+    leeProducto(idProducto)
+  })
+
+
+  const leeCategoria = async (fam,cat) => {
+    try {
+      const { data } = await api.get(`/categorias/familia/${fam}categoria/${cat}`)
+      setCategoria(data.info)
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
     <>

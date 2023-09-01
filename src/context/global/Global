@@ -2,7 +2,6 @@ import { GlobalContext } from './globalContext'
 import { useState } from 'react'
 
 export function GlobalProvider ({ children }) {
-  const [producto, setProducto] = useState({})
   const [cantidad, setCantidad] = useState(0)
   const [idUser, setIdUser] = useState('')
   const [token, setToken] = useState('')
@@ -14,11 +13,9 @@ export function GlobalProvider ({ children }) {
         BACKEND_URL,
         idUser,
         token,
-        producto,
         cantidad,
         setIdUser,
         setToken,
-        setProducto,
         setCantidad
       }}
     >

@@ -20,10 +20,13 @@ export default function Familias () {
 
 
   const navigate = useNavigate()
-  const handleFamilia = (p,idx) => {
-    localStorage.setItem('familia', JSON.stringify(p));
-    navigate('/Catalogo/'+idx)
+  const handleCategorias = (p ) => {
+ 
+    const ruta=`/Categorias/familia/${p.familia}`
+    localStorage.setItem('ruta',ruta)
+    navigate(ruta)
   }
+
 
   return (
     <div>
@@ -41,7 +44,7 @@ export default function Familias () {
                 <ImageButton
                   focusRipple
                   key={p.familia}
-                  onClick={() => handleFamilia(p,idx)}
+                  onClick={() => handleCategorias(p)}
                   style={{
                     margin: 4
                   }}

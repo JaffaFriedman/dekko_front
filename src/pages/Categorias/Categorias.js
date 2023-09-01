@@ -5,12 +5,12 @@ import { Container } from 'react-bootstrap'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import { useNavigate, useParams } from 'react-router-dom'
-import { useState, useEffect, useContext } from 'react'
-import tablaFamilias from '../Familias/TablaFamilias';
+import { useState, useContext, useEffect } from 'react'
+import tablaFamilias from '../Familias/TablaFamilias'
 
 import axios from 'axios'
 
-export default function Catalogo () {
+export default function Categoria () {
   const {
     ImageButton,
     ImageSrc,
@@ -19,8 +19,8 @@ export default function Catalogo () {
     ImageMarked,
     BACKEND_URL
   } = useContext(GlobalContext)
-  const { familiaIdx } = useParams();
-  const familia=tablaFamilias[familiaIdx]
+  const { idFamilia } = useParams()
+  const familia = tablaFamilias.find(f => f.familia === idFamilia);
   const [tablaCategorias, setTablaCategorias] = useState([])
 
   const api = axios.create({
@@ -31,28 +31,26 @@ export default function Catalogo () {
     }
   })
 
-  const recuperaCatalogos = async p => {
+  const leeCategorias = async (p) => {
+    console.log('Categorias leeCategoria', `/categorias/familia/${p}`)
     try {
       const { data } = await api.get(`/categorias/familia/${p}`)
       setTablaCategorias(data.info)
     } catch (error) {
-      console.log(error)
+      console.log('Categorias leeCategoria',error)
     }
   }
 
   useEffect(() => {
-    const familiaJSON = localStorage.getItem('familia')
-    if (familiaJSON !== null) {
-      const familia = JSON.parse(familiaJSON)
-      recuperaCatalogos(familia.familia)
-    }
-    recuperaCatalogos(familia.familia)
-  })
+    leeCategorias(familia.familia)})
+
 
   const navigate = useNavigate()
-  const handleCategoria = c => {
-    localStorage.setItem('categoria', JSON.stringify(c))
-    navigate('/Productos')
+  const handleProductos = c => {
+    const ruta=`/Products/idFamilia/${c.familia}/idCategoria/${c.categoria}`
+    localStorage.setItem('ruta',ruta)
+    localStorage.setItem('categoria',JSON.stringify(c))
+    navigate(ruta)
   }
 
   return (
@@ -70,7 +68,7 @@ export default function Catalogo () {
                 <ImageButton
                   focusRipple
                   key={p.categoria}
-                  onClick={() => handleCategoria(p)}
+                  onClick={() => handleProductos(p)}
                   style={{
                     margin: 4
                   }}
