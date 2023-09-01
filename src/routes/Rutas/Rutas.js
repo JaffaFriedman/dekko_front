@@ -55,7 +55,7 @@ function Rutas () {
           <Route path='/papeles/idProducto/:idProducto' element={<Papeles />} />
           <Route path='/cortinas/idProducto/:idProducto' element={<Cortinas />} />
           <Route path='/rollos/idProducto/:idProducto' element={<Rollos />} />
-          <Route path='/bobinas/idProducto/:idProducto' element={<Bobina />} />
+          <Route path='/bobina/idProducto/:idProducto' element={<Bobina />} />
           <Route path='/metro/idProducto/:idProducto' element={<Metro />} />
           <Route path='/calculo' element={<Calculo />} />
           <Route path='/calculobobina' element={<Calculobobina />} />

@@ -78,7 +78,7 @@ function Cortinas () {
 
   const leeCategoria = async (fam,cat) => {
     try {
-      const { data } = await api.get(`/categorias/familia/${fam}categoria/${cat}`)
+      const { data } = await api.get(`/categorias/familia/${fam}/categoria/${cat}`)
       setCategoria(data.info)
     } catch (error) {
       console.log(error)

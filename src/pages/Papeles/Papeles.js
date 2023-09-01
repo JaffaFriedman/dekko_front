@@ -27,7 +27,7 @@ const Item = styled(Paper)(({ theme }) => ({
 }))
 
 function Papeles () {
-  const { BACKEND_URL } = useContext(GlobalContext)
+  const { cantidad, setCantidad,BACKEND_URL } = useContext(GlobalContext)
   const { dispatchCarrito } = useContext(CarritoContext)
   const { idProducto } = useParams()
 
@@ -78,13 +78,6 @@ function Papeles () {
     tela: 0,
     precio: producto.precio,
     precioMt2: producto.precio,
-    /*
-    title: '',
-    imagen: '',
-    tela: 0,
-    precio: 0,
-    precioMt2: 0,
-   */
     textura: 0,
     papel: 0
   }
@@ -135,7 +128,7 @@ function Papeles () {
     setShow(false)
   }
 
-  const handleGlosa = () => {
+  const handleGlosa = (producto) => {
     datos.alto = parseInt(datos.alto) + 5
     datos.ancho = parseInt(datos.ancho) + 5
     datos.mt2 = (datos.ancho * datos.alto) / (100 * 100)
@@ -153,13 +146,14 @@ function Papeles () {
       datos.alto +
       ' cm. Mt2: ' +
       datos.mt2.toFixed(2)
+      setCantidad(cantidad)
     setDatos(datos)
     setShow(false)
   }
   const options = { style: 'currency', currency: 'CLP' }
 
   const handlePapel = v => {
-    datos.precio = v.precio
+    datos.precioMt2 = v.precio
     datos.nombre = v.nombre
     setDatos(datos)
   }
@@ -186,7 +180,7 @@ function Papeles () {
   const leeCategoria = async (fam,cat) => {
     console.log('Categorias leeCategoria', `/categorias/familia/${cat}`)
     try {
-      const { data } = await api.get(`/categorias/familia/${fam}categoria/${cat}`)
+      const { data } = await api.get(`/categorias/familia/${fam}/categoria/${cat}`)
       setCategoria(data.info)
     } catch (error) {
       console.log(error)
