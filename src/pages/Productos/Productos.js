@@ -10,7 +10,6 @@ function Productos () {
   const {
     familia,
     categoria,
-    setProducto,
     BACKEND_URL
   } = useContext(GlobalContext)
   const navigate = useNavigate()
@@ -25,6 +24,7 @@ function Productos () {
   })
 
   const recuperaProductos = async (f, c) => {
+
     try {
       const { data } = await api.get(
         `/products/familia/${f}/categoria/${c}`)
@@ -34,17 +34,23 @@ function Productos () {
     }
   }
 
+  
   useEffect(() => {
-    recuperaProductos(categoria.familia, categoria.categoria)
+    const categoriaJSON = localStorage.getItem('categoria')
+    if (categoriaJSON !== null) {
+      const categoria = JSON.parse(categoriaJSON)
+      recuperaProductos(categoria.familia, categoria.categoria)
+    }
   })
 
-  
 
   const handleProducto = (p) => {
-    setProducto(p)
+    localStorage.setItem('producto', JSON.stringify(p));
+    localStorage.setItem('idProducto', p._id);
     if (categoria.link !== '') navigate(categoria.link)
     else navigate(familia.link)
   }
+
   const options = { style: 'currency', currency: 'CLP' }
 
   return (

@@ -26,8 +26,12 @@ import Productos from '../../pages/Productos/Productos'
 import Registro from '../../pages/Registro/Registro'
 import Rollos from '../../pages/Rollos/Rollos'
 import Separador from '../../pages/Separador/Separador'
+import { useState } from 'react'
+
 
 function Rutas () {
+  const [idProducto, setIdProducto] = useState('')
+
   return (
     <div>
       <Routes>
@@ -49,12 +53,12 @@ function Rutas () {
           <Route path='/separador' element={<Separador />} />
           <Route path='/familias' element={<Familias />} />
           <Route path='/catalogo' element={<Catalogo />} />
-          <Route path='/productos' element={<Productos />} />
-          <Route path='/papeles' element={<Papeles />} />
-          <Route path='/cortinas' element={<Cortinas />} />
-          <Route path='/rollos' element={<Rollos />} />
-          <Route path='/bobina' element={<Bobina />} />
-          <Route path='/metro' element={<Metro />} />
+          <Route path='/productos' element={<Productos setIdProducto={setIdProducto} />} />
+          <Route path='/papeles' element={<Papeles idProducto={idProducto}  />} />
+          <Route path='/cortinas' element={<Cortinas idProducto={idProducto}  />} />
+          <Route path='/rollos' element={<Rollos idProducto={idProducto}  />} />
+          <Route path='/bobina' element={<Bobina idProducto={idProducto}  />} />
+          <Route path='/metro' element={<Metro idProducto={idProducto}  />} />
           <Route path='/calculo' element={<Calculo />} />
           <Route path='/calculobobina' element={<Calculobobina />} />
           <Route path='/calculorollo' element={<Calculorollo />} />

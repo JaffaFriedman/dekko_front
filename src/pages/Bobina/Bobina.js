@@ -18,6 +18,7 @@ import Radio from '@mui/material/Radio'
 import RadioGroup from '@mui/material/RadioGroup'
 import Calculobobina from '../../pages/Calculo/Calculobobina'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
+import axios from 'axios'
 import { CarritoContext } from '../../context/carrito/carritoContext'
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -29,11 +30,12 @@ const Item = styled(Paper)(({ theme }) => ({
 }))
 
 function Bobina () {
-  const { categoria, producto, cantidad, setCantidad } =
-    useContext(GlobalContext)
+  const { cantidad, setCantidad, BACKEND_URL } = useContext(GlobalContext)
   const { dispatchCarrito } = useContext(CarritoContext)
 
   const navigate = useNavigate()
+  let producto = JSON.parse(localStorage.getItem('producto'))
+  let categoria = JSON.parse(localStorage.getItem('categoria'))
 
   let [color, setColor] = useState(0)
   const [show, setShow] = useState(false)
@@ -62,12 +64,30 @@ function Bobina () {
   }
   const handleChangeGramaje = event => {
     setGramaje(event.target.value)
-    datos.gramaje=gramaje
-    datos.precioMt2=parseFloat(p.pesos[datos.gramaje].precio)
-    datos.precio=datos.precioMt2*33
+    datos.gramaje = gramaje
+    datos.precioMt2 = parseFloat(producto.pesos[datos.gramaje].precio)
+    datos.precio = datos.precioMt2 * 33
     setDatos(datos)
   }
-  const p = producto
+
+  const api = axios.create({
+    baseURL: BACKEND_URL,
+    timeout: 5000,
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+
+  const lee_producto = async () => {
+    console.log('lee_producto')
+    let idProducto = localStorage.getItem('idProducto')
+    try {
+      const { data } = await api.get(`/products/categoria/${idProducto}`)
+      producto = data.detail
+    } catch (error) {
+      idProducto = localStorage.getItem('idProducto')
+    }
+  }
 
   const formDatos = {
     cantidad: 1,
@@ -78,8 +98,8 @@ function Bobina () {
     imagen: '',
     gramaje: 0,
     color: color,
-    precioMt2: p.pesos[0].precio,
-    precio: p.pesos[0].precio*33,
+    precioMt2: producto.pesos[0].precio,
+    precio: producto.pesos[0].precio * 33,
     textura: 0
   }
   const [datos, setDatos] = useState(formDatos)
@@ -96,14 +116,14 @@ function Bobina () {
       ' ' +
       categoria.categoria +
       ' Código Color ' +
-      p.colores[color].codigo +
+      producto.colores[color].codigo +
       ' Gramaje ' +
-      p.pesos[datos.gramaje].peso +
+      producto.pesos[datos.gramaje].peso +
       'gr por mt'
     setCantidad(cantidad)
-    
+
     const item = {
-      imagen: p.colores[color].url,
+      imagen: producto.colores[color].url,
       glosa: datos.glosa,
       color: color,
       cantidad: datos.cantidad,
@@ -111,6 +131,7 @@ function Bobina () {
     }
     dispatchCarrito({ type: 'AGREGAR_ITEM', item })
   }
+  lee_producto()
 
   return (
     <>
@@ -126,8 +147,8 @@ function Bobina () {
             <Grid item xs={8}>
               <img
                 className='d-block w-100 image-responsive justify-content-center ps-5'
-                alt={p.descripcion}
-                src={p.colores[color].url}
+                alt={producto.descripcion}
+                src={producto.colores[color].url}
               />
               <h6 className='mt-1 text-center'>
                 {categoria.familia} - {categoria.categoria}{' '}
@@ -136,7 +157,7 @@ function Bobina () {
             <Grid item xs={4} className='mt-4'>
               <h4>
                 {' '}
-                {p.catalogo} - {p.nombre}
+                {producto.catalogo} - {producto.nombre}
               </h4>
               <h6>Las bobinas son de 33mt2 (Ancho 110 cm, Largo 30 mt) </h6>
               <FormControl className='mt-4 mb-4'>
@@ -150,7 +171,7 @@ function Bobina () {
                   value={gramaje}
                   onChange={handleChangeGramaje}
                 >
-                  {p.pesos.map((v, i) => (
+                  {producto.pesos.map((v, i) => (
                     <FormControlLabel
                       key={i}
                       value={i}
@@ -171,10 +192,10 @@ function Bobina () {
                   Selecciona otro color
                 </Button>
               </div>
-              <h6>{'Gramaje por mt2: ' + p.pesos[gramaje].peso + ' gramos'}</h6>
+              <h6>{'Gramaje por mt2: ' + producto.pesos[gramaje].peso + ' gramos'}</h6>
               <h6>
                 {' Precio mt2: ' +
-                  parseFloat(p.pesos[datos.gramaje].precio).toLocaleString(
+                  parseFloat(producto.pesos[datos.gramaje].precio).toLocaleString(
                     'es-CL',
                     { style: 'currency', currency: 'CLP' }
                   )}
@@ -182,7 +203,7 @@ function Bobina () {
               <h6 className='mb-4 '>
                 {'Precio Bobina: ' +
                   parseFloat(
-                    (p.pesos[datos.gramaje].precio * 33).toFixed(0)
+                    (producto.pesos[datos.gramaje].precio * 33).toFixed(0)
                   ).toLocaleString('es-CL', {
                     style: 'currency',
                     currency: 'CLP'
@@ -191,7 +212,7 @@ function Bobina () {
               <Box
                 component='form'
                 onSubmit={handleSubmit}
-                Validate
+                noValidate
                 sx={{ mt: 1 }}
               >
                 <Stack direction='row' spacing={2}>
@@ -215,7 +236,7 @@ function Bobina () {
               <h5 className='mt-4 mb-4'>
                 {'Precio: ' +
                   parseFloat(
-                    (datos.precio* datos.cantidad).toFixed(0)
+                    (datos.precio * datos.cantidad).toFixed(0)
                   ).toLocaleString('es-CL', {
                     style: 'currency',
                     currency: 'CLP'
@@ -246,7 +267,7 @@ function Bobina () {
                       flexWrap='wrap'
                       spacing={2}
                     >
-                      {p.colores.map((v, i) => (
+                      {producto.colores.map((v, i) => (
                         <Item key={i}>
                           <img
                             className='d-block w-40 image-responsive justify-content-center '
@@ -272,7 +293,7 @@ function Bobina () {
                     <Box
                       component='form'
                       onSubmit={handleSubmit}
-                      Validate
+                      noValidate
                       sx={{ mt: 1 }}
                     ></Box>
 
@@ -280,7 +301,7 @@ function Bobina () {
                       variant='text'
                       sx={{ mt: 3, mb: 2 }}
                       color='primary'
-                      onClick={() => handleGlosa(p)}
+                      onClick={() => handleGlosa(producto)}
                     >
                       Aceptar
                     </Button>
@@ -292,7 +313,7 @@ function Bobina () {
                 variant='text'
                 sx={{ mt: 3, mb: 2 }}
                 color='primary'
-                onClick={() => handleCategoria(p.categoria)}
+                onClick={() => handleCategoria(producto.categoria)}
               >
                 Mas diseños categoria {producto.categoria}
               </Button>

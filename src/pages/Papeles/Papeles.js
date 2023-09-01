@@ -27,11 +27,14 @@ const Item = styled(Paper)(({ theme }) => ({
 }))
 
 function Papeles () {
-  const { familia, categoria, producto, BACKEND_URL } =
+  const { BACKEND_URL } =
     useContext(GlobalContext)
   const { dispatchCarrito } = useContext(CarritoContext)
 
-  const p = producto
+  let producto = JSON.parse(localStorage.getItem('producto'))
+  let categoria = JSON.parse(localStorage.getItem('categoria'))
+  let familia = JSON.parse(localStorage.getItem('familia'))
+
   const [tablaTexturas, setTablaTexturas] = useState([])
 
   const api = axios.create({
@@ -56,11 +59,11 @@ function Papeles () {
     ancho: 100,
     mt2: 1,
     glosa: '',
-    title: p.descripcion,
-    imagen: p.url[0],
+    title: producto.descripcion,
+    imagen: producto.url[0],
     tela: 0,
-    precio: p.precio,
-    precioMt2: p.precio,
+    precio: producto.precio,
+    precioMt2: producto.precio,
     textura: 0,
     papel: 0
   }
@@ -115,9 +118,9 @@ function Papeles () {
     datos.precio = parseInt(datos.mt2 * datos.precioMt2)
     datos.glosa =
       'Catálogo: ' +
-      p.catalogo +
+      producto.catalogo +
       ' Diseño: ' +
-      p.nombre +
+      producto.nombre +
       '\n  Textura: ' +
       datos.papel +
       '\n Medidas Ancho: ' +
@@ -137,6 +140,18 @@ function Papeles () {
     setDatos(datos)
   }
 
+  const lee_producto = async () => {
+    console.log('lee_producto')
+    let idProducto = localStorage.getItem('idProducto')
+    try {
+      const { data } = await api.get(`/products/categoria/${idProducto}`)
+      producto = data.detail
+    } catch (error) {
+      idProducto = localStorage.getItem('idProducto')
+    }
+  }
+
+  lee_producto()
   return (
     <>
       <div className='bg-dark text-bg-dark pb-2 mb-1 text-center'>
@@ -150,15 +165,15 @@ function Papeles () {
           <Grid container spacing={2}>
             <Grid item xs={8}>
               <Carousel className='pt-4 pb-4 ps-3 centered '>
-                {p.url.map((v, i) => (
+                {producto.url.map((v, i) => (
                   <Carousel.Item key={i}>
                     <img
                       className='d-block w-100 image-responsive justify-content-center '
-                      alt={p.descripcion}
+                      alt={producto.descripcion}
                       src={v}
                     />
                     <Carousel.Caption>
-                      <h5>{p.descripcion}</h5>
+                      <h5>{producto.descripcion}</h5>
                     </Carousel.Caption>
                   </Carousel.Item>
                 ))}
@@ -167,13 +182,13 @@ function Papeles () {
             <Grid item xs={4} className='mt-4'>
               <h4>
                 {' '}
-                {p.catalogo} - {p.nombre}
+                {producto.catalogo} - {producto.nombre}
               </h4>
               <h6>
-                {'Producto:  '} {p.descripcion}
+                {'Producto:  '} {producto.descripcion}
               </h6>
               <h6>{datos.glosa}</h6>
-              <h5> {p.precio.toLocaleString('es-CL', options)} por Mt2 </h5>
+              <h5> {producto.precio.toLocaleString('es-CL', options)} por Mt2 </h5>
 
               <Box component='form' onSubmit={handleSubmit} sx={{ mt: 1 }}>
                 <Stack direction='row' spacing={2}>
@@ -315,7 +330,7 @@ function Papeles () {
                       variant='text'
                       sx={{ mt: 3, mb: 2 }}
                       color='primary'
-                      onClick={() => handleGlosa(p)}
+                      onClick={() => handleGlosa(producto)}
                     >
                       Aceptar
                     </Button>
@@ -326,7 +341,7 @@ function Papeles () {
                 variant='text'
                 sx={{ mt: 3, mb: 2 }}
                 color='primary'
-                onClick={() => handleCategoria(p.categoria)}
+                onClick={() => handleCategoria(producto.categoria)}
               >
                 Mas diseños categoria {producto.categoria}
               </Button>

@@ -133,7 +133,7 @@ export default function Calculorollo () {
                 <Box
                   component='form'
                   onSubmit={handleSubmit}
-                  Validate
+                  validate
                   sx={{ mt: 1 }}
                 >
                   <Stack direction='row' spacing={2}>

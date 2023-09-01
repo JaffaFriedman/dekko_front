@@ -5,8 +5,8 @@ import { Container } from 'react-bootstrap'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import { useNavigate } from 'react-router-dom'
-import { useState,useEffect,useContext  } from 'react'
- 
+import { useState, useEffect, useContext } from 'react'
+
 import axios from 'axios'
 
 export default function Catalogo () {
@@ -27,7 +27,7 @@ export default function Catalogo () {
     baseURL: BACKEND_URL,
     timeout: 5000,
     headers: {
-      'Content-Type': 'application/json', 
+      'Content-Type': 'application/json'
     }
   })
 
@@ -40,15 +40,19 @@ export default function Catalogo () {
     }
   }
 
-  
   useEffect(() => {
+    const familiaJSON = localStorage.getItem('familia')
+    if (familiaJSON !== null) {
+      const familia = JSON.parse(familiaJSON)
+      recuperaCatalogos(familia.familia)
+    }
     recuperaCatalogos(familia.familia)
   })
-
 
   const navigate = useNavigate()
   const handleCategoria = c => {
     setCategoria(c)
+    localStorage.setItem('categoria', JSON.stringify(c))
     navigate('/Productos')
   }
 

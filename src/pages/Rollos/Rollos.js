@@ -13,6 +13,7 @@ import Calculorollo from '../../pages/Calculo/Calculorollo'
 import { CarritoContext } from '../../context/carrito/carritoContext'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import { GlobalContext } from '../../context/global/globalContext'
+import axios from 'axios'
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
   ...theme.typography.body2,
@@ -22,24 +23,25 @@ const Item = styled(Paper)(({ theme }) => ({
 }))
 
 function Rollos () {
-  const { categoria, producto, setCantidad } = useContext(GlobalContext)
+  const {   setCantidad, BACKEND_URL } = useContext(GlobalContext)
   const { dispatchCarrito } = useContext(CarritoContext)
 
   const navigate = useNavigate()
- 
+  let producto = JSON.parse(localStorage.getItem('producto'))
+  let categoria = JSON.parse(localStorage.getItem('categoria'))
+
 
   const handleCategoria = () => {
     navigate('/Productos')
   }
-  const p = producto
-
+ 
   const formDatos = {
     cantidad: 1,
     glosa: '',
-    title: p.descripcion,
-    imagen: p.url[0],
-    precio: p.precio,
-    precioMt2: p.precio
+    title: producto.descripcion,
+    imagen: producto.url[0],
+    precio: producto.precio,
+    precioMt2: producto.precio
   }
   const [datos, setDatos] = useState(formDatos)
   const handleChange = e => {
@@ -51,7 +53,7 @@ function Rollos () {
 
   const handleSubmit = event => {
     event.preventDefault()
-    datos.glosa = 'Catálogo: ' + p.catalogo + ' Diseño: ' + p.nombre
+    datos.glosa = 'Catálogo: ' + producto.catalogo + ' Diseño: ' + producto.nombre
     setDatos(datos)
   }
   const agregarCarro = () => {
@@ -65,6 +67,25 @@ function Rollos () {
     dispatchCarrito({ type: 'AGREGAR_ITEM', item })
   }
   const options = { style: 'currency', currency: 'CLP' }
+  const api = axios.create({
+    baseURL: BACKEND_URL,
+    timeout: 5000,
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+
+  const lee_producto = async () => {
+    console.log('lee_producto')
+    let idProducto = localStorage.getItem('idProducto')
+    try {
+      const { data } = await api.get(`/products/categoria/${idProducto}`)
+      producto = data.detail
+    } catch (error) {
+      idProducto = localStorage.getItem('idProducto')
+    }
+  }
+  lee_producto()
 
   return (
     <>
@@ -79,17 +100,17 @@ function Rollos () {
           <Grid container spacing={2}>
             <Grid item xs={8}>
               <Carousel className='pt-4 pb-4 ps-2 centered '>
-                {p.url.map((v, i) => (
+                {producto.url.map((v, i) => (
                   <Carousel.Item key={i}>
                     <img
                       className='d-block w-100 image-responsive justify-content-center ps-5'
                       style={{ maxHeight: '48rem' }}
-                      alt={p.descripcion}
+                      alt={producto.descripcion}
                       src={v}
                     />
 
                     <Carousel.Caption>
-                      <h5>{p.descripcion}</h5>
+                      <h5>{producto.descripcion}</h5>
                     </Carousel.Caption>
                   </Carousel.Item>
                 ))}
@@ -98,9 +119,9 @@ function Rollos () {
             <Grid item xs={4} className='mt-4'>
               <h4>
                 {' '}
-                {p.catalogo} - {p.nombre}
+                {producto.catalogo} - {producto.nombre}
               </h4>
-              <h5> {p.precio.toLocaleString('es-CL', options)} por rollo </h5>
+              <h5> {producto.precio.toLocaleString('es-CL', options)} por rollo </h5>
               <p>Las medidas son en centimetros.</p>
               <Box
                 component='form'
@@ -127,8 +148,8 @@ function Rollos () {
                 </Stack>
               </Box>
 
-              <h6 className='mt-4'>Ancho del rollo {p.ancho} centimetros</h6>
-              <h6 className='mt-4'>Alto del rollo {p.alto} metros</h6>
+              <h6 className='mt-4'>Ancho del rollo {producto.ancho} centimetros</h6>
+              <h6 className='mt-4'>Alto del rollo {producto.alto} metros</h6>
               <h5 className='mt-4 mb-4'>
                 Precio Total{' '}
                 {(datos.precio * datos.cantidad).toLocaleString('es-CL', options)}
@@ -141,7 +162,7 @@ function Rollos () {
                 variant='text'
                 sx={{ mt: 3, mb: 2 }}
                 color='primary'
-                onClick={() => handleCategoria(p.categoria)}
+                onClick={() => handleCategoria(producto.categoria)}
               >
                 Mas diseños categoria {producto.categoria}
               </Button>

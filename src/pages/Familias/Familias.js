@@ -47,6 +47,7 @@ export default function Familias () {
   const navigate = useNavigate()
   const handleFamilia = p => {
     setFamilia(p)
+    localStorage.setItem('familia', JSON.stringify(p));
     navigate('/Catalogo')
   }
 
