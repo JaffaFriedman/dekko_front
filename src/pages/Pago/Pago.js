@@ -22,7 +22,8 @@ export default function Pago () {
 
   const handleClickOpen = () => {
     setOpen(true)
-    if (idUser !== '') {
+    
+    if (idUser !== '' || idUser !== null) {
       recuperaUsuario(idUser)
     }
   }
