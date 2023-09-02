@@ -17,14 +17,15 @@ import { ToastContainer, toast } from 'react-toastify'
 import { CarritoContext } from '../../context/carrito/carritoContext'
 export default function Pago () {
   const [open, setOpen] = useState(false)
-  const { token, idUser, BACKEND_URL } = useContext(GlobalContext)
+  const {   BACKEND_URL } = useContext(GlobalContext)
   const { carritoCompra } = useContext(CarritoContext)
+  const token = localStorage.getItem('token')
 
   const handleClickOpen = () => {
     setOpen(true)
     
-    if (idUser !== '' || idUser !== null) {
-      recuperaUsuario(idUser)
+    if (token !== null) {
+      recuperaUsuario()
     }
   }
 
@@ -87,6 +88,7 @@ export default function Pago () {
   }
 
   const recuperaUsuario = async () => {
+    const idUser = localStorage.getItem('idUser')
     try {
       const { data } = await api.get(`/users/auth/${idUser}`)
       console.log(data)
