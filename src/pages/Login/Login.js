@@ -65,7 +65,6 @@ export default function Login () {
       [e.target.name]: e.target.value
     })
   }
-
   let tokenDecodificado = {}
   const api = axios.create({
     baseURL: BACKEND_URL,
