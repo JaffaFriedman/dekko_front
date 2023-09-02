@@ -1,4 +1,3 @@
-
 import FacebookIcon from '@mui/icons-material/Facebook'
 import InstagramIcon from '@mui/icons-material/Instagram'
 import CallIcon from '@mui/icons-material/Call'
@@ -12,12 +11,16 @@ import Col from 'react-bootstrap/Col'
 import webpay from '../../images/2.WebpayPlus_FN_800px.png'
 import qr from '../../images/QR-VitrinaDeComercio.png'
 import { grey } from '@mui/material/colors'
+import { useNavigate } from 'react-router-dom'
 import WhatsAppIcon from '@mui/icons-material/WhatsApp'
 import LocationOnIcon from '@mui/icons-material/LocationOn'
 import NotListedLocationIcon from '@mui/icons-material/NotListedLocation'
 import Contacto from '../../pages/Contacto/Contacto'
+import Button from '@mui/material/Button'
 import { Fragment } from 'react'
 const Footer = () => {
+  const navigate = useNavigate()
+
   let urlFacebook = 'https://www.facebook.com/search/top?q=katzmania'
   let urlInstagram = 'https://www.instagram.com/explore/tags/katzmaniaaa/'
   let urlWebpay = 'https://www.webpay.cl/company/32794'
@@ -36,7 +39,7 @@ const Footer = () => {
           justifyContent='center'
         >
           <Grid item md={2}>
-          <Typography level='body' className='bg-dark text-bg-dark'>
+            <Typography level='body' className='bg-dark text-bg-dark'>
               <Fragment>
                 <Contacto />
               </Fragment>
@@ -64,27 +67,33 @@ const Footer = () => {
             </Typography>
           </Grid>
           <Grid item md={2}>
-          <Typography level='h6'>
-              {' '}
-              <Link sx={{ color: grey[50] }} underline='none' href='/nosotros'>
-                Sobre Nosotros
-              </Link>{' '}
-            </Typography>
             <Typography level='h6'>
-              {' '}
-              <Link sx={{ color: grey[50] }} underline='none' href='/garantias'>
-                Garantias y condiciones generales
-              </Link>{' '}
-            </Typography>
-            <Typography level='h6'>
-              {' '}
-              <Link
+              <Button
                 sx={{ color: grey[50] }}
-                underline='none'
-                href='/instructivo'
+                onClick={() => navigate('/nosotros')}
+                color='secondary'
+              >
+                Sobre Nosotros
+              </Button>
+            </Typography>
+            <Typography level='h6'>
+              <Button
+                sx={{ color: grey[50] }}
+                onClick={() => navigate('/garantias')}
+                color='secondary'
+              >
+                Garantias y condiciones generales
+              </Button>
+            </Typography>
+            <Typography level='h6'>
+              {' '}
+              <Button
+                sx={{ color: grey[50] }}
+                onClick={() => navigate('/instructivo')}
+                color='secondary'
               >
                 Instalación de murales
-              </Link>
+              </Button>
             </Typography>
             <Typography level='h6'> </Typography>
           </Grid>
