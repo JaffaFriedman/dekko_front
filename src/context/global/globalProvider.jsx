@@ -10,6 +10,9 @@ import { useState } from 'react'
 
 export function GlobalProvider ({ children }) {
 
+  const [familia, setFamilia] = useState({})
+  const [categoria, setCategoria] = useState({})
+  const [producto, setProducto] = useState({})
   const [cantidad, setCantidad] = useState(0)
   const [userName, setUserName] = useState( 'MI PERFIL')
   const redondear = num => {
@@ -98,9 +101,15 @@ export function GlobalProvider ({ children }) {
         Image,
         ImageBackdrop,
         ImageMarked,
+        familia,
+        categoria,
+        producto,
         cantidad,
         userName,
         setUserName,
+        setFamilia,
+        setCategoria,
+        setProducto,
         setCantidad,
         redondear
       }}

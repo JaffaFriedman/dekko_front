@@ -109,7 +109,7 @@ export default function Calculo () {
                 <Box
                   component='form'
                   onSubmit={handleSubmit}
-                  validate
+                  Validate
                   sx={{ mt: 1 }}
                 >
                   <Stack direction='row' spacing={2}>

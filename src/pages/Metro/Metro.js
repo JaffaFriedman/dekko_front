@@ -1,11 +1,11 @@
-import { Fragment, useContext, useState,useEffect } from 'react'
+import { Fragment, useContext, useState } from 'react'
 import { GlobalContext } from '../../context/global/globalContext'
 import Container from 'react-bootstrap/Container'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
-import { useNavigate , useParams} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import Modal from 'react-bootstrap/Modal'
 import Paper from '@mui/material/Paper'
 import Stack from '@mui/material/Stack'
@@ -16,11 +16,9 @@ import FormControlLabel from '@mui/material/FormControlLabel'
 import FormControl from '@mui/material/FormControl'
 import FormLabel from '@mui/material/FormLabel'
 import Radio from '@mui/material/Radio'
-import axios from 'axios'
 import RadioGroup from '@mui/material/RadioGroup'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import { CarritoContext } from '../../context/carrito/carritoContext'
-import tablaFamilias from '../Familias/TablaFamilias'
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -31,17 +29,14 @@ const Item = styled(Paper)(({ theme }) => ({
 }))
 
 function Metro () {
-  const {  cantidad, setCantidad, BACKEND_URL } =
+  const { categoria, producto, cantidad, setCantidad } =
     useContext(GlobalContext)
   const { dispatchCarrito } = useContext(CarritoContext)
 
   const navigate = useNavigate()
-  const { idProducto } = useParams()
+
   let [color, setColor] = useState(0)
   const [show, setShow] = useState(false)
-  const [producto, setProducto] = useState({})
-  const [categoria, setCategoria] = useState({})
-  const [familia, setFamilia] = useState({})
 
   const handleSubmit = event => {
     event.preventDefault()
@@ -55,9 +50,7 @@ function Metro () {
   }
 
   const handleCategoria = () => {
-    const ruta = `/Products/idFamilia/${producto.familia}/idCategoria/${producto.categoria}`
-    localStorage.setItem('ruta',ruta)
-    navigate(ruta)
+    navigate('/Productos')
   }
 
   const handleSalir = () => {
@@ -70,12 +63,12 @@ function Metro () {
   const handleChangeGramaje = event => {
     setGramaje(event.target.value)
     datos.gramaje = gramaje
-    datos.precioMt2 = parseFloat(producto.pesos[datos.gramaje].precio)
+    datos.precioMt2 = parseFloat(p.pesos[datos.gramaje].precio)
     datos.precioMtLineal = datos.precioMt2 * 1.4
     datos.precio = datos.precioMt2 * 1.4
     setDatos(datos)
   }
- 
+  const p = producto
 
   const formDatos = {
     cantidad: 10,
@@ -86,9 +79,9 @@ function Metro () {
     imagen: '',
     gramaje: 0,
     color: color,
-    precioMt2: producto.pesos[0].precio,
-    precioMtLineal: parseInt(producto.pesos[0].precio * 1.4),
-    precio: producto.pesos[0].precio * 14,
+    precioMt2: p.pesos[0].precio,
+    precioMtLineal: parseInt(p.pesos[0].precio * 1.4),
+    precio: p.pesos[0].precio * 14,
     textura: 0
   }
   const [datos, setDatos] = useState(formDatos)
@@ -105,14 +98,14 @@ function Metro () {
       ' ' +
       categoria.categoria +
       ' Código Color ' +
-      producto.colores[color].codigo +
+      p.colores[color].codigo +
       ' Gramaje ' +
-      producto.pesos[datos.gramaje].peso +
+      p.pesos[datos.gramaje].peso +
       'gr por mt'
     setCantidad(cantidad)
 
     const item = {
-      imagen: producto.colores[color].url,
+      imagen: p.colores[color].url,
       glosa: datos.glosa,
       color: color,
       cantidad: datos.cantidad,
@@ -120,46 +113,7 @@ function Metro () {
     }
     dispatchCarrito({ type: 'AGREGAR_ITEM', item })
   }
-  const api = axios.create({
-    baseURL: BACKEND_URL,
-    timeout: 5000,
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  })
 
- 
-   
-  const leeProducto = async (prod) => {
-    try {
-      const { data } = await api.get(`/products/categoria/${prod}`)
-
-      localStorage.setItem('producto', JSON.stringify(data.detail))
-      setProducto(data.detail)
-      setFamilia(tablaFamilias.find(f => f.familia === data.detail.familia))
-      localStorage.setItem('familia', JSON.stringify(familia))
-      leeCategoria(producto.familia, producto.categoria)
-      localStorage.setItem('categoria', JSON.stringify(categoria))
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
- 
- 
-
-  useEffect(() => {
-    leeProducto(idProducto)
-  })
-
-    const leeCategoria = async (fam,cat) => {
-      try {
-        const { data } = await api.get(`/categorias/familia/${fam}/categoria/${cat}`)
-        setCategoria(data.info)
-      } catch (error) {
-        console.log(error)
-      }
-    }
   return (
     <>
       <div className='bg-dark text-bg-dark pb-2 ps-5  mb-1 text-center'>
@@ -175,16 +129,16 @@ function Metro () {
               <Container className='p-3 heigth=200 text-center'>
                 <img
                   className='d-inline-block w-100 image-responsive justify-content-center ps-5'
-                  alt={producto.descripcion}
-                  src={producto.colores[color].url}
-                  title={'Código Color: ' + producto.colores[color].codigo}
+                  alt={p.descripcion}
+                  src={p.colores[color].url}
+                  title={'Código Color: ' + p.colores[color].codigo}
                 />
               </Container>
             </Grid>
             <Grid item xs={4} className='mt-4'>
               <h4>
                 {' '}
-                {producto.catalogo} - {producto.nombre}
+                {p.catalogo} - {p.nombre}
               </h4>
               <h6>Se vende por metro lineal de 140 cm de ancho </h6>
               <FormControl className='mt-4 mb-4'>
@@ -198,7 +152,7 @@ function Metro () {
                   value={gramaje}
                   onChange={handleChangeGramaje}
                 >
-                  {producto.pesos.map((v, i) => (
+                  {p.pesos.map((v, i) => (
                     <FormControlLabel
                       key={i}
                       value={i}
@@ -290,7 +244,7 @@ function Metro () {
                       flexWrap='wrap'
                       spacing={2}
                     >
-                      {producto.colores.map((v, i) => (
+                      {p.colores.map((v, i) => (
                         <Item key={i}>
                           <img
                             className='d-block w-40 image-responsive justify-content-center '
@@ -317,7 +271,7 @@ function Metro () {
                     <Box
                       component='form'
                       onSubmit={handleSubmit}
-                      validate
+                      Validate
                       sx={{ mt: 1 }}
                     ></Box>
 
@@ -325,7 +279,7 @@ function Metro () {
                       variant='text'
                       sx={{ mt: 3, mb: 2 }}
                       color='primary'
-                      onClick={() => handleGlosa(producto)}
+                      onClick={() => handleGlosa(p)}
                     >
                       Aceptar
                     </Button>
@@ -336,7 +290,7 @@ function Metro () {
                 variant='text'
                 sx={{ mt: 3, mb: 2 }}
                 color='primary'
-                onClick={() => handleCategoria(producto.categoria)}
+                onClick={() => handleCategoria(p.categoria)}
               >
                 Mas diseños categoria {producto.categoria}
               </Button>

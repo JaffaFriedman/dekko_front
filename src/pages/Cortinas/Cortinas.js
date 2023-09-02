@@ -1,24 +1,21 @@
-import {  useContext, useState ,useEffect } from 'react'
+import { useContext } from 'react'
 import Container from 'react-bootstrap/Container'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import Button from '@mui/material/Button'
 import Carousel from 'react-bootstrap/Carousel'
 import TextField from '@mui/material/TextField'
-import { useNavigate, useParams  } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import Modal from 'react-bootstrap/Modal'
 import Stack from '@mui/material/Stack'
 import Paper from '@mui/material/Paper'
 import { styled } from '@mui/material/styles'
- 
+import { useState } from 'react'
 import axios from 'axios'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import Form from 'react-bootstrap/Form'
 import { GlobalContext } from '../../context/global/globalContext'
 import { CarritoContext } from '../../context/carrito/carritoContext'
-import tablaFamilias from '../Familias/TablaFamilias'
-
-
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
   ...theme.typography.body2,
@@ -30,16 +27,12 @@ const Item = styled(Paper)(({ theme }) => ({
 const options = { style: 'currency', currency: 'CLP' }
 
 function Cortinas () {
-  const { BACKEND_URL } =
+  const { familia, categoria, producto, BACKEND_URL } =
     useContext(GlobalContext)
   const { dispatchCarrito } = useContext(CarritoContext)
-  const { idProducto } = useParams()
-  const [tablaTelas, setTablaTelas] = useState([])
-  const [producto, setProducto] = useState({})
-  const [categoria, setCategoria] = useState({})
-  const [familia, setFamilia] = useState({})
-   
+  const p = producto
 
+  const [tablaTelas, setTablaTelas] = useState([])
   const api = axios.create({
     baseURL: BACKEND_URL,
     timeout: 5000,
@@ -47,39 +40,10 @@ function Cortinas () {
       'Content-Type': 'application/json'
     }
   })
-
   const recuperaTelas = async (f, c) => {
     try {
       const { data } = await api.get(`/telas/familia/${f}/categoria/${c}`)
       setTablaTelas(data.info)
-    } catch (error) {
-      console.log(error)
-    }
-  }
-  const leeProducto = async (prod) => {
-    try {
-      const { data } = await api.get(`/products/categoria/${prod}`)
-
-      localStorage.setItem('producto', JSON.stringify(data.detail))
-      setProducto(data.detail)
-      setFamilia(tablaFamilias.find(f => f.familia === data.detail.familia))
-      localStorage.setItem('familia', JSON.stringify(familia))
-      leeCategoria(producto.familia, producto.categoria)
-      localStorage.setItem('categoria', JSON.stringify(categoria))
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
-  useEffect(() => {
-    leeProducto(idProducto)
-  })
-
-
-  const leeCategoria = async (fam,cat) => {
-    try {
-      const { data } = await api.get(`/categorias/familia/${fam}/categoria/${cat}`)
-      setCategoria(data.info)
     } catch (error) {
       console.log(error)
     }
@@ -94,9 +58,7 @@ function Cortinas () {
   }
 
   const handleCategoria = () => {
-    const ruta = `/Products/idFamilia/${producto.familia}/idCategoria/${producto.categoria}`
-    localStorage.setItem('ruta',ruta)
-    navigate(ruta)
+    navigate('/Productos')
   }
 
   const handleTela = (f, c) => {
@@ -114,7 +76,7 @@ function Cortinas () {
     datos.mt2 = (datos.ancho * datos.alto) / (100 * 100)
     datos.precio = parseInt(datos.mt2 * datos.precioMt2)
     datos.glosa =
-      producto.nombre +
+      p.nombre +
       '  - ' +
       datos.cortina +
       '  ' +
@@ -134,10 +96,10 @@ function Cortinas () {
     ancho: 100,
     mt2: 1,
     glosa: '',
-    imagen: producto.url[0],
+    imagen: p.url[0],
     tela: 0,
-    precio: producto.precio,
-    precioMt2: producto.precio,
+    precio: p.precio,
+    precioMt2: p.precio,
     textura: 0,
     papel: 0
   }
@@ -160,7 +122,7 @@ function Cortinas () {
     }
     dispatchCarrito({ type: 'AGREGAR_ITEM', item })
   }
- 
+
   return (
     <>
       <div className='bg-dark text-bg-dark pb-2 ps-5  mb-1 text-center'>
@@ -174,15 +136,15 @@ function Cortinas () {
           <Grid container spacing={2}>
             <Grid item xs={8}>
               <Carousel className='pt-4 pb-4 ps-3 centered '>
-                {producto.url.map((v, i) => (
+                {p.url.map((v, i) => (
                   <Carousel.Item key={i}>
                     <img
                       className='d-block w-100 image-responsive justify-content-center '
-                      alt={producto.descripcion}
+                      alt={p.descripcion}
                       src={v}
                     />
                     <Carousel.Caption>
-                      <h5>{producto.descripcion}</h5>
+                      <h5>{p.descripcion}</h5>
                     </Carousel.Caption>
                   </Carousel.Item>
                 ))}
@@ -191,14 +153,14 @@ function Cortinas () {
             <Grid item xs={4} className='mt-4'>
               <h4>
                 {' '}
-                {producto.catalogo} - {producto.nombre}
+                {p.catalogo} - {p.nombre}
               </h4>
               <p className='mt: 3'> {familia.mensaje}</p>
               <Button
                 variant='text'
                 sx={{ mb: 2 }}
                 color='primary'
-                onClick={() => handleTela(producto.familia, producto.categoria)}
+                onClick={() => handleTela(p.familia, p.categoria)}
               >
                 Configura tu producto
               </Button>
@@ -349,7 +311,7 @@ function Cortinas () {
                       variant='text'
                       sx={{ mt: 3, mb: 2 }}
                       color='primary'
-                      onClick={() => handleGlosa(producto)}
+                      onClick={() => handleGlosa(p)}
                     >
                       Aceptar
                     </Button>
@@ -360,7 +322,7 @@ function Cortinas () {
                 variant='text'
                 sx={{ mt: 3, mb: 2 }}
                 color='primary'
-                onClick={() => handleCategoria(producto.categoria)}
+                onClick={() => handleCategoria(p.categoria)}
               >
                 Mas diseños categoria {producto.categoria}
               </Button>

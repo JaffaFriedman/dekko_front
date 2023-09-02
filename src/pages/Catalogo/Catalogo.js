@@ -4,52 +4,52 @@ import Typography from '@mui/material/Typography'
 import { Container } from 'react-bootstrap'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-import { useNavigate, useParams } from 'react-router-dom'
-import { useState, useContext, useEffect } from 'react'
-import tablaFamilias from '../Familias/TablaFamilias'
-
+import { useNavigate } from 'react-router-dom'
+import { useState,useEffect,useContext  } from 'react'
+ 
 import axios from 'axios'
 
-export default function Categoria () {
+export default function Catalogo () {
   const {
     ImageButton,
     ImageSrc,
     Image,
     ImageBackdrop,
     ImageMarked,
+    familia,
+    setCategoria,
     BACKEND_URL
   } = useContext(GlobalContext)
-  const { idFamilia } = useParams()
-  const familia = tablaFamilias.find(f => f.familia === idFamilia)
+
   const [tablaCategorias, setTablaCategorias] = useState([])
 
   const api = axios.create({
     baseURL: BACKEND_URL,
     timeout: 5000,
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json', 
     }
   })
 
-  const leeCategorias = async p => {
+  const recuperaCatalogos = async p => {
     try {
       const { data } = await api.get(`/categorias/familia/${p}`)
       setTablaCategorias(data.info)
     } catch (error) {
-      console.log('Categorias leeCategoria', error)
+      console.log(error)
     }
   }
 
+  
   useEffect(() => {
-    leeCategorias(familia.familia)
+    recuperaCatalogos(familia.familia)
   })
 
+
   const navigate = useNavigate()
-  const handleProductos = c => {
-    const ruta = `/Products/idFamilia/${c.familia}/idCategoria/${c.categoria}`
-    localStorage.setItem('ruta', ruta)
-    localStorage.setItem('categoria', JSON.stringify(c))
-    navigate(ruta)
+  const handleCategoria = c => {
+    setCategoria(c)
+    navigate('/Productos')
   }
 
   return (
@@ -67,7 +67,7 @@ export default function Categoria () {
                 <ImageButton
                   focusRipple
                   key={p.categoria}
-                  onClick={() => handleProductos(p)}
+                  onClick={() => handleCategoria(p)}
                   style={{
                     margin: 4
                   }}

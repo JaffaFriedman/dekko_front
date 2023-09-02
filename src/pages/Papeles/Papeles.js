@@ -4,7 +4,7 @@ import Grid from '@mui/material/Grid'
 import Button from '@mui/material/Button'
 import Carousel from 'react-bootstrap/Carousel'
 import TextField from '@mui/material/TextField'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import Modal from 'react-bootstrap/Modal'
 import Stack from '@mui/material/Stack'
 import Paper from '@mui/material/Paper'
@@ -12,10 +12,10 @@ import { styled } from '@mui/material/styles'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import axios from 'axios'
 import Form from 'react-bootstrap/Form'
-import { useContext, useState, useEffect } from 'react'
+import { useState, useContext } from 'react'
+
 import { GlobalContext } from '../../context/global/globalContext'
 import { CarritoContext } from '../../context/carrito/carritoContext'
-import tablaFamilias from '../Familias/TablaFamilias'
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -27,29 +27,12 @@ const Item = styled(Paper)(({ theme }) => ({
 }))
 
 function Papeles () {
-  const { cantidad, setCantidad,BACKEND_URL } = useContext(GlobalContext)
+  const { familia, categoria, producto, BACKEND_URL } =
+    useContext(GlobalContext)
   const { dispatchCarrito } = useContext(CarritoContext)
-  const { idProducto } = useParams()
 
-  const iniProducto = {
-    sku: '',
-    familia: '',
-    categoria: '',
-    catalogo: '',
-    nombre: '',
-    descripcion: '',
-    url: [{}],
-    ancho: 0,
-    alto: 0,
-    peso: 0,
-    precio: 0,
-    venta: ''
-  }
-
+  const p = producto
   const [tablaTexturas, setTablaTexturas] = useState([])
-  const [producto, setProducto] = useState(iniProducto)
-  const [categoria, setCategoria] = useState({})
-  const [familia, setFamilia] = useState({})
 
   const api = axios.create({
     baseURL: BACKEND_URL,
@@ -58,7 +41,7 @@ function Papeles () {
       'Content-Type': 'application/json'
     }
   })
-  const recuperaTexturas = async (f) => {
+  const recuperaTexturas = async f => {
     try {
       const { data } = await api.get(`/texturas/familia/${f}`)
       setTablaTexturas(data.info)
@@ -73,11 +56,11 @@ function Papeles () {
     ancho: 100,
     mt2: 1,
     glosa: '',
-    title: producto.descripcion,
-    imagen: producto.url[0],
+    title: p.descripcion,
+    imagen: p.url[0],
     tela: 0,
-    precio: producto.precio,
-    precioMt2: producto.precio,
+    precio: p.precio,
+    precioMt2: p.precio,
     textura: 0,
     papel: 0
   }
@@ -100,9 +83,7 @@ function Papeles () {
   }
 
   const handleCategoria = () => {
-    const ruta = `/Products/idFamilia/${producto.familia}/idCategoria/${producto.categoria}`
-    localStorage.setItem('ruta',ruta)
-    navigate(ruta)
+    navigate('/Productos')
   }
 
   const agregarCarro = () => {
@@ -118,7 +99,6 @@ function Papeles () {
   const handleTextura = () => {
     recuperaTexturas(producto.familia)
     datos.textura = producto.url[0]
-    datos.imagen = producto.url[0]
     datos.glosa = ''
     setDatos(datos)
     setShow(true)
@@ -128,16 +108,16 @@ function Papeles () {
     setShow(false)
   }
 
-  const handleGlosa = (producto) => {
+  const handleGlosa = () => {
     datos.alto = parseInt(datos.alto) + 5
     datos.ancho = parseInt(datos.ancho) + 5
     datos.mt2 = (datos.ancho * datos.alto) / (100 * 100)
     datos.precio = parseInt(datos.mt2 * datos.precioMt2)
     datos.glosa =
       'Catálogo: ' +
-      producto.catalogo +
+      p.catalogo +
       ' Diseño: ' +
-      producto.nombre +
+      p.nombre +
       '\n  Textura: ' +
       datos.papel +
       '\n Medidas Ancho: ' +
@@ -146,45 +126,15 @@ function Papeles () {
       datos.alto +
       ' cm. Mt2: ' +
       datos.mt2.toFixed(2)
-      setCantidad(cantidad)
     setDatos(datos)
     setShow(false)
   }
   const options = { style: 'currency', currency: 'CLP' }
 
   const handlePapel = v => {
-    datos.precioMt2 = v.precio
+    datos.precio = v.precio
     datos.nombre = v.nombre
     setDatos(datos)
-  }
-
-  const leeProducto = async (prod) => {
-    try {
-      const { data } = await api.get(`/products/categoria/${prod}`)
-
-      localStorage.setItem('producto', JSON.stringify(data.detail))
-      setProducto(data.detail)
-      setFamilia(tablaFamilias.find(f => f.familia === data.detail.familia))
-      localStorage.setItem('familia', JSON.stringify(familia))
-      leeCategoria(producto.familia, producto.categoria)
-      localStorage.setItem('categoria', JSON.stringify(categoria))
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
-  useEffect(() => {
-    leeProducto(idProducto)
-  })
-
-  const leeCategoria = async (fam,cat) => {
-    console.log('Categorias leeCategoria', `/categorias/familia/${cat}`)
-    try {
-      const { data } = await api.get(`/categorias/familia/${fam}/categoria/${cat}`)
-      setCategoria(data.info)
-    } catch (error) {
-      console.log(error)
-    }
   }
 
   return (
@@ -192,7 +142,7 @@ function Papeles () {
       <div className='bg-dark text-bg-dark pb-2 mb-1 text-center'>
         <h3>
           {' '}
-          {producto.familia} - {producto.categoria}{' '}
+          {categoria.familia} - {categoria.categoria}{' '}
         </h3>
       </div>
       <Container>
@@ -200,15 +150,15 @@ function Papeles () {
           <Grid container spacing={2}>
             <Grid item xs={8}>
               <Carousel className='pt-4 pb-4 ps-3 centered '>
-                {producto.url.map((v, i) => (
+                {p.url.map((v, i) => (
                   <Carousel.Item key={i}>
                     <img
                       className='d-block w-100 image-responsive justify-content-center '
-                      alt={producto.descripcion}
+                      alt={p.descripcion}
                       src={v}
                     />
                     <Carousel.Caption>
-                      <h5>{producto.descripcion}</h5>
+                      <h5>{p.descripcion}</h5>
                     </Carousel.Caption>
                   </Carousel.Item>
                 ))}
@@ -217,16 +167,13 @@ function Papeles () {
             <Grid item xs={4} className='mt-4'>
               <h4>
                 {' '}
-                {producto.catalogo} - {producto.nombre}
+                {p.catalogo} - {p.nombre}
               </h4>
               <h6>
-                {'Producto:  '} {producto.descripcion}
+                {'Producto:  '} {p.descripcion}
               </h6>
               <h6>{datos.glosa}</h6>
-              <h5>
-                {' '}
-                {producto.precio.toLocaleString('es-CL', options)} por Mt2{' '}
-              </h5>
+              <h5> {p.precio.toLocaleString('es-CL', options)} por Mt2 </h5>
 
               <Box component='form' onSubmit={handleSubmit} sx={{ mt: 1 }}>
                 <Stack direction='row' spacing={2}>
@@ -297,7 +244,7 @@ function Papeles () {
                         spacing={2}
                       >
                         {tablaTexturas
-                          .filter(t => t.familia === producto.familia)
+                          .filter(t => t.familia === categoria.familia)
                           .map((v, i) => (
                             <Item key={i}>
                               <img
@@ -368,7 +315,7 @@ function Papeles () {
                       variant='text'
                       sx={{ mt: 3, mb: 2 }}
                       color='primary'
-                      onClick={() => handleGlosa(producto)}
+                      onClick={() => handleGlosa(p)}
                     >
                       Aceptar
                     </Button>
@@ -379,7 +326,7 @@ function Papeles () {
                 variant='text'
                 sx={{ mt: 3, mb: 2 }}
                 color='primary'
-                onClick={() => handleCategoria(producto.categoria)}
+                onClick={() => handleCategoria(p.categoria)}
               >
                 Mas diseños categoria {producto.categoria}
               </Button>

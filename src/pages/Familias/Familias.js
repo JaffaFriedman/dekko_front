@@ -1,13 +1,12 @@
-import { useContext  } from 'react'
+import { useContext , useState ,useEffect} from 'react'
 import { GlobalContext } from '../../context/global/globalContext'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import { Container } from 'react-bootstrap'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
+import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
-import tablaFamilias from '../Familias/TablaFamilias';
-
 
 export default function Familias () {
   const {
@@ -15,18 +14,38 @@ export default function Familias () {
     ImageSrc,
     Image,
     ImageBackdrop,
-    ImageMarked
+    ImageMarked,
+    setFamilia,
+    BACKEND_URL
   } = useContext(GlobalContext)
 
+  const [tablaFamilias, setTablaFamilias] = useState([])
 
-  const navigate = useNavigate()
-  const handleCategorias = (p ) => {
- 
-    const ruta=`/Categorias/familia/${p.familia}`
-    localStorage.setItem('ruta',ruta)
-    navigate(ruta)
+  const api = axios.create({
+    baseURL: BACKEND_URL,
+    timeout: 5000,
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+  const recuperaFamilias = async () => {
+    try {
+      const { data } = await api.get('/familias')
+      setTablaFamilias(data.info)
+    } catch (error) {
+      console.log(error)
+    }
   }
 
+  useEffect(() => {
+    recuperaFamilias()
+  })
+
+  const navigate = useNavigate()
+  const handleFamilia = p => {
+    setFamilia(p)
+    navigate('/Catalogo')
+  }
 
   return (
     <div>
@@ -44,7 +63,7 @@ export default function Familias () {
                 <ImageButton
                   focusRipple
                   key={p.familia}
-                  onClick={() => handleCategorias(p)}
+                  onClick={() => handleFamilia(p)}
                   style={{
                     margin: 4
                   }}

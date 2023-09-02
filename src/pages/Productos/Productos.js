@@ -1,72 +1,50 @@
 import { Card, Container } from 'react-bootstrap'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { GlobalContext } from '../../context/global/globalContext'
 import axios from 'axios'
-import { useState, useContext, useEffect } from 'react'
-import tablaFamilias from '../Familias/TablaFamilias'
-
+import { useState,useEffect,useContext  } from 'react'
+ 
 function Productos () {
-  const { BACKEND_URL } = useContext(GlobalContext)
+  const {
+    familia,
+    categoria,
+    setProducto,
+    BACKEND_URL
+  } = useContext(GlobalContext)
   const navigate = useNavigate()
-  const { idFamilia, idCategoria } = useParams()
-  const familia = tablaFamilias.find(f => f.familia === idFamilia)
 
-  const [categoria, setCategoria] = useState({})
   const [tablaProductos, setTablaProductos] = useState([])
   const api = axios.create({
     baseURL: BACKEND_URL,
     timeout: 5000,
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json', 
     }
   })
 
-  const leeCategoria = async (fam, cat) => {
-    setCategoria(JSON.parse(localStorage.getItem('categoria')))
-    localStorage.setItem('fam', fam)
-    localStorage.setItem('cat', cat)
+  const recuperaProductos = async (f, c) => {
     try {
       const { data } = await api.get(
-        `/categorias/familia/${fam}/categoria/${cat}`
-      )
-      setCategoria(data.info)
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
-  const leeProductos = async (fam, cat) => {
-    try {
-      const { data } = await api.get(
-        `/products/familia/${fam}/categoria/${cat}`
-      )
+        `/products/familia/${f}/categoria/${c}`)
       setTablaProductos(data.info)
-      leeCategoria(idFamilia, idCategoria)
     } catch (error) {
       console.log(error)
     }
   }
 
   useEffect(() => {
-    leeProductos(idFamilia, idCategoria)
+    recuperaProductos(categoria.familia, categoria.categoria)
   })
 
-  const handleProducto = p => {
-    const restoRuta = '/idProducto/' + p._id
-    let ruta = familia.link
-    if (categoria.link === null) {
-      ruta = familia.link
-    } else {
-      if (categoria.link !== '') ruta = categoria.link
-    }
-    ruta = ruta + restoRuta
-    localStorage.setItem('ruta', ruta)
-    localStorage.setItem('producto', JSON.stringify(p))
-    navigate(ruta)
-  }
+  
 
+  const handleProducto = (p) => {
+    setProducto(p)
+    if (categoria.link !== '') navigate(categoria.link)
+    else navigate(familia.link)
+  }
   const options = { style: 'currency', currency: 'CLP' }
 
   return (
@@ -84,7 +62,7 @@ function Productos () {
               <Card style={{ width: '25rem', height: '25rem' }} className='m-3'>
                 <Card.Body>
                   <Card.Title>
-                    {p.categoria} - {p.nombre}{' '}
+                    {p.catalogo} - {p.nombre}{' '}
                   </Card.Title>
                   <Card.Img
                     variant='top'

@@ -15,6 +15,7 @@ import {  useEffect } from 'react'
 const Navigation = () => {
   const oldUser = localStorage.getItem('userName')
   const { userName, setUserName } = useContext(GlobalContext)
+
   useEffect(() => {
     setUserName(oldUser === null ? 'MI PERFIL' : oldUser)
   })
