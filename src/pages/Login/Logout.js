@@ -33,7 +33,7 @@ export default function Logout () {
   const handleSubmit = async e => {
     e.preventDefault()
    
-    notifySuccess('Hasta pronto')
+    notifySuccess('Hasta pronto '+userName)
     localStorage.removeItem('token')
     localStorage.removeItem('idUser')
     localStorage.removeItem('userName')
@@ -78,12 +78,12 @@ export default function Logout () {
                     {carritoCompra.totalProductos === 0 ? (
                       <Button onClick={handleSubmit} color='primary'>
                         <LoginIcon color='primary' fontSize='large' />
-                        ¿{userName}, por favor confirma que quieres desconectarte?
+                        {userName}, por favor confirma que quieres desconectarte
                       </Button>
                     ) : (
                       <Button onClick={handleSubmit} color='primary'>
                         <LoginIcon color='primary' fontSize='large' />
-                        ¿{userName}, aún tienes cosas en tu carro, por favor confirma?
+                        {userName}, aún tienes cosas en tu carro, por favor confirma
                       </Button>
                     )}
                   </Grid>

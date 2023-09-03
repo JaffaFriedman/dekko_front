@@ -31,7 +31,7 @@ import Registro from '../../pages/Registro/Registro'
 import 'react-toastify/dist/ReactToastify.css'
 
 export default function Login () {
-  const { setUserName, BACKEND_URL } = useContext(GlobalContext)
+  const {setUserName, BACKEND_URL } = useContext(GlobalContext)
   const [showPassword, setShowPassword] = useState(false)
   const handleClickShowPassword = () => setShowPassword(show => !show)
 
@@ -96,13 +96,13 @@ export default function Login () {
       localStorage.setItem('token', data.token)
       localStorage.setItem('idUser', data.idUser)
       localStorage.setItem('userName', data.userName)
-
       setUserName(data.userName)
       dispatchUser({
         type: types.setUserState,
         payload: tokenDecodificado
       })
       notifySuccess(data.userName+', te datos la bienvenida')
+      setOpen(false)
     } catch (error) {
       dispatchUser({
         type: types.setError,

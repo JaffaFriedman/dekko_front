@@ -21,7 +21,7 @@ import { ToastContainer, toast } from 'react-toastify'
 export default function MiPerfil () {
   const [open, setOpen] = useState(false)
   const [datosValidos, setDatosValidos] = useState(true)
-  const { userName, BACKEND_URL } = useContext(GlobalContext)
+  const { userName, setUserName, BACKEND_URL } = useContext(GlobalContext)
   const token = localStorage.getItem('token')
 
   const handleClickOpen = () => {
@@ -192,9 +192,12 @@ export default function MiPerfil () {
           type: types.setUserState,
           payload: data
         })
-        if (data.message === 'OK')
-          notifySuccess(formUser.nombre + ' hemos actualizado tu cuenta')
-        else notifyError(data.message)
+        if (data.message === 'OK') {
+          localStorage.setItem('userName', data.userName)
+          setUserName(data.userName)
+          notifySuccess(userName + ' hemos actualizado tu cuenta')
+          setOpen(false)
+        } else notifyError(data.message)
       } catch (error) {
         notifyError('Tuvimos un error al actualizar tu cuenta')
       }

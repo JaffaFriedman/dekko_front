@@ -13,10 +13,12 @@ import { GlobalContext } from '../../context/global/globalContext'
 import {  useEffect } from 'react'
 
 const Navigation = () => {
-  const oldUser = localStorage.getItem('userName')
+  
   const { userName, setUserName } = useContext(GlobalContext)
 
   useEffect(() => {
+    const oldUser = localStorage.getItem('userName')
+    setUserName(oldUser);
     setUserName(oldUser === null ? 'MI PERFIL' : oldUser)
   })
   const token = localStorage.getItem('token')
