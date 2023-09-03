@@ -18,9 +18,9 @@ import NotListedLocationIcon from '@mui/icons-material/NotListedLocation'
 import Contacto from '../../pages/Contacto/Contacto'
 import Button from '@mui/material/Button'
 import { Fragment } from 'react'
+import QuizIcon from '@mui/icons-material/Quiz'
 const Footer = () => {
   const navigate = useNavigate()
-
   let urlFacebook = 'https://www.facebook.com/search/top?q=katzmania'
   let urlInstagram = 'https://www.instagram.com/explore/tags/katzmaniaaa/'
   let urlWebpay = 'https://www.webpay.cl/company/32794'
@@ -56,7 +56,6 @@ const Footer = () => {
             >
               <NotListedLocationIcon fontSize='medium' /> Como llegar
             </Link>
-
             <Typography level='body' sx={{ color: grey[50] }}>
               <CallIcon fontSize='medium' /> Telefonos: +569 1111 2222 +569 3333
               4444{' '}
@@ -122,6 +121,12 @@ const Footer = () => {
                 <Link href={urlWhatsapp} target='_blank'>
                   <WhatsAppIcon sx={{ color: grey[50] }} fontSize='medium' />{' '}
                 </Link>
+                <Button
+                  sx={{ color: grey[50] }}
+                  onClick={() => navigate('/prueba')}
+                >
+                  <QuizIcon sx={{ color: grey[50] }} fontSize='medium' />{' '}
+                </Button>
               </Col>
             </Row>
           </Grid>

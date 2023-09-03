@@ -26,7 +26,7 @@ import Productos from '../../pages/Productos/Productos'
 import Registro from '../../pages/Registro/Registro'
 import Rollos from '../../pages/Rollos/Rollos'
 import Separador from '../../pages/Separador/Separador'
-
+import Prueba from '../../pages/Prueba/Prueba'
 function Rutas () {
   return (
     <div>
@@ -58,6 +58,7 @@ function Rutas () {
           <Route path='/calculo' element={<Calculo />} />
           <Route path='/calculobobina' element={<Calculobobina />} />
           <Route path='/calculorollo' element={<Calculorollo />} />
+          <Route path='/prueba' element={<Prueba />} />
         </Route>
         <Route path='*' element={<h1>Not Found</h1>} />
       </Routes>
