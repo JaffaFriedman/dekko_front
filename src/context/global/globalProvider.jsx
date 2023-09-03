@@ -15,6 +15,13 @@ export function GlobalProvider ({ children }) {
   const [producto, setProducto] = useState({})
   const [cantidad, setCantidad] = useState(0)
   const [userName, setUserName] = useState( 'MI PERFIL')
+
+  initMercadoPago('TEST-ddb11d27-73ea-4298-9db7-260bf011c799')
+  //const BACKEND_URL="https://uddjaffa.onrender.com"
+  const BACKEND_URL = 'http://localhost:8080'
+  //const BACKEND_URL="https://dekkoback-k4hg-dev.fl0.io"
+
+
   const redondear = num => {
     let roundedString = num.toFixed(2)
     let roundedNumber = parseFloat(roundedString)
@@ -87,10 +94,6 @@ export function GlobalProvider ({ children }) {
     transition: theme.transitions.create('opacity')
   }))
 
-  initMercadoPago('TEST-ddb11d27-73ea-4298-9db7-260bf011c799')
-  //const BACKEND_URL="https://uddjaffa.onrender.com"
-  //const BACKEND_URL = 'http://localhost:8080'
-  const BACKEND_URL="https://dekkoback-k4hg-dev.fl0.io"
 
   return (
     <GlobalContext.Provider

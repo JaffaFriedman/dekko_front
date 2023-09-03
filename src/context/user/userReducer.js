@@ -1,23 +1,23 @@
 export const types = {
   setUserState: '[USER] Set User State',
-  setError: '[USER] Set Error',
+  setError: '[USER] Set Error'
 }
 
-const userReducer= ( state, action = {}) => {
+const userReducer = (state, action = {}) => {
   switch (action.type) {
     case types.setUserState:
       return {
         ...state,
-        user: action.payload,
+        user: action.payload
       }
     case types.setError:
       return {
         ...state,
-        error: action.payload,
+        error: action.payload
       }
     default:
-      return state;
+      return state
   }
 }
 
-export default userReducer;
+export default userReducer

@@ -78,12 +78,12 @@ export default function Logout () {
                     {carritoCompra.totalProductos === 0 ? (
                       <Button onClick={handleSubmit} color='primary'>
                         <LoginIcon color='primary' fontSize='large' />
-                        ¿{userName} Estas seguro?
+                        ¿{userName}, por favor confirma que quieres desconectarte?
                       </Button>
                     ) : (
                       <Button onClick={handleSubmit} color='primary'>
                         <LoginIcon color='primary' fontSize='large' />
-                        ¿Aún tienes cosas en tu carro, estas seguro?
+                        ¿{userName}, aún tienes cosas en tu carro, por favor confirma?
                       </Button>
                     )}
                   </Grid>

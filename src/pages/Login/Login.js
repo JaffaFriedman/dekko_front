@@ -58,13 +58,29 @@ export default function Login () {
   }
 
   const [formUser, setFormUser] = useState(initialUser)
+  const [emailError, setEmailError] = useState('')
+  const validateEmail = e => {
+    const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
+    if (!e) {
+      setEmailError('Campo requerido')
+    } else if (!emailRegex.test(e)) {
+      setEmailError('Correo electrónico no válido')
+    } else {
+      setEmailError('')
+    }
+  }
 
   const handleChange = e => {
     setFormUser({
       ...formUser,
       [e.target.name]: e.target.value
     })
+    if (e.target.name === 'email') {
+      validateEmail(e.target.value)
+      return
+    }
   }
+
   let tokenDecodificado = {}
   const api = axios.create({
     baseURL: BACKEND_URL,
@@ -73,34 +89,32 @@ export default function Login () {
       'Content-Type': 'application/json'
     }
   })
-  const handleSubmit = async e => {
-    e.preventDefault()
+  const handleSubmit = async () => {
     try {
       const { data } = await api.post('/users/login', formUser)
       tokenDecodificado = jwtDecode(data.token)
       localStorage.setItem('token', data.token)
       localStorage.setItem('idUser', data.idUser)
       localStorage.setItem('userName', data.userName)
+
       setUserName(data.userName)
       dispatchUser({
         type: types.setUserState,
         payload: tokenDecodificado
       })
-      notifySuccess(data.userName+ ' bienvenido a Dekko')
+      notifySuccess(data.userName+', te datos la bienvenida')
     } catch (error) {
-      notifyError('Error de conexión')
-      localStorage.removeItem('token')
-      localStorage.removeItem('idUser')
-      localStorage.removeItem('userName')
-      setUserName('MI PERFIL')
-      notifyError('No pudimos conectarte')
       dispatchUser({
         type: types.setError,
         payload: error
       })
-      console.log(error)
+      localStorage.removeItem('token')
+      localStorage.removeItem('idUser')
+      localStorage.removeItem('userName')
+      notifyError('Error en la conexión')
     }
   }
+
   const notifyError = msg => toast.error(msg)
   const notifySuccess = msg => toast.success(msg)
   return (
@@ -153,6 +167,8 @@ export default function Login () {
                   onChange={handleChange}
                   autoComplete='email'
                   autoFocus
+                  error={Boolean(emailError)}
+                  helperText={emailError}
                 />
                 <FormControl sx={{ width: '50ch' }} variant='outlined'>
                   <InputLabel htmlFor='outlined-adornment-password'>
