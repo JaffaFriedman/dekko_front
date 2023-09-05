@@ -1,4 +1,4 @@
-import { useContext,Fragment,useState } from 'react'
+import { useContext, Fragment, useState } from 'react'
 import Container from 'react-bootstrap/Container'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
@@ -12,7 +12,6 @@ import { styled } from '@mui/material/styles'
 import Calculorollo from '../../pages/Calculo/Calculorollo'
 import { CarritoContext } from '../../context/carrito/carritoContext'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
-import { GlobalContext } from '../../context/global/globalContext'
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
   ...theme.typography.body2,
@@ -22,16 +21,21 @@ const Item = styled(Paper)(({ theme }) => ({
 }))
 
 function Rollos () {
-  const { categoria, producto, setCantidad } = useContext(GlobalContext)
   const { dispatchCarrito } = useContext(CarritoContext)
 
+  const categoriaObj = JSON.parse(localStorage.getItem('categoriaObj'))
+  const p = JSON.parse(localStorage.getItem('productoObj'))
+  const familia = localStorage.getItem('familia')
+  const categoria = localStorage.getItem('categoria')
   const navigate = useNavigate()
- 
 
-  const handleCategoria = () => {
-    navigate('/Productos')
+  const toProductos = p => {
+    localStorage.setItem('categoria', p.categoria)
+    localStorage.setItem('categoriaObj', JSON.stringify(p))
+    const ruta = `/Products`
+    localStorage.setItem('ruta', ruta)
+    navigate(ruta)
   }
-  const p = producto
 
   const formDatos = {
     cantidad: 1,
@@ -61,7 +65,6 @@ function Rollos () {
       cantidad: datos.cantidad,
       precio: datos.precio
     }
-    setCantidad(datos.cantidad)
     dispatchCarrito({ type: 'AGREGAR_ITEM', item })
   }
   const options = { style: 'currency', currency: 'CLP' }
@@ -71,7 +74,7 @@ function Rollos () {
       <div className='bg-dark text-bg-dark pb-2 ps-5  mb-1 text-center'>
         <h3>
           {' '}
-          {categoria.familia} - {categoria.categoria}{' '}
+          {familia} - {categoria}{' '}
         </h3>
       </div>
       <Container>
@@ -131,7 +134,10 @@ function Rollos () {
               <h6 className='mt-4'>Alto del rollo {p.alto} metros</h6>
               <h5 className='mt-4 mb-4'>
                 Precio Total{' '}
-                {(datos.precio * datos.cantidad).toLocaleString('es-CL', options)}
+                {(datos.precio * datos.cantidad).toLocaleString(
+                  'es-CL',
+                  options
+                )}
               </h5>
               <Button onClick={agregarCarro} color='primary'>
                 <ShoppingCartIcon color='primary' fontSize='large' />
@@ -141,9 +147,9 @@ function Rollos () {
                 variant='text'
                 sx={{ mt: 3, mb: 2 }}
                 color='primary'
-                onClick={() => handleCategoria(p.categoria)}
+                onClick={() => toProductos(categoriaObj)}
               >
-                Mas diseños categoria {producto.categoria}
+                Mas diseños categoria {categoria}
               </Button>
             </Grid>
           </Grid>

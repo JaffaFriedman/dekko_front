@@ -7,6 +7,7 @@ import Calculobobina from '../../pages/Calculo/Calculobobina'
 import Calculorollo from '../../pages/Calculo/Calculorollo'
 import Carrito from '../../pages/Carrito/Carrito'
 import Catalogo from '../../pages/Catalogo/Catalogo'
+import Categorias from '../../pages/Categorias/Categorias'
 import MiPerfil from '../../pages/MiPerfil/MiPerfil'
 import Contacto from '../../pages/Contacto/Contacto'
 import Cortinas from '../../pages/Cortinas/Cortinas'
@@ -49,7 +50,8 @@ function Rutas () {
           <Route path='/separador' element={<Separador />} />
           <Route path='/familias' element={<Familias />} />
           <Route path='/catalogo' element={<Catalogo />} />
-          <Route path='/productos' element={<Productos />} />
+          <Route path='/categorias' element={<Categorias />} />
+          <Route path='/products' element={<Productos />} />
           <Route path='/papeles' element={<Papeles />} />
           <Route path='/cortinas' element={<Cortinas />} />
           <Route path='/rollos' element={<Rollos />} />

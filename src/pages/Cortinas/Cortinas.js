@@ -27,12 +27,15 @@ const Item = styled(Paper)(({ theme }) => ({
 const options = { style: 'currency', currency: 'CLP' }
 
 function Cortinas () {
-  const { familia, categoria, producto, BACKEND_URL } =
+  const {  BACKEND_URL } =
     useContext(GlobalContext)
   const { dispatchCarrito } = useContext(CarritoContext)
-  const p = producto
-
-  const [tablaTelas, setTablaTelas] = useState([])
+  const familiaObj=JSON.parse(localStorage.getItem('familiaObj'))
+  const categoriaObj=JSON.parse(localStorage.getItem('categoriaObj'))
+  const p=JSON.parse(localStorage.getItem('productoObj'))
+  const familia=localStorage.getItem('familia')
+  const categoria=localStorage.getItem('categoria')
+   const [tablaTelas, setTablaTelas] = useState([])
   const api = axios.create({
     baseURL: BACKEND_URL,
     timeout: 5000,
@@ -57,8 +60,12 @@ function Cortinas () {
     event.preventDefault()
   }
 
-  const handleCategoria = () => {
-    navigate('/Productos')
+  const toProductos = p => {
+    localStorage.setItem('categoria', p.categoria)
+    localStorage.setItem('categoriaObj', JSON.stringify(p))
+    const ruta = `/Products`
+    localStorage.setItem('ruta', ruta)
+    navigate(ruta)
   }
 
   const handleTela = (f, c) => {
@@ -128,7 +135,7 @@ function Cortinas () {
       <div className='bg-dark text-bg-dark pb-2 ps-5  mb-1 text-center'>
         <h3>
           {' '}
-          {categoria.familia} - {categoria.categoria}{' '}
+          { familia} - { categoria}{' '}
         </h3>
       </div>
       <Container>
@@ -155,12 +162,12 @@ function Cortinas () {
                 {' '}
                 {p.catalogo} - {p.nombre}
               </h4>
-              <p className='mt: 3'> {familia.mensaje}</p>
+              <p className='mt: 3'> {familiaObj.mensaje}</p>
               <Button
                 variant='text'
                 sx={{ mb: 2 }}
                 color='primary'
-                onClick={() => handleTela(p.familia, p.categoria)}
+                onClick={() => handleTela(familia, categoria)}
               >
                 Configura tu producto
               </Button>
@@ -208,7 +215,7 @@ function Cortinas () {
                     )}{' '}
               </h5>
               {datos.glosa === '' ? (
-                <p>{familia.mensaje}</p>
+                <p>{familiaObj.mensaje}</p>
               ) : (
                 <Button onClick={agregarCarro} color='primary'>
                   <ShoppingCartIcon color='primary' fontSize='large' />
@@ -322,9 +329,9 @@ function Cortinas () {
                 variant='text'
                 sx={{ mt: 3, mb: 2 }}
                 color='primary'
-                onClick={() => handleCategoria(p.categoria)}
+                onClick={() => toProductos(categoriaObj)}
               >
-                Mas diseños categoria {producto.categoria}
+                Mas diseños categoria {categoria}
               </Button>
             </Grid>
           </Grid>

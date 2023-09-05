@@ -4,13 +4,10 @@ import Col from 'react-bootstrap/Col'
 import { useNavigate } from 'react-router-dom'
 import { GlobalContext } from '../../context/global/globalContext'
 import axios from 'axios'
-import { useState,useEffect,useContext  } from 'react'
- 
+import { useState, useEffect, useContext } from 'react'
+
 function Productos () {
   const {
-    familia,
-    categoria,
-    setProducto,
     BACKEND_URL
   } = useContext(GlobalContext)
   const navigate = useNavigate()
@@ -20,30 +17,32 @@ function Productos () {
     baseURL: BACKEND_URL,
     timeout: 5000,
     headers: {
-      'Content-Type': 'application/json', 
+      'Content-Type': 'application/json'
     }
   })
 
   const recuperaProductos = async (f, c) => {
     try {
-      const { data } = await api.get(
-        `/products/familia/${f}/categoria/${c}`)
+      const { data } = await api.get(`/products/familia/${f}/categoria/${c}`)
       setTablaProductos(data.info)
     } catch (error) {
       console.log(error)
     }
   }
-
+  const familiaObj=JSON.parse(localStorage.getItem('familiaObj'))
+  const categoriaObj=JSON.parse(localStorage.getItem('categoriaObj'))
+  const familia=localStorage.getItem('familia')
+  const categoria=localStorage.getItem('categoria')
   useEffect(() => {
-    recuperaProductos(categoria.familia, categoria.categoria)
+    recuperaProductos(familia, categoria)
   })
 
-  
-
-  const handleProducto = (p) => {
-    setProducto(p)
-    if (categoria.link !== '') navigate(categoria.link)
-    else navigate(familia.link)
+  const toProducto = p => {
+    localStorage.setItem('productoObj', JSON.stringify(p))
+    localStorage.setItem('producto', p._id)
+    let tipoProducto=familiaObj.link
+    if (tipoProducto ==='') tipoProducto=categoriaObj.link
+    navigate(tipoProducto)
   }
   const options = { style: 'currency', currency: 'CLP' }
 
@@ -52,7 +51,7 @@ function Productos () {
       <div className='bg-dark text-bg-dark pb-2 ps-5  mb-1 text-center'>
         <h3>
           {' '}
-          {categoria.familia} - {categoria.categoria}{' '}
+          {familia} - {categoria}{' '}
         </h3>
       </div>
       <Container>
@@ -68,7 +67,7 @@ function Productos () {
                     variant='top'
                     style={{ maxHeight: '18rem' }}
                     src={p.url[0]}
-                    onClick={() => handleProducto(p)}
+                    onClick={() => toProducto(p)}
                   />
                 </Card.Body>
                 <Card.Footer>

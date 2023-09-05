@@ -29,11 +29,26 @@ const Item = styled(Paper)(({ theme }) => ({
 }))
 
 function Bobina () {
-  const { categoria, producto, cantidad, setCantidad } =
+  const { cantidad, setCantidad } =
     useContext(GlobalContext)
   const { dispatchCarrito } = useContext(CarritoContext)
 
   const navigate = useNavigate()
+
+  const categoriaObj = JSON.parse(localStorage.getItem('categoriaObj'))
+  const p = JSON.parse(localStorage.getItem('productoObj'))
+  const familia = localStorage.getItem('familia')
+  const categoria = localStorage.getItem('categoria')
+
+
+  const toProductos = p => {
+    localStorage.setItem('categoria', p.categoria)
+    localStorage.setItem('categoriaObj', JSON.stringify(p))
+    const ruta = `/Products`
+    localStorage.setItem('ruta', ruta)
+    navigate(ruta)
+  }
+
 
   let [color, setColor] = useState(0)
   const [show, setShow] = useState(false)
@@ -49,11 +64,7 @@ function Bobina () {
     setColor(i)
   }
 
-  const handleCategoria = () => {
-    navigate('/Productos')
-  }
-
-  const handleSalir = () => {
+   const handleSalir = () => {
     setShow(false)
   }
 
@@ -67,8 +78,7 @@ function Bobina () {
     datos.precio=datos.precioMt2*33
     setDatos(datos)
   }
-  const p = producto
-
+  
   const formDatos = {
     cantidad: 1,
     alto: 300,
@@ -92,15 +102,15 @@ function Bobina () {
   }
   const agregarCarro = () => {
     datos.glosa =
-      categoria.familia +
+       familia +
       ' ' +
-      categoria.categoria +
+       categoria +
       ' Código Color ' +
       p.colores[color].codigo +
       ' Gramaje ' +
       p.pesos[datos.gramaje].peso +
       'gr por mt'
-    setCantidad(cantidad)
+      setCantidad(cantidad)
     
     const item = {
       imagen: p.colores[color].url,
@@ -117,7 +127,7 @@ function Bobina () {
       <div className='bg-dark text-bg-dark pb-2 ps-5  mb-1 text-center'>
         <h3>
           {' '}
-          {categoria.familia} - {categoria.categoria}{' '}
+          {familia} - {categoria}{' '}
         </h3>
       </div>
       <Container>
@@ -130,7 +140,7 @@ function Bobina () {
                 src={p.colores[color].url}
               />
               <h6 className='mt-1 text-center'>
-                {categoria.familia} - {categoria.categoria}{' '}
+                {familia} - {categoria}{' '}
               </h6>
             </Grid>
             <Grid item xs={4} className='mt-4'>
@@ -292,9 +302,9 @@ function Bobina () {
                 variant='text'
                 sx={{ mt: 3, mb: 2 }}
                 color='primary'
-                onClick={() => handleCategoria(p.categoria)}
+                onClick={() => toProductos(categoriaObj)}
               >
-                Mas diseños categoria {producto.categoria}
+                Mas diseños categoria {categoria}
               </Button>
             </Grid>
           </Grid>

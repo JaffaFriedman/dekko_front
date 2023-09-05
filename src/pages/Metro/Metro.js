@@ -29,7 +29,7 @@ const Item = styled(Paper)(({ theme }) => ({
 }))
 
 function Metro () {
-  const { categoria, producto, cantidad, setCantidad } =
+  const {  cantidad, setCantidad } =
     useContext(GlobalContext)
   const { dispatchCarrito } = useContext(CarritoContext)
 
@@ -49,8 +49,16 @@ function Metro () {
     setColor(i)
   }
 
-  const handleCategoria = () => {
-    navigate('/Productos')
+  const categoriaObj = JSON.parse(localStorage.getItem('categoriaObj'))
+  const p = JSON.parse(localStorage.getItem('productoObj'))
+   const categoria = localStorage.getItem('categoria')
+ 
+  const toProductos = p => {
+    localStorage.setItem('categoria', p.categoria)
+    localStorage.setItem('categoriaObj', JSON.stringify(p))
+    const ruta = `/Products`
+    localStorage.setItem('ruta', ruta)
+    navigate(ruta)
   }
 
   const handleSalir = () => {
@@ -68,8 +76,7 @@ function Metro () {
     datos.precio = datos.precioMt2 * 1.4
     setDatos(datos)
   }
-  const p = producto
-
+  
   const formDatos = {
     cantidad: 10,
     alto: 1000,
@@ -94,9 +101,9 @@ function Metro () {
   }
   const agregarCarro = () => {
     datos.glosa =
-      categoria.familia +
+      categoriaObj.familia +
       ' ' +
-      categoria.categoria +
+      categoriaObj.categoria +
       ' Código Color ' +
       p.colores[color].codigo +
       ' Gramaje ' +
@@ -119,7 +126,7 @@ function Metro () {
       <div className='bg-dark text-bg-dark pb-2 ps-5  mb-1 text-center'>
         <h3>
           {' '}
-          {categoria.familia} - {categoria.categoria}{' '}
+          {categoriaObj.familia} - {categoriaObj.categoria}{' '}
         </h3>
       </div>
       <Container>
@@ -290,9 +297,9 @@ function Metro () {
                 variant='text'
                 sx={{ mt: 3, mb: 2 }}
                 color='primary'
-                onClick={() => handleCategoria(p.categoria)}
+                onClick={() => toProductos(categoriaObj)}
               >
-                Mas diseños categoria {producto.categoria}
+                Mas diseños categoria {categoria}
               </Button>
             </Grid>
           </Grid>

@@ -5,8 +5,8 @@ import { Container } from 'react-bootstrap'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import { useNavigate } from 'react-router-dom'
-import { useState,useEffect,useContext  } from 'react'
- 
+import { useState, useEffect, useContext } from 'react'
+
 import axios from 'axios'
 
 export default function Catalogo () {
@@ -16,18 +16,20 @@ export default function Catalogo () {
     Image,
     ImageBackdrop,
     ImageMarked,
-    familia,
     setCategoria,
-    BACKEND_URL
+    familia,
+    setTipoProducto,
+    BACKEND_URL,
+    iniCategoria
   } = useContext(GlobalContext)
-
+  iniCategoria()
   const [tablaCategorias, setTablaCategorias] = useState([])
 
   const api = axios.create({
     baseURL: BACKEND_URL,
-    timeout: 5000,
+    timeout: 8000,
     headers: {
-      'Content-Type': 'application/json', 
+      'Content-Type': 'application/json'
     }
   })
 
@@ -40,16 +42,19 @@ export default function Catalogo () {
     }
   }
 
-  
   useEffect(() => {
     recuperaCatalogos(familia.familia)
   })
 
-
   const navigate = useNavigate()
   const handleCategoria = c => {
     setCategoria(c)
-    navigate('/Productos')
+    const ruta = '/Products'
+    localStorage.setItem('ruta', ruta)
+    localStorage.setItem('categoria', JSON.stringify(c))
+    if (c.link !== '') setTipoProducto(c.link)
+    else setTipoProducto(familia.link)
+    navigate(ruta)
   }
 
   return (

@@ -27,11 +27,15 @@ const Item = styled(Paper)(({ theme }) => ({
 }))
 
 function Papeles () {
-  const { familia, categoria, producto, BACKEND_URL } =
+  const { BACKEND_URL } =
     useContext(GlobalContext)
   const { dispatchCarrito } = useContext(CarritoContext)
 
-  const p = producto
+  const familiaObj=JSON.parse(localStorage.getItem('familiaObj'))
+  const categoriaObj=JSON.parse(localStorage.getItem('categoriaObj'))
+  const p=JSON.parse(localStorage.getItem('productoObj'))
+  const familia=localStorage.getItem('familia')
+  const categoria=localStorage.getItem('categoria')
   const [tablaTexturas, setTablaTexturas] = useState([])
 
   const api = axios.create({
@@ -82,8 +86,12 @@ function Papeles () {
     event.preventDefault()
   }
 
-  const handleCategoria = () => {
-    navigate('/Productos')
+  const toProductos = p => {
+    localStorage.setItem('categoria', p.categoria)
+    localStorage.setItem('categoriaObj', JSON.stringify(p))
+    const ruta = `/Products`
+    localStorage.setItem('ruta', ruta)
+    navigate(ruta)
   }
 
   const agregarCarro = () => {
@@ -97,8 +105,8 @@ function Papeles () {
   }
 
   const handleTextura = () => {
-    recuperaTexturas(producto.familia)
-    datos.textura = producto.url[0]
+    recuperaTexturas(p.familia)
+    datos.textura = p.url[0]
     datos.glosa = ''
     setDatos(datos)
     setShow(true)
@@ -142,7 +150,7 @@ function Papeles () {
       <div className='bg-dark text-bg-dark pb-2 mb-1 text-center'>
         <h3>
           {' '}
-          {categoria.familia} - {categoria.categoria}{' '}
+          {familia} - {categoria}{' '}
         </h3>
       </div>
       <Container>
@@ -209,7 +217,7 @@ function Papeles () {
               </Button>
               <Box>
                 {datos.glosa === '' ? (
-                  <p>{familia.mensaje}</p>
+                  <p>{familiaObj.mensaje}</p>
                 ) : (
                   <Button onClick={agregarCarro} color='primary'>
                     <ShoppingCartIcon color='primary' fontSize='large' />
@@ -244,7 +252,7 @@ function Papeles () {
                         spacing={2}
                       >
                         {tablaTexturas
-                          .filter(t => t.familia === categoria.familia)
+                          .filter(t => t.familia === familia)
                           .map((v, i) => (
                             <Item key={i}>
                               <img
@@ -326,9 +334,9 @@ function Papeles () {
                 variant='text'
                 sx={{ mt: 3, mb: 2 }}
                 color='primary'
-                onClick={() => handleCategoria(p.categoria)}
+                onClick={() => toProductos(categoriaObj)}
               >
-                Mas diseños categoria {producto.categoria}
+                Mas diseños categoria {categoria}
               </Button>
             </Grid>
           </Grid>

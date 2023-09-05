@@ -1,52 +1,44 @@
-import { useContext , useState ,useEffect} from 'react'
+import { useContext, useEffect } from 'react'
 import { GlobalContext } from '../../context/global/globalContext'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import { Container } from 'react-bootstrap'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import tablaFamilias from '../Familias/TablaFamilias'
 
 export default function Familias () {
-  const {
-    ImageButton,
-    ImageSrc,
-    Image,
-    ImageBackdrop,
-    ImageMarked,
-    setFamilia,
-    BACKEND_URL
-  } = useContext(GlobalContext)
+  const { ImageButton, ImageSrc, Image, ImageBackdrop, ImageMarked } =
+    useContext(GlobalContext)
 
-  const [tablaFamilias, setTablaFamilias] = useState([])
+  const iniFamilia = () => {
+    localStorage.removeItem('familia')
+    localStorage.removeItem('categoria')
+    localStorage.removeItem('tipoProducto')
+    localStorage.removeItem('producto')
+    localStorage.removeItem('familiaObj')
+    localStorage.removeItem('categoriaObj')
+    localStorage.removeItem('tipoProductoObj')
+    localStorage.removeItem('productoObj')
+  }
 
-  const api = axios.create({
-    baseURL: BACKEND_URL,
-    timeout: 5000,
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  })
-  const recuperaFamilias = async () => {
-    try {
-      const { data } = await api.get('/familias')
-      setTablaFamilias(data.info)
-    } catch (error) {
-      console.log(error)
-    }
+  const navigate = useNavigate()
+
+  const toCategoria = p => {
+    localStorage.setItem('familiaObj', JSON.stringify(p))
+    localStorage.setItem('familia', p.familia)
+    if (p.link !== '') localStorage.setItem('tipoProducto', p.link)
+    else localStorage.removeItem('tipoProducto')
+    const ruta = `/Categorias`
+    //const ruta=`/Catalogo`
+    localStorage.setItem('ruta', ruta)
+    navigate(ruta)
   }
 
   useEffect(() => {
-    recuperaFamilias()
+    iniFamilia()
   })
-
-  const navigate = useNavigate()
-  const handleFamilia = p => {
-    setFamilia(p)
-    navigate('/Catalogo')
-  }
-
   return (
     <div>
       <div className='bg-dark text-bg-dark pb-2   text-center'>
@@ -63,7 +55,7 @@ export default function Familias () {
                 <ImageButton
                   focusRipple
                   key={p.familia}
-                  onClick={() => handleFamilia(p)}
+                  onClick={() => toCategoria(p)}
                   style={{
                     margin: 4
                   }}

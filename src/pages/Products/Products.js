@@ -11,9 +11,6 @@ function Productos () {
   const { BACKEND_URL } = useContext(GlobalContext)
   const navigate = useNavigate()
   const { idFamilia, idCategoria } = useParams()
-  const familia = tablaFamilias.find(f => f.familia === idFamilia)
-
-  const [categoria, setCategoria] = useState({})
   const [tablaProductos, setTablaProductos] = useState([])
   const api = axios.create({
     baseURL: BACKEND_URL,

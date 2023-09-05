@@ -4,10 +4,9 @@ import Typography from '@mui/material/Typography'
 import { Container } from 'react-bootstrap'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useState, useContext, useEffect } from 'react'
-import tablaFamilias from '../Familias/TablaFamilias'
-
+ 
 import axios from 'axios'
 
 export default function Categoria () {
@@ -19,13 +18,21 @@ export default function Categoria () {
     ImageMarked,
     BACKEND_URL
   } = useContext(GlobalContext)
-  const { idFamilia } = useParams()
-  const familia = tablaFamilias.find(f => f.familia === idFamilia)
+
+  const familia = localStorage.getItem('familia')
+  const iniCategoria = () => {
+    localStorage.removeItem('categoria')
+    localStorage.removeItem('tipoProducto')
+    localStorage.removeItem('producto')
+    localStorage.removeItem('categoriaObj')
+    localStorage.removeItem('tipoProductoObj')
+    localStorage.removeItem('productoObj')
+  }
   const [tablaCategorias, setTablaCategorias] = useState([])
 
   const api = axios.create({
     baseURL: BACKEND_URL,
-    timeout: 5000,
+    timeout: 8000,
     headers: {
       'Content-Type': 'application/json'
     }
@@ -41,21 +48,23 @@ export default function Categoria () {
   }
 
   useEffect(() => {
-    leeCategorias(familia.familia)
+    iniCategoria()
+    leeCategorias(familia)
   })
 
   const navigate = useNavigate()
-  const handleProductos = c => {
-    const ruta = `/Products/idFamilia/${c.familia}/idCategoria/${c.categoria}`
+  const toProductos = p => {
+    localStorage.setItem('categoria', p.categoria)
+    localStorage.setItem('categoriaObj', JSON.stringify(p))
+    const ruta = `/Products`
     localStorage.setItem('ruta', ruta)
-    localStorage.setItem('categoria', JSON.stringify(c))
     navigate(ruta)
   }
 
   return (
     <div>
       <div className='bg-dark text-bg-dark pb-2   text-center'>
-        <h3> {familia.familia} </h3>
+        <h3> {familia} </h3>
       </div>
       <Box
         sx={{ display: 'flex', flexWrap: 'wrap', minWidth: 400, width: '100%' }}
@@ -67,7 +76,7 @@ export default function Categoria () {
                 <ImageButton
                   focusRipple
                   key={p.categoria}
-                  onClick={() => handleProductos(p)}
+                  onClick={() => toProductos(p)}
                   style={{
                     margin: 4
                   }}
